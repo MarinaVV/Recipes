@@ -41,6 +41,7 @@ public class RegisterServlet extends HttpServlet {
 				response.getWriter().println("Acc Created");
 			} else {
 				response.getWriter().println("Error");
+				
 			}
 		}
 	}
