@@ -27,11 +27,11 @@ public class LogInServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		UsersDao dao = new UsersDao();
-
+		
 		String username = request.getParameter("uname");
-
+		
 		if (dao.findUserByUsername(username) != null) {
-			response.getWriter().println("Succsess");
+			response.sendRedirect("home-page/home-page.jsp?uname="+username);
 		} else {
 			response.sendRedirect("register/register.html");
 		}
