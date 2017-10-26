@@ -4,8 +4,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.inject.Singleton;
+
 import web.eng.recipes.models.User;
 
+@Singleton
 public class UsersDao extends Dao {
 
 	public boolean createUser(User user) {
@@ -26,6 +29,7 @@ public class UsersDao extends Dao {
 			e.printStackTrace();
 			return false;
 		} finally {
+			System.out.println("vliza si");
 			close();
 		}
 

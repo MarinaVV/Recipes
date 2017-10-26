@@ -6,6 +6,8 @@ public class User {
 	private String userName;
 	private String password;
 	private String role;
+	//field is 1 when user is deleted
+	private int is_deleted;
 	
 	public User() {
 		
@@ -34,6 +36,14 @@ public class User {
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public int getIs_deleted() {
+		return is_deleted;
+	}
+
+	public void setIs_deleted(int is_deleted) {
+		this.is_deleted = is_deleted;
 	}
 	
 	
