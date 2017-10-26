@@ -3,6 +3,7 @@ package web.eng.recipes.servlets;
 import java.io.IOException;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +17,7 @@ import web.eng.recipes.models.User;
 @WebServlet(name="RegisterServlet",value="/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	@Inject UsersDao dao;
 
 	public RegisterServlet() {
 		super();
@@ -36,7 +37,7 @@ public class RegisterServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		// doGet(request, response);
 		
-		UsersDao dao = new UsersDao();
+
 		User user = new User();
 		user.setUserName(request.getParameter("uname"));
 		user.setPassword(request.getParameter("pass"));
