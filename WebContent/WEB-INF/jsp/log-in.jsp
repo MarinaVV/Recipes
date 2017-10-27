@@ -9,7 +9,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/log-in.js"></script>
 </head>
 <body>
-	<form id="my_form" action="${pageContext.request.contextPath}/LogInServlet"
+	<form id="my_form" action="${pageContext.request.contextPath}/UserControlServlet"
 		method="post">
 		<div class="outer">
 			<div class="inner">

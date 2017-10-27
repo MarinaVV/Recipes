@@ -6,21 +6,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/register.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/register.js"></script>
 </head>
 <body>
-	<form action="/web.eng.recipes/RegisterServlet" method="post">
+	<form action="/web.eng.recipes/UserControlServlet" method="post">
 		<div class="outer">
 			<div class="inner">
-				Username: <input class="inner_input" type="text" name="uname">
+				Username: <input id="uname" class="inner_input" type="text">
 			</div>
 			<div class="inner">
-				Password: <input class="inner_input" type="text" name="pass">
+				Password: <input id="pass" class="inner_input" type="text">
 			</div>
 			<div class="inner">
-				Password conformation: <input class="inner_input" type="text" name="passconf">
+				Password conformation: <input class="inner_input" type="text">
 			</div>
 			<div class="inner">
-				<input   class="button" type="submit" value="Register">
+				<input   class="button" type="button" value="Register" onclick="register()">
 			</div>
 		</div>
 	</form>
