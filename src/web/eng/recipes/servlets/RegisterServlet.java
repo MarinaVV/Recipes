@@ -11,13 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import web.eng.recipes.dao.UsersDao;
+import web.eng.recipes.business_services.UserService;
+import web.eng.recipes.dao.UserDaoImpl;
 import web.eng.recipes.models.User;
 
-@WebServlet(name="RegisterServlet",value="/RegisterServlet")
+@WebServlet(value = "/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	@Inject UsersDao dao;
+	@Inject
+	UserService userService;
 
 	public RegisterServlet() {
 		super();
@@ -27,30 +29,32 @@ public class RegisterServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.sendRedirect("register/register.html");
-		RequestDispatcher dispatcher=getServletContext().getRequestDispatcher( "/WEB-INF/jsp/register.jsp" );
-		dispatcher.forward( request, response );
+		// response.sendRedirect("register/register.html");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/register.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// doGet(request, response);
-		
 
 		User user = new User();
 		user.setUserName(request.getParameter("uname"));
 		user.setPassword(request.getParameter("pass"));
 
-		if (dao.findUserByUsername(user.getUserName()) != null) {
-			response.getWriter().println("name exist");
-		} else {
-			if (dao.createUser(user)) {
-				response.getWriter().println("Acc Created");
-			} else {
-				response.getWriter().println("Error");
-				
-			}
+		String isUserCreated = userService.register(user);
+
+		switch (isUserCreated) {
+		case "DUPLICATE_NAME":
+			response.getWriter().print("Duplicate");
+			break;
+		case "ACC_CREATED":
+			response.getWriter().print("Created");
+			break;
+		case "ERROR":
+			response.getWriter().print("Created");
+			break;
 		}
 	}
 

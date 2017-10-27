@@ -6,16 +6,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <!-- <link rel="stylesheet" type="text/css" href="home-page.css"> -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/shared-functions.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/shared-functions.js"></script>
 </head>
-<body> 	
+<body id="body">
 	<p id="p_uname">${uname}</p>
 	<script>
 		var name = document.getElementById("p_uname");
 		localStorage.setItem("uname", name)
 	</script>
-
-
-
 </body>
 </html>

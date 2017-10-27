@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 import web.eng.recipes.models.User;
 
 @Singleton
-public class UsersDao extends Dao {
+public class UserDaoImpl extends Dao implements UserDao {
 
 	public boolean createUser(User user) {
 

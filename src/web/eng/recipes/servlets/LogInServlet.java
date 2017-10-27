@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import web.eng.recipes.dao.UsersDao;
+import web.eng.recipes.dao.UserDaoImpl;
 
 /**
  * Servlet implementation class LogInServlet
@@ -38,7 +38,7 @@ public class LogInServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		UsersDao dao = new UsersDao();
+		UserDaoImpl dao = new UserDaoImpl();
 
 		String username = request.getParameter("uname");
 

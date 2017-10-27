@@ -18,10 +18,12 @@
 			<div class="inner">
 				Password: <input id="pass" class="inner_input" type="password" name="pass">
 			</div>
-			<div class="inner">
-				<input class="button" type="button" value="Log in" onclick="login()">
-			</div>
 		</div>
 	</form>
+	<div class="inner">
+		<input class="button" type="button" value="Log in" onclick="login()">
+		<input class="button" type="button" value="Register" onclick="document.location.href='UserControlServlet?action=register'">
+	</div>
+	
 </body>
 </html>
