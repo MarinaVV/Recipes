@@ -9,6 +9,11 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/log-in.js"></script>
 </head>
 <body>
+	
+	<script type="text/javascript">
+		window.onload = window.sessionStorage.clear();
+	</script>
+
 	<p id="is_invalid"></p>
 	<script>
 		var is_invalid=${is_invalid};

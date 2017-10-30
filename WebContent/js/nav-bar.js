@@ -5,7 +5,7 @@ function createNavBar(){
 			find_recipes : "Find Recipes",
 			fav_recipes : "Favorite Recipes",
 			create_recipe: "Create Recipe",
-			ingredient: "Our ingredients list",
+			ingredients: "Our ingredients list",
 			account: "Account"
 	}
 	
@@ -14,19 +14,32 @@ function createNavBar(){
 	
 	
 	for(key in mapOptions){
-		var p = document.createElement('p');
-		p.innerHTML=mapOptions[key];
-		if(key == "home"){
-			p.setAttribute("class", "active")
+		var a = document.createElement('a');
+		a.innerHTML=mapOptions[key];
+		a.setAttribute("href",  "NavBarControlServlet?action="+key);
+		var action = getParameterByName("action");
+		// Mark home as clicked first time when enter home page
+		if(window.location.href.indexOf("UserControlServlet") > -1 && key == "home"){
+			a.setAttribute("class", "active")
+		}
+		// Mark the clicked page as clicked
+		if(key == getParameterByName("action")){
+			a.setAttribute("class", "active")
 		}
 		var li = document.createElement('li');
-		li.appendChild(p);
+		a.setAttribute("onclick", "document.location.href='NavBarControlServlet?action="+key);
+		li.appendChild(a);
 		li.setAttribute("class", "nav_bar_option");
-		li.setAttribute("onlick", key+"()");
+		
 		ul.appendChild(li);
 	}
 	
 	document.getElementById("nav_bar_container").appendChild(ul);
+}
+
+function getParameterByName(name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 }
 
 
