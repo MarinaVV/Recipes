@@ -5,15 +5,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-<!-- <link rel="stylesheet" type="text/css" href="home-page.css"> -->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/shared-functions.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/nav-bar.css"> 
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/shared-design.css"> 
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/nav-bar.js"></script>
 </head>
 <body id="body">
-	<p id="p_uname">${uname}</p>
-	<script>
-		var name = document.getElementById("p_uname");
-		localStorage.setItem("uname", name)
-	</script>
+
+	<div class="outer_container">
+	
+		<p id="p_uname">${uname}</p>
+		<script>
+			var name = document.getElementById("p_uname");
+			localStorage.setItem("uname", name)
+		</script>
+	
+		<div id="nav_bar_container">
+		<script>
+			createNavBar();
+		</script>
+		</div>
+	</div>
+
 </body>
 </html>

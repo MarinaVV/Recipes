@@ -38,4 +38,8 @@ body {
 .button:hover{
 	background-color: #008000;
 }
+
+#response_text{
+	color:red;
+}
 }

@@ -6,23 +6,29 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/register.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/register.js"></script>
 </head>
 <body>
-	<form action="/web.eng.recipes/RegisterServlet" method="post">
+	<form id="register_form" action="${pageContext.request.contextPath}/UserControlServlet" method="post">
 		<div class="outer">
+			<p id="response_text" ></p>
 			<div class="inner">
-				Username: <input class="inner_input" type="text" name="uname">
+				Username: <input id="username" class="inner_input" type="text" name="uname">
 			</div>
 			<div class="inner">
-				Password: <input class="inner_input" type="text" name="pass">
+				Password: <input id="password" class="inner_input" type="text" name="pass">
 			</div>
 			<div class="inner">
-				Password conformation: <input class="inner_input" type="text" name="passconf">
+				Password conformation: <input id="password_cofirm" class="inner_input" type="text" name="passconf">
 			</div>
+			<input id="action" class="inner_input" type="hidden" name="action">
 			<div class="inner">
-				<input   class="button" type="submit" value="Register">
+				<input   class="button" type="button" value="Register" onclick="register()">
+				<input   class="button" type="button" value="Back" onclick="document.location.href='UserControlServlet?action=log_in'">
+
 			</div>
 		</div>
 	</form>
+
 </body>
 </html>

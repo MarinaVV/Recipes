@@ -46,8 +46,8 @@ public class UserControlServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		
 		User user = new User();
-		user.setUserName(request.getParameter("uname"));
-		user.setPassword(request.getParameter("pass"));
+		user.setUserName(request.getParameter("username"));
+		user.setPassword(request.getParameter("password"));
 		
 		if(action!=null && action.equals("log_in")){
 			
@@ -66,18 +66,20 @@ public class UserControlServlet extends HttpServlet {
 		}else if(action!=null && action.equals("register")){
 			
 			String isUserCreated = userService.register(user);
+			
+			response.getWriter().write(isUserCreated);
 
-			switch (isUserCreated) {
+			/*switch (isUserCreated) {
 			case "DUPLICATE_NAME":
 				response.getWriter().write("Duplicate");
 				break;
 			case "ACC_CREATED":
-				response.getWriter().write("/WEB-INF/jsp/log-in.jsp");
+				response.getWriter().write("ACC_CREATED");
 				break;
 			case "ERROR":
 				response.getWriter().write("Created");
 				break;
-			}
+			}*/
 		}
 		
 	}

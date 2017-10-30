@@ -10,20 +10,20 @@
 </head>
 <body>
 	<p id="is_invalid"></p>
-<!-- 	<script>
+	<script>
 		var is_invalid=${is_invalid};
-		if(is_invalid == "true"){
-			document.getElementById("is_invalid").value="Username or password is incorrect!"
+		if(is_invalid == true){
+			document.getElementById("is_invalid").innerHTML="Username or password is incorrect!"
 		}
-	</script> -->
-	<form id="my_form" action="${pageContext.request.contextPath}/UserControlServlet"
+	</script>
+	<form id="log_in_form" action="${pageContext.request.contextPath}/UserControlServlet"
 		method="post">
 		<div class="outer">
 			<div class="inner">
-				Username: <input id="uname" class="inner_input" type="text" name="uname">
+				Username: <input id="uname" class="inner_input" type="text" name="username">
 			</div>
 			<div class="inner">
-				Password: <input id="pass" class="inner_input" type="password" name="pass">
+				Password: <input id="pass" class="inner_input" type="password" name="password">
 			</div>
 			<input id="action" class="inner_input" type="hidden" name="action">
 		</div>
