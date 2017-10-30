@@ -1,0 +1,26 @@
+.body_container {
+	/* 	padding-top:5px;
+	width: 98.55%;
+	height: 200px;
+	background: aqua;
+	margin: auto;
+	padding: 10px; */
+	
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
+}
+
+.search_part {
+	width: 33%;
+	height: 700px;
+	background: red;
+	float: left;
+}
+
+.result_part {
+	padding-left:5px;
+	height: 700px;
+	background: black;
+}
