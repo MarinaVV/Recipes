@@ -12,15 +12,15 @@
     width: 16%;
 }
 
-.nav_bar_option p {
+.nav_bar_option a {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 20px 16px;
     text-decoration: none;
 }
 
-.nav_bar_option p:hover:not(.active) {
+.nav_bar_option a:hover:not(.active) {
     background-color: #111;
 }
 

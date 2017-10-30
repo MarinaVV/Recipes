@@ -54,7 +54,7 @@ public class UserControlServlet extends HttpServlet {
 			boolean isLogInSuccsesful =  userService.login(user) ;
 			
 			if (isLogInSuccsesful) {
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/home-page.jsp");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/NavBarControlServlet?action=home");
 				request.setAttribute("uname", user.getUserName());
 				dispatcher.forward(request, response);
 			} else {
