@@ -9,7 +9,14 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/log-in.js"></script>
 </head>
 <body>
-	<form id="my_form" action="${pageContext.request.contextPath}/LogInServlet"
+	<p id="is_invalid"></p>
+<!-- 	<script>
+		var is_invalid=${is_invalid};
+		if(is_invalid == "true"){
+			document.getElementById("is_invalid").value="Username or password is incorrect!"
+		}
+	</script> -->
+	<form id="my_form" action="${pageContext.request.contextPath}/UserControlServlet"
 		method="post">
 		<div class="outer">
 			<div class="inner">
@@ -18,6 +25,7 @@
 			<div class="inner">
 				Password: <input id="pass" class="inner_input" type="password" name="pass">
 			</div>
+			<input id="action" class="inner_input" type="hidden" name="action">
 		</div>
 	</form>
 	<div class="inner">

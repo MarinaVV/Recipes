@@ -13,6 +13,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean login(User user){
 		
+		User userFromDB = dao.findUserByUsername(user.getUserName());
+		if(userFromDB.getPassword().equals(user.getPassword())) {
+			return true;
+		}
+		
 		return false;
 	}
 

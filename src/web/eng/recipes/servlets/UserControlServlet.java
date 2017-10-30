@@ -43,11 +43,11 @@ public class UserControlServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String action = (String) request.getAttribute("action");
+		String action = request.getParameter("action");
+		
 		User user = new User();
 		user.setUserName(request.getParameter("uname"));
 		user.setPassword(request.getParameter("pass"));
-		
 		
 		if(action!=null && action.equals("log_in")){
 			
@@ -57,10 +57,10 @@ public class UserControlServlet extends HttpServlet {
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/home-page.jsp");
 				request.setAttribute("uname", user.getUserName());
 				dispatcher.forward(request, response);
-				// response.sendRedirect("WEB_INF/home-page/home-page.jsp?uname=" +
-				// username);
 			} else {
-				response.sendRedirect("register/register.html");
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/log-in.jsp");
+				request.setAttribute("is_invalid", "true");
+				dispatcher.forward(request, response);
 			}
 			
 		}else if(action!=null && action.equals("register")){
@@ -69,13 +69,13 @@ public class UserControlServlet extends HttpServlet {
 
 			switch (isUserCreated) {
 			case "DUPLICATE_NAME":
-				response.getWriter().print("Duplicate");
+				response.getWriter().write("Duplicate");
 				break;
 			case "ACC_CREATED":
-				response.getWriter().print("Created");
+				response.getWriter().write("/WEB-INF/jsp/log-in.jsp");
 				break;
 			case "ERROR":
-				response.getWriter().print("Created");
+				response.getWriter().write("Created");
 				break;
 			}
 		}
