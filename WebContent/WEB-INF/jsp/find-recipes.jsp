@@ -24,7 +24,7 @@
 		</script>
 		</div>
 		
-				<div class="padding_div"> </div>
+		<div class="padding_div"> </div>
 		
 		<!--  BODY -->
 		<div class="body_container">
