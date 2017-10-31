@@ -8,7 +8,7 @@ function search_recipes(){
 	
 }
 
-function search_recipe_U(){
+function search_recipe_U(username){
 	
 	
 }

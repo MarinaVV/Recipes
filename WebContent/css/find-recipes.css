@@ -11,7 +11,7 @@
 }
 
 .search_part {
-	width: 33%;
+	width: 17%;
 	height: 700px;
 	background: red;
 	float: left;
@@ -29,9 +29,12 @@
 }
 
 .search_row {
-	display: grid;
 	margin: 10px;
 	margin-bottom: 15px;
+}
+
+.search_row input {
+	width:97%;
 }
 
 .ingredient_lsit {
@@ -44,36 +47,36 @@
 }
 
 .ingredient {
-	padding-top:5px;
-	padding-bottom:10px;
+	padding-top: 5px;
+	padding-bottom: 10px;
 }
 
 .ingredient input {
-	width:85%;
+	width: 85%;
 }
 
-.ingredient button{
+.ingredient button {
 	margin-left: 4px;
 }
 
-#add_button{
+#add_button {
 	width: 35px;
 	height: 35px;
 	size: 14px;
-	display:block;
-	margin:0 auto;
+	display: block;
+	margin: 0 auto;
 }
 
-#search_button{
+#search_button {
 	width: 75%;
 	height: 35px;
 	size: 14px;
-	display:block;
-	margin:0 auto;
+	display: block;
+	margin: 0 auto;
 }
 
 .result_part {
-	margin-left: 35%;
+	margin-left: 18%;
 	padding-left: 5px;
 	height: 700px;
 	background: black;
