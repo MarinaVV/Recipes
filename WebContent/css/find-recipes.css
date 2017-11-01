@@ -42,7 +42,7 @@
 	padding: 5px;
 	padding-bottom: 20px;
 	border: 1px solid white;
-	overflow-y: scroll;
+	overflow-y: auto;
 	max-height: 300px;
 }
 
