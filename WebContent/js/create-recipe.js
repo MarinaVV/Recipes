@@ -52,9 +52,8 @@ function delete_ingredient(divId) {
 	document.getElementById("ingredients").removeChild(divId);
 }
 
-function readURL() {
+function previewImg(input) {
 
-	var input = document.getElementById("filechooser");
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
 

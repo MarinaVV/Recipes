@@ -28,15 +28,14 @@
 }
 
 .ingredients_div {
-	width: 54%;
+	margin-left: 56%;
+	padding-left: 5px;
 	height: 400px;
 	border: 1px solid;
-	float: left;
 	padding-left: 10px;
 	padding-top: 10px;
 	text-align: center;
-	max-height: 400px;
-	overflow: auto;
+	overflow: hidden;
 }
 
 .ingredients_div hr {
@@ -73,33 +72,38 @@
 }
 
 .images_div {
-	margin-left: 56%;
-	padding-left: 5px;
+	width: 54%;
 	height: 400px;
 	border: 1px solid;
+	float: left;
 	padding-left: 10px;
 	padding-top: 10px;
 	text-align: center;
-	overflow: hidden;
+	max-height: 400px;
+	overflow: auto;
 }
 
 .preview_div {
-	width: 45%;
+	width: 40%;
 	border: 1px solid;
 	float: left;
 	height: 250px;
 }
 
 .choose_div {
-	border: 1px solid;
-	margin-left: 47%;
+	margin-left: 42%;
 	padding: 5px;
 	margin-right: 5px;
 }
 
 .choose_div input {
+	max-width: 90%;
 	border: 1px solid;
 	margin: 5px 0;
+}
+
+.choose_div button {
+	margin-left: 5px;
 }
 
 .description_div {

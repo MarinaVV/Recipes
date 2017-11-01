@@ -34,7 +34,50 @@
 			</div>
 			
 			<div class="ingredients_images_div">
+				<div class="images_div">
+					<div class="preview_div">
+						<img id="previewHolder" alt="Uploaded Image Preview Holder" width="250px" height="250px"/>
+					</div>
+					<div class="choose_div">
+						<div>
+							<div>
+							<label>Primary image</label>
+							</div>
+							<input id="primary_img" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(primary_img)">
+							<button onclick="previewImg(primary_img)">Peview	image</button>
+						</div>
+						<div>
+							<div>
+							<label>Image</label>
+							</div>
+							<input id="secondary_img_1" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_1)">
+							<button onclick="previewImg(secondary_img_1)">Peview	image</button>
+						</div>
+						<div>
+							<div>
+							<label>Image</label>
+							</div>
+							<input id="secondary_img_2" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_2)">
+							<button onclick="previewImg(secondary_img_2)">Peview	image</button>
+						</div>
+						<div>
+							<div>
+							<label>Image</label>
+							</div>
+							<input id="secondary_img_3" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_3)">
+							<button onclick="previewImg(secondary_img_3)">Peview	image</button>
+						</div>
+						<div>
+							<div>
+							<label>Image</label>
+							</div>
+							<input id="secondary_img_4" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_4)">
+							<button onclick="previewImg(secondary_img_4)">Peview image</button>
+						</div>
+					</div>
+				</div>
 				<div class="ingredients_div">
+					
 					<label>Ingredients</label>
 					<input type="hidden" value="1" id="count_ingredients_input">
 					<hr>
@@ -52,23 +95,7 @@
 						 <option value="Chrome">
   						 <option value="Firefox">
 					</datalist>
-				</div>
-				<div class="images_div">
-					<div class="preview_div">
-						<img id="previewHolder" alt="Uploaded Image Preview Holder" width="250px" height="250px"/>
-					</div>
-					<div class="choose_div">
-						<label>Primary image</label>
-						<input id="primary_img" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="readURL()">
-						<label>Image</label>
-						<input id="secondary_img_1" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="readURL()">
-						<label>Image</label>
-						<input id="secondary_img_2" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="readURL()">
-						<label>Image</label>
-						<input id="secondary_img_3" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="readURL()">
-						<label>Image</label>
-						<input id="secondary_img_4" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="readURL()">
-					</div>
+					
 				</div>
 			</div>
 			
