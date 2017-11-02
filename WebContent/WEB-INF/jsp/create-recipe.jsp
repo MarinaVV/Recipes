@@ -84,7 +84,7 @@
 					<hr>
 					<div id="ingredients">
 						<div class="ingredient" id="div_ingredient_1">
-							<input class="ingredient_input" id="ingredient_input_1" type="text" name="ingredients_input" 
+							<input class="ingredient_input" id="ingredient_input_1" type="text" name="ingredient_input" 
 							value="Add ingredient" onclick="deleteHintValueIngredient(ingredient_input_1)" onblur="setHintValueIngredient(ingredient_input_1)"><input 
 							class="quantity_input" id="quantity_input_1" type="text" name="quantity_input" value="Quantity"
 							onclick="deleteHintValueQuantity(quantity_input_1)" onblur="setHintValueQuantity(quantity_input_1)"><input 
