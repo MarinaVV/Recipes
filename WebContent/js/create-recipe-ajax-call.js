@@ -13,15 +13,14 @@ function createRecipe(){
 	var listIngredientInputs=document.getElementsByName("ingredient_input");
 	var listQunatitiesInputs=document.getElementsByName("quantity_input");
 	var listUnitsInputs=document.getElementsByName("units_input");
-	for(var index=0;index<listIngredientInputs.length;index++){
+	for(var index=0;index<listIngredientInputs.length - 1;index++){
 		if(listIngredientInputs[index].value != "Add ingredient"){
-			listIngredients.push(listIngredientInputs[index].value)
+			var recipe_ingredient = {};
+			recipe_ingredient.ingredient=listIngredientInputs[index].value;
+			recipe_ingredient.quantity = listQunatitiesInputs[index].value;
+			recipe_ingredient.units = listUnitsInputs[index].value;
+			listIngredients.push(recipe_ingredient);
 		}
 	}	
 	
-	var listIngredients=[];
-	var listIngredientInputs=document.getElementsByName("ingredient_input");
-	for(input in listIngredientInputs){
-		listIngredients.push(input.value);
-	}
 }
