@@ -44,9 +44,11 @@ public class RecipeControlServlet extends HttpServlet {
 		String description = request.getParameter("description");
 		
 		
-		JSONArray jObj = null;
+		JSONArray jArr = null;
 		try {
-			jObj = new JSONArray(request.getParameter("recie_ingredients"));
+			jArr = new JSONArray(request.getParameter("recie_ingredients"));
+			JSONObject obj=jArr.getJSONObject(0);
+			String ingredient = obj.getString("ingredient");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
