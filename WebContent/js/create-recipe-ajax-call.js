@@ -1,26 +1,73 @@
-function createRecipe(){
-	var title = document.getElementById("title_input").value;
-	var category=document.getElementById("category_select").value;
-	var description=document.getElementById("description_input").innerHTML;
+function createRecipe() {
+
+	elementsMap = getElementsValues();
+	var xhttp = new XMLHttpRequest();
+	var action = "create_recipe";
+	var formdata = new FormData();
 	
-	var primary_img = document.getElementById("primary_img").files[0];
-	var secondary_img_1 = document.getElementById("secondary_img_1").files[0];
-	var secondary_img_2 = document.getElementById("secondary_img_2").files[0];
-	var secondary_img_3 = document.getElementById("secondary_img_3").files[0];
-	var secondary_img_4 = document.getElementById("secondary_img_4").files[0];
+	formdata.append("title", elementsMap.title);
+	formdata.append("category", elementsMap.category);
+	formdata.append("primary_img", elementsMap.primary_img);
+	formdata.append("secondary_img_list", elementsMap.secondary_imag_list);
+	formdata.append("recie_ingredients", JSON.stringify( elementsMap.recipeIngredientsList));
+	formdata.append("description",elementsMap.description);
 	
-	var listIngredients=[{}];
-	var listIngredientInputs=document.getElementsByName("ingredient_input");
-	var listQunatitiesInputs=document.getElementsByName("quantity_input");
-	var listUnitsInputs=document.getElementsByName("units_input");
-	for(var index=0;index<listIngredientInputs.length - 1;index++){
-		if(listIngredientInputs[index].value != "Add ingredient"){
+	var value = formdata.getAll("title");
+
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			window.location = this.responseText;
+		}
+	};
+
+	xhttp.open("POST", "RecipeControlServlet", true);
+	xhttp.send(formdata);
+
+/*	xhttp.onload = function(e) {
+
+		if (this.status == 200) {
+
+			alert(this.responseText);
+
+		}
+
+	};*/
+}
+
+function getElementsValues() {
+
+	var elementsMap = {};
+
+	elementsMap.title = document.getElementById("title_input").value;
+	elementsMap.category = document.getElementById("category_select").value;
+	elementsMap.description = document.getElementById("description_input").innerHTML;
+
+	elementsMap.primary_img = document.getElementById("primary_img").files[0];
+	var secondary_img_list = [];
+	secondary_img_list
+			.push(document.getElementById("secondary_img_1").files[0]);
+	secondary_img_list
+			.push(document.getElementById("secondary_img_2").files[0]);
+	secondary_img_list
+			.push(document.getElementById("secondary_img_3").files[0]);
+	secondary_img_list
+			.push(document.getElementById("secondary_img_4").files[0]);
+	elementsMap.secondary_imag_list = secondary_img_list;
+
+	var listRecipeIngredients = [];
+	var listIngredientInputs = document.getElementsByName("ingredient_input");
+	var listQunatitiesInputs = document.getElementsByName("quantity_input");
+	var listUnitsInputs = document.getElementsByName("units_input");
+	for (var index = 0; index < listIngredientInputs.length; index++) {
+		if (listIngredientInputs[index].value != "Add ingredient") {
 			var recipe_ingredient = {};
-			recipe_ingredient.ingredient=listIngredientInputs[index].value;
+			recipe_ingredient.ingredient = listIngredientInputs[index].value;
 			recipe_ingredient.quantity = listQunatitiesInputs[index].value;
 			recipe_ingredient.units = listUnitsInputs[index].value;
-			listIngredients.push(recipe_ingredient);
+			listRecipeIngredients.push(recipe_ingredient);
 		}
-	}	
-	
+	}
+	elementsMap.recipeIngredientsList = listRecipeIngredients;
+
+	return elementsMap;
 }
