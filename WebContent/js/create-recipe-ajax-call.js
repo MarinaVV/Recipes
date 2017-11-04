@@ -7,8 +7,14 @@ function createRecipe() {
 	
 	formdata.append("title", elementsMap.title);
 	formdata.append("category", elementsMap.category);
+	formdata.append("username", sessionStorage.getItem('uname'));
+	
 	formdata.append("primary_img", elementsMap.primary_img);
-	formdata.append("secondary_img_list", elementsMap.secondary_imag_list);
+	formdata.append("secondary_img_1", elementsMap.secondary_imag_list[0]);
+	formdata.append("secondary_img_2", elementsMap.secondary_imag_list[1]);
+	formdata.append("secondary_img_3", elementsMap.secondary_imag_list[2]);
+	formdata.append("secondary_img_4", elementsMap.secondary_imag_list[3]);
+	
 	formdata.append("recie_ingredients", JSON.stringify( elementsMap.recipeIngredientsList));
 	formdata.append("description",elementsMap.description);
 	
@@ -16,7 +22,7 @@ function createRecipe() {
 
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			window.location = this.responseText;
+			//window.location = this.responseText;
 		}
 	};
 

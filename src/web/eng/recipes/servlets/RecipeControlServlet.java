@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -19,6 +20,11 @@ import javax.servlet.http.Part;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import web.eng.recipes.models.Ingredient;
+import web.eng.recipes.models.Recipe;
+import web.eng.recipes.models.Recipe_ingredient;
+import web.eng.recipes.models.User;
 
 @WebServlet("/RecipeControlServlet")
 @MultipartConfig
@@ -39,57 +45,58 @@ public class RecipeControlServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String title = request.getParameter("title");
-		String category = request.getParameter("category");
-		String description = request.getParameter("description");
+		List<Recipe_ingredient> recipeIngredList = new ArrayList<>();
+		Recipe recipe = new Recipe();
+
+		User user = new User();
+		user.setUserName(request.getParameter("username"));
+		recipe.setCreatingUser(user);
+
+		List<Part> images = new ArrayList<>(); //images[0] is primary img
+		if (request.getPart("primary_img").getContentType().startsWith("image/")) {
+			images.add(0, request.getPart("primary_img"));
+		}
 		
+
+		if (request.getPart("secondary_img_1").getContentType().startsWith("image/")) {
+			images.add(1,request.getPart("secondary_img_1"));
+		}
+		if (request.getPart("secondary_img_2").getContentType().startsWith("image/")) {
+			images.add(2,request.getPart("secondary_img_2"));
+		}
+		if (request.getPart("secondary_img_3").getContentType().startsWith("image/")) {
+			images.add(3,request.getPart("secondary_img_3"));
+		}
+		if (request.getPart("secondary_img_4").getContentType().startsWith("image/")) {
+			images.add(4,request.getPart("secondary_img_4"));
+		}
 		
+		recipe.setTitle(request.getParameter("title"));
+		recipe.setCategory(request.getParameter("category"));
+		recipe.setDescription(request.getParameter("description"));
+
 		JSONArray jArr = null;
+
 		try {
 			jArr = new JSONArray(request.getParameter("recie_ingredients"));
-			JSONObject obj=jArr.getJSONObject(0);
-			String ingredient = obj.getString("ingredient");
+			for (int index = 0; index < jArr.length(); index++) {
+				JSONObject obj = jArr.getJSONObject(index);
+				Ingredient ingredient = new Ingredient();
+				ingredient.setName(obj.getString("ingredient"));
+				recipeIngredList.get(index).setIngredient(ingredient);
+				recipeIngredList.get(index).setQuantity(obj.getInt("quantity"));
+				recipeIngredList.get(index).setUnits(obj.getString("units"));
+			}
+
+			recipe.setRecipe_ingredients(recipeIngredList);
+
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		Part img = request.getPart("primary_img");
 
-		writeImg(img, title, "primary_img");
+		System.out.println(" ss");
 
-		System.out.println(title);
-	}
-
-	private String writeImg(Part img, String title, String imgName) throws IOException{
-		OutputStream out = null;
-		InputStream filecontent = null;
-		String directory="C:\\Users\\Stanislav\\Documents\\uni\\INfoVOrgan\\9\\";
-		String name=imgName+".png";
-		
-		new File(directory+title).mkdirs();
-		
-		String pathToDir=directory+title+"\\";
-		String imgPath = pathToDir + name;
-
-		try {
-			out = new FileOutputStream(new File(imgPath));
-			filecontent = img.getInputStream();
-
-			int read = 0;
-			//final byte[] bytes = new byte[1024];
-
-			while ((read = filecontent.read()) != -1) {
-				out.write(read);
-			}
-			
-			return imgPath;
-		} catch (FileNotFoundException e) {
-			return "";
-		}finally{
-			out.close();
-		}
 	}
 
 }

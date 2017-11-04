@@ -13,7 +13,7 @@ public class Dao {
 
 	private final String URL = "jdbc:mysql://localhost:3306/recipes_app";
 	private final String USER = "root";
-	private final String PASS = "123";
+	private final String PASS = "";
 
 	protected void open() {
 		try {

@@ -6,6 +6,7 @@ import java.util.List;
 public class Recipe {
 
 	private long id;
+	private String title;
 	private String description;
 	private Date date;
 	private String category;
@@ -68,6 +69,12 @@ public class Recipe {
 	}
 	public void setRecipe_ingredients(List<Recipe_ingredient> recipe_ingredients) {
 		this.recipe_ingredients = recipe_ingredients;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
 	
