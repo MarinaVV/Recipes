@@ -50,9 +50,11 @@ public class RecipeServiceImpl implements RecipeService {
 			}
 		}
 		
-		recipeDao.createRecipe(recipe,imgPaths);
-
-		return "SUCCESS";
+		if(recipeDao.createRecipe(recipe,imgPaths)) {
+			return "RECIPE_CREATED";
+		}else {
+			return "ERROR";
+		}
 	}
 
 	private String writeImg(Part img, String title, String imgName) throws IOException {

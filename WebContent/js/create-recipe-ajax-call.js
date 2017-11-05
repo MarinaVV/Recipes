@@ -5,6 +5,7 @@ function createRecipe() {
 	var action = "create_recipe";
 	var formdata = new FormData();
 	
+	formdata.append("action",action);
 	formdata.append("title", elementsMap.title);
 	formdata.append("category", elementsMap.category);
 	formdata.append("username", sessionStorage.getItem('uname'));
@@ -22,7 +23,7 @@ function createRecipe() {
 
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			//window.location = this.responseText;
+			var response = this.responseText;
 		}
 	};
 
@@ -46,7 +47,7 @@ function getElementsValues() {
 
 	elementsMap.title = document.getElementById("title_input").value;
 	elementsMap.category = document.getElementById("category_select").value;
-	elementsMap.description = document.getElementById("description_input").innerHTML;
+	elementsMap.description = document.getElementById("description_input").value;
 
 	elementsMap.primary_img = document.getElementById("primary_img").files[0];
 	var secondary_img_list = [];

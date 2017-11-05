@@ -5,14 +5,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import web.eng.recipes.business_services.RecipeServiceImpl;
 import web.eng.recipes.models.Recipe;
+import web.eng.recipes.models.Recipe_ingredient;
 import web.eng.recipes.models.User;
 import web.eng.recipes.utils.SQL;
 
 public class RecipeDaoImpl extends Dao implements RecipeDao {
 
-	private boolean isAutoCommit=true;
-	
+	private boolean isAutoCommit = true;
+
 	public Recipe getRecipeByTitle(String title) {
 
 		open();
@@ -63,7 +65,7 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 
 		try {
 			con.setAutoCommit(false);
-			isAutoCommit=false;
+			isAutoCommit = false;
 			stmt = con.prepareStatement(SQL.INSERT_RECIPE);
 
 			stmt.setString(1, recipe.getDescription());
@@ -73,46 +75,16 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 			stmt.execute();
 
 			Recipe newRecipe = getRecipeByTitle(recipe.getTitle());
-			// insertImage(recipe.getTitle(), imgPaths, (short)1, newRecipe.getId());
-
-			PreparedStatement stmtImg = null;
-			String sql = "INSERT INTO images ( `img_path`, `recipe_id`, `is_primary` ) VALUES ";
-			///////////////////////////////////////////////////
-			// change the insert query depending on number of images
-			for (int index = 0; index < imgPaths.size(); index++) {
-				if (index < imgPaths.size() - 1) {
-					sql += "(?,?,?),";
-				} else {
-					sql += "(?,?,?)";
-				}
-
-			}
-
-			stmtImg = con.prepareStatement(sql);
-
-			stmtImg.setString(1, imgPaths.get(0));
-			stmtImg.setLong(2, newRecipe.getId());
-			stmtImg.setShort(3, (short) 1);
-
-			int indexNumber = 3;
-			for (int index = 1; index < imgPaths.size(); index++) {
-				indexNumber++;
-				stmtImg.setString(indexNumber, imgPaths.get(index));
-				indexNumber++;
-				stmtImg.setLong(indexNumber, newRecipe.getId());
-				indexNumber++;
-				stmtImg.setShort(indexNumber, (short) 0);
-			}
-
-			stmtImg.execute();
-
-			//////////////////////
+			insertImage(imgPaths, (short) 1, newRecipe.getId());
+			
+			insertRecipeIngredients(recipe.getRecipe_ingredients(),newRecipe.getId());
 
 			con.commit();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		} finally {
 			try {
 				if (stmt != null) {
@@ -124,10 +96,61 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 			close();
 		}
 
-		return false;
+		return true;
 	}
 
-	public void insertImage(String recipeTitle, List<String> imgPaths, Short isPrimary, Long recipe_id) {
+	public void insertRecipeIngredients(List<Recipe_ingredient> recipe_ingredients, Long recipe_id) {
+		open();
+		PreparedStatement stmt = null;
+		String sql = "INSERT INTO recipe_ingredients (`recipe_id`, `ingredient`, `quantity`, `units` ) VALUES ";
+
+		// change the insert query depending on number of ingredients
+		for (int index = 0; index < recipe_ingredients.size(); index++) {
+			if (index < recipe_ingredients.size() - 1) {
+				sql += "(?,?,?,?),";
+			} else {
+				sql += "(?,?,?,?)";
+			}
+
+		}
+
+		try {
+			stmt = con.prepareStatement(sql);
+
+			int indexNumber = 0;
+			for (int index = 0; index < recipe_ingredients.size(); index++) {
+				indexNumber++;
+				stmt.setLong(indexNumber, recipe_id);
+				indexNumber++;
+				stmt.setString(indexNumber, recipe_ingredients.get(index).getIngredient().getName());
+				indexNumber++;
+				stmt.setInt(indexNumber, recipe_ingredients.get(index).getQuantity());
+				indexNumber++;
+				stmt.setString(indexNumber, recipe_ingredients.get(index).getUnits());
+			}
+
+			stmt.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (isAutoCommit) {
+					close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void insertImage(List<String> imgPaths, Short isPrimary, Long recipe_id) {
 		open();
 		PreparedStatement stmt = null;
 		String sql = "INSERT INTO images ( `img_path`, `recipe_id`, `is_primary` ) VALUES ";
@@ -169,9 +192,11 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 				if (stmt != null) {
 					stmt.close();
 				}
-				/*
-				 * if (!con.getAutoCommit()) { close(); }
-				 */
+
+				if (isAutoCommit) {
+					close();
+				}
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
