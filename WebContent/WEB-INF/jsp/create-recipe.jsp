@@ -31,7 +31,12 @@
 		<div class="body_container">
 			<div class="title_category_div">
 				<input id="title_input" type="text" value="Add Title" onclick="deleteHintValueTitle(title_input)" onblur="setHintValueTitle(title_input)">
-				<select id="category_select"></select> 
+				<select id="category_select">
+					<option>Breakfast</option>
+					<option>Lunch</option>
+					<option>Dinner</option>
+					<option>Snack</option>
+				</select> 
 			</div>
 			
 			<div class="ingredients_images_div">
