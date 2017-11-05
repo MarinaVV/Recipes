@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,29 +17,48 @@ import web.eng.recipes.models.Recipe;
 import web.eng.recipes.models.Recipe_ingredient;
 
 public class RecipeServiceImpl implements RecipeService {
+
+	@Inject
+	RecipeDao recipeDao;
 	
-	@Inject RecipeDao recipeDao;
+
 	
+	public static final String IMAGE_FOLDER = "E:\\11uni\\7\\web\\Images\\";
+
 	public String createRecipe(Recipe recipe, List<Part> images) {
-		
-		
-		if(recipeIngredList == null || recipeIngredList.isEmpty()) {
+
+		List<String> imgPaths = new ArrayList<>();
+
+		if (recipe == null) {
+			return "ERROR";
+		}
+		if (recipe.getRecipe_ingredients() == null || recipe.getRecipe_ingredients().isEmpty()) {
 			return "NO_INGREDIENTS";
 		}
-		if(recipeDao.checkIfRecipeNameExist(title)) {
+		if (recipeDao.getRecipeByTitle(recipe.getTitle())!=null) {
 			return "DUPLICATE_TITLE";
 		}
+		if (images != null && !images.isEmpty()) {
+			try {
+				imgPaths.add(0, writeImg(images.get(0), recipe.getTitle(), "primary_img"));
+				for(int index=1;index<images.size();index++) {
+					imgPaths.add(index, writeImg(images.get(index), recipe.getTitle(), "secondary_img_"+index));
+				}
+				
+			} catch (IOException ex) {
+				return "IMAGES_ERROR";
+			}
+		}
 		
-		return "";
+		recipeDao.createRecipe(recipe,imgPaths);
+
+		return "SUCCESS";
 	}
-	
-	
-	
 
 	private String writeImg(Part img, String title, String imgName) throws IOException {
 		OutputStream out = null;
 		InputStream filecontent = null;
-		String directory = "C:\\Users\\Stanislav\\Documents\\uni\\INfoVOrgan\\9\\";
+		String directory = IMAGE_FOLDER;
 		String name = imgName + ".png";
 
 		new File(directory + title).mkdirs();
@@ -59,10 +79,10 @@ public class RecipeServiceImpl implements RecipeService {
 
 			return imgPath;
 		} catch (FileNotFoundException e) {
-			return "";
+			return null;
 		} finally {
 			out.close();
 		}
 	}
-	
+
 }

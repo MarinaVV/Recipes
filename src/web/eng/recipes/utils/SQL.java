@@ -1,12 +1,8 @@
 package web.eng.recipes.utils;
 
-public class SQL {
+public  class SQL {
 
-	
-/*	INSERT INTO `recipes`(`description`,`name`, `category`, `user_id`)
-	SELECT 
-		"descr", "name","category", id 
-	FROM users WHERE `username`="sf"*/
+	public static final String INSERT_RECIPE = "INSERT INTO `recipes`(`description`,`title`, `category`, `user_id`) SELECT  ?, ?,?, id FROM users WHERE `username`=?";
 	
 	
 }

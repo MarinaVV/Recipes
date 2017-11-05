@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import web.eng.recipes.business_services.RecipeService;
 import web.eng.recipes.models.Ingredient;
 import web.eng.recipes.models.Recipe;
 import web.eng.recipes.models.Recipe_ingredient;
@@ -30,6 +32,8 @@ import web.eng.recipes.models.User;
 @MultipartConfig
 public class RecipeControlServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	@Inject RecipeService recipeService;
 
 	public RecipeControlServlet() {
 		super();
@@ -53,21 +57,20 @@ public class RecipeControlServlet extends HttpServlet {
 		recipe.setCreatingUser(user);
 
 		List<Part> images = new ArrayList<>(); //images[0] is primary img
-		if (request.getPart("primary_img").getContentType().startsWith("image/")) {
+		if (request.getPart("primary_img").getContentType()!=null && request.getPart("primary_img").getContentType().startsWith("image/")) {
 			images.add(0, request.getPart("primary_img"));
 		}
-		
 
-		if (request.getPart("secondary_img_1").getContentType().startsWith("image/")) {
+		if (request.getPart("secondary_img_1").getContentType()!=null && request.getPart("secondary_img_1").getContentType().startsWith("image/")) {
 			images.add(1,request.getPart("secondary_img_1"));
 		}
-		if (request.getPart("secondary_img_2").getContentType().startsWith("image/")) {
+		if (request.getPart("secondary_img_2").getContentType()!=null && request.getPart("secondary_img_2").getContentType().startsWith("image/")) {
 			images.add(2,request.getPart("secondary_img_2"));
 		}
-		if (request.getPart("secondary_img_3").getContentType().startsWith("image/")) {
+		if (request.getPart("secondary_img_3").getContentType()!=null && request.getPart("secondary_img_3").getContentType().startsWith("image/")) {
 			images.add(3,request.getPart("secondary_img_3"));
 		}
-		if (request.getPart("secondary_img_4").getContentType().startsWith("image/")) {
+		if (request.getPart("secondary_img_4").getContentType()!=null && request.getPart("secondary_img_4").getContentType().startsWith("image/")) {
 			images.add(4,request.getPart("secondary_img_4"));
 		}
 		
@@ -83,6 +86,7 @@ public class RecipeControlServlet extends HttpServlet {
 				JSONObject obj = jArr.getJSONObject(index);
 				Ingredient ingredient = new Ingredient();
 				ingredient.setName(obj.getString("ingredient"));
+				recipeIngredList.add(index,new Recipe_ingredient());
 				recipeIngredList.get(index).setIngredient(ingredient);
 				recipeIngredList.get(index).setQuantity(obj.getInt("quantity"));
 				recipeIngredList.get(index).setUnits(obj.getString("units"));
@@ -94,6 +98,8 @@ public class RecipeControlServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		String responseMsg = recipeService.createRecipe(recipe, images);
 
 		System.out.println(" ss");
 
