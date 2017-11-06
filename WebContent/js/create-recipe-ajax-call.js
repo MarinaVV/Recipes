@@ -41,6 +41,50 @@ function createRecipe() {
 	};*/
 }
 
+function saveUnknownIngredients(){
+	var optionElements = document.getElementsByName("options");
+	var allIngredientsList=[];
+	
+	//get all ingredients
+	for(var index=0;index<optionElements.length;index++){
+		allIngredientsList.push(optionElements[index].value);
+	}
+	
+	var ingredientElements = document.getElementsByName("ingredient_input");
+	var ingrediensList = [];
+	
+	//get the ingredients which will be inserted
+	for(var index=0;index<ingredientElements.length;index++){
+		ingrediensList.push(optionElements[index].value);
+	}
+	
+	var missingIngredients = [];
+	
+	//get the ingredients that are not in the database
+	for(var index=0;index<ingrediensList.length;index++){
+		
+		if(allIngredientsList.indexOf(ingredientsList[index]) == -1){
+			missingIngredients.push(ingredientsList[index]);
+		}
+	}
+
+	var xhttp = new XMLHttpRequest();
+	var action = "save_ingredients";
+	var formdata = new FormData();
+	
+	formdata.append("action",action);
+	formdata.append("ingredients", JSON.stringify( missingIngredients));
+	
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var response = this.responseText;
+		}
+	};
+
+	xhttp.open("POST", "RecipeControlServlet", true);
+	xhttp.send(formdata);
+}
+
 function getElementsValues() {
 
 	var elementsMap = {};

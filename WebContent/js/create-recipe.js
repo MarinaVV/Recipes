@@ -78,17 +78,6 @@ function previewImg(input) {
 	}
 }
 
-function saveUnknownIngredients(){
-	var optionElements = document.getElementsByName("options");
-	var allIngredientsList=[];
-	
-	for(var index=0;index<optionElements.length;index++){
-		allIngredientsList.push(optionElements[index]);
-	}
-	
-	var 
-}
-
 function deleteHintValueIngredient(element) {
 	if (element.value == "Add ingredient") {
 		element.setAttribute("value", "")
