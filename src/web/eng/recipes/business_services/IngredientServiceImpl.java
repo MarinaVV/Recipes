@@ -23,5 +23,12 @@ public class IngredientServiceImpl implements IngredientService {
 		}
 		
 	}
+	
+	public void saveIngredients(List<String> ingredientsList) {
+		
+		if(ingredientsList!=null && !ingredientsList.isEmpty()) {
+			ingredientDao.insertIngredients(ingredientsList);
+		}
+	}
 
 }

@@ -51,17 +51,17 @@ function saveUnknownIngredients(){
 	}
 	
 	var ingredientElements = document.getElementsByName("ingredient_input");
-	var ingrediensList = [];
+	var ingredientsList = [];
 	
 	//get the ingredients which will be inserted
 	for(var index=0;index<ingredientElements.length;index++){
-		ingrediensList.push(optionElements[index].value);
+		ingredientsList.push(optionElements[index].value);
 	}
 	
 	var missingIngredients = [];
 	
 	//get the ingredients that are not in the database
-	for(var index=0;index<ingrediensList.length;index++){
+	for(var index=0;index<ingredientsList.length;index++){
 		
 		if(allIngredientsList.indexOf(ingredientsList[index]) == -1){
 			missingIngredients.push(ingredientsList[index]);

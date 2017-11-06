@@ -68,7 +68,9 @@ public class RecipeControlServlet extends HttpServlet {
 		case "create_recipe":
 			response.getWriter().write(createRecipeAction(request));
 			break;
-
+		case "save_ingredients":
+			saveIngredientsAction(request);
+			break;
 		}
 
 	}
@@ -138,9 +140,24 @@ public class RecipeControlServlet extends HttpServlet {
 	private String getAllIngredientsAction() {
 
 		List<String> ingredientNames = ingredientService.getAllIngredientNames();
-
 		return new JSONArray(ingredientNames).toString();
 
+	}
+	
+	private void saveIngredientsAction(HttpServletRequest request) {
+		
+		JSONArray jArr = null;
+
+		try {
+			jArr = new JSONArray(request.getParameter("ingredients"));
+			List<String> ingredientsList = new ArrayList<>();
+			
+			ingredientService.saveIngredients(ingredientsList);
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

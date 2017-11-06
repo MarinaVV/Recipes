@@ -116,7 +116,7 @@
 			
 			<div class="last_buttons_div">
 				<button>Review</button>
-				<button onclick="createRecipe()">Create recipe</button>
+				<button onclick="saveUnknownIngredients();createRecipe()">Create recipe</button>
 			</div>
 		</div>
 	</div>
