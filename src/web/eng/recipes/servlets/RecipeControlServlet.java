@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import web.eng.recipes.business_services.IngredientService;
 import web.eng.recipes.business_services.RecipeService;
 import web.eng.recipes.models.Ingredient;
 import web.eng.recipes.models.Recipe;
@@ -36,6 +37,9 @@ public class RecipeControlServlet extends HttpServlet {
 	@Inject
 	RecipeService recipeService;
 
+	@Inject
+	IngredientService ingredientService;
+
 	public RecipeControlServlet() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -43,20 +47,29 @@ public class RecipeControlServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		String action = request.getParameter("action");
+		switch (action) {
+		case "get_ingredients_list":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(getAllIngredientsAction());
+			break;
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String action = request.getParameter("action");
 
-		switch(action) {
-		case "create_recipe": 
+		switch (action) {
+		case "create_recipe":
 			response.getWriter().write(createRecipeAction(request));
+			break;
+
 		}
-		
 
 	}
 
@@ -120,6 +133,14 @@ public class RecipeControlServlet extends HttpServlet {
 		String responseMsg = recipeService.createRecipe(recipe, images);
 
 		return responseMsg;
+	}
+
+	private String getAllIngredientsAction() {
+
+		List<String> ingredientNames = ingredientService.getAllIngredientNames();
+
+		return new JSONArray(ingredientNames).toString();
+
 	}
 
 }

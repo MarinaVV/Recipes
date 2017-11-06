@@ -11,10 +11,15 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/create-recipe.css">
  
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/nav-bar.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/create-recipe.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/create-recipe-ajax-call.js"></script>
 </head>
 <body>
+	<script type="text/javascript">
+		window.onload = getListIngredients();
+	</script>
+
 	<div class="outer_container">
 		<p>Create rec</p>
 		
@@ -100,8 +105,6 @@
 					</div>
 					<button id=add_button onclick="add_ingredient()">+</button>	
 					<datalist id="suggestions">
-						 <option value="Chrome">
-  						 <option value="Firefox">
 					</datalist>
 					
 				</div>
