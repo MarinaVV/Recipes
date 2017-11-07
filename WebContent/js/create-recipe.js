@@ -17,7 +17,7 @@ function add_ingredient() {
 			+ "input_ingredient_" + countIngredients + ")");
 	ingredientInput.setAttribute("onblur", "setHintValueIngredient("
 			+ "input_ingredient_" + countIngredients + ")");
-	unitsInput.setAttribute("list", "suggestionsIngredients");
+	ingredientInput.setAttribute("list", "suggestionsIngredients");
 
 	var quantityInput = document.createElement("input");
 	quantityInput.setAttribute("type", "text");

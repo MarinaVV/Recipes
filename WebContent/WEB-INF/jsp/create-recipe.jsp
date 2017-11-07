@@ -17,7 +17,6 @@
 </head>
 <body>
 	<script type="text/javascript">
-		window.onload = getListIngredients();
 		window.onload = function(){
 			getListIngredients();
 			setUnitsSuggestions();
