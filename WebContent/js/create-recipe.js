@@ -17,6 +17,7 @@ function add_ingredient() {
 			+ "input_ingredient_" + countIngredients + ")");
 	ingredientInput.setAttribute("onblur", "setHintValueIngredient("
 			+ "input_ingredient_" + countIngredients + ")");
+	unitsInput.setAttribute("list", "suggestionsIngredients");
 
 	var quantityInput = document.createElement("input");
 	quantityInput.setAttribute("type", "text");
@@ -39,7 +40,7 @@ function add_ingredient() {
 			+ countIngredients + ")");
 	unitsInput.setAttribute("onblur", "setHintValueUnits(" + "unit_input_"
 			+ countIngredients + ")");
-	unitsInput.setAttribute("list", "suggestions");
+	unitsInput.setAttribute("list", "suggestionsUnits");
 
 	var deleteButton = document.createElement("button");
 	deleteButton.setAttribute("id", "delete_button_" + countIngredients);
@@ -59,6 +60,19 @@ function add_ingredient() {
 function delete_ingredient(divId) {
 
 	document.getElementById("ingredients").removeChild(divId);
+}
+
+function setUnitsSuggestions(){
+	var unitsDatalist = document.getElementById("suggestionsUnits");
+	
+	var unitsList =["kg","g","mg","tbsp.","tsp.","ml","l","pint"];
+	
+	for(var index=0;index<unitsList.length;index++){
+		var option = document.createElement("option");
+		option.setAttribute("value", unitsList[index]);
+		
+		unitsDatalist.appendChild(option);
+	}
 }
 
 function previewImg(input) {

@@ -23,7 +23,7 @@ public class RecipeServiceImpl implements RecipeService {
 	
 
 	
-	public static final String IMAGE_FOLDER = "E:\\11uni\\7\\web\\Images\\";
+	public static final String IMAGE_FOLDER = "C:\\Users\\Stanislav\\Documents\\uni\\WebIngPlaning\\images\\";
 
 	public String createRecipe(Recipe recipe, List<Part> images) {
 

@@ -75,9 +75,11 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 			stmt.execute();
 
 			Recipe newRecipe = getRecipeByTitle(recipe.getTitle());
-			insertImage(imgPaths, (short) 1, newRecipe.getId());
-			
-			insertRecipeIngredients(recipe.getRecipe_ingredients(),newRecipe.getId());
+			if (imgPaths != null && !imgPaths.isEmpty()) {
+				insertImage(imgPaths, (short) 1, newRecipe.getId());
+			}
+
+			insertRecipeIngredients(recipe.getRecipe_ingredients(), newRecipe.getId());
 
 			con.commit();
 

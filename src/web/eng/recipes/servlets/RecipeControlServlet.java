@@ -152,6 +152,10 @@ public class RecipeControlServlet extends HttpServlet {
 			jArr = new JSONArray(request.getParameter("ingredients"));
 			List<String> ingredientsList = new ArrayList<>();
 			
+			for(int index=0;index<jArr.length();index++){
+				ingredientsList.add(jArr.getString(index));
+			}
+			
 			ingredientService.saveIngredients(ingredientsList);
 
 		} catch (JSONException e) {

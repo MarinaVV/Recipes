@@ -8,7 +8,7 @@ function getListIngredients() {
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var response = JSON.parse(this.responseText);
-			var suggestionsElement = document.getElementById("suggestions");
+			var suggestionsElement = document.getElementById("suggestionsIngredients");
 			
 			for(var index=0;index<response.length;index++){
 				var option = document.createElement("option");
