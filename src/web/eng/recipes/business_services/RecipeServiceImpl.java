@@ -69,9 +69,11 @@ public class RecipeServiceImpl implements RecipeService {
 		List<Recipe> foundRecipes = new ArrayList<>();
 
 		foundRecipes = recipeDao.getRecipesPrimaryImageByUsername(username);
+		int index = 0;
 		for (Recipe recipe : foundRecipes) {
-			String img = readImg(recipe.getImages().get(0).getImgPath());
-			recipe.getImages().get(0).setImage(img);
+			String img = readImg(recipe.getImages().get(index).getImgPath());
+			recipe.getImages().get(index).setImage(img);
+			index++;
 		}
 		return foundRecipes;
 
