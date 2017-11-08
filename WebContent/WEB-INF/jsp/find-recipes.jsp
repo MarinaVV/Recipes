@@ -64,15 +64,18 @@
 					<label class="category">Dinner</label>
 					<label class="category">Snack</label>
 				</div>
+				<hr>
 				<div class="results">
 					<div class="result_row">
 						<div class="left_result">
+							<label>Title</label>
 						</div>
 						<div class="right_result">
+							<label>Title</label>
 						</div>
 					</div>
 				</div>
-				<hr>
+				
 			</div>
 		</div>
 	</div>
