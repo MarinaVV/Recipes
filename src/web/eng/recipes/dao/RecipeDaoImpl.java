@@ -3,9 +3,11 @@ package web.eng.recipes.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import web.eng.recipes.business_services.RecipeServiceImpl;
+import web.eng.recipes.models.Image;
 import web.eng.recipes.models.Recipe;
 import web.eng.recipes.models.Recipe_ingredient;
 import web.eng.recipes.models.User;
@@ -203,5 +205,66 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public List<Recipe> getRecipesPrimaryImageByUsername(String username){
+		open();
+		PreparedStatement stmt = null;
+		String sql = SQL.GET_RECIPES_IMAGES_BY_USERNAME;
+		ResultSet rs;
+		List<Recipe> foundRecipes = new ArrayList<>();
+
+		try {
+			stmt = con.prepareStatement(sql);
+
+			stmt.setString(1, username);
+			rs = stmt.executeQuery();
+			
+			while(rs.next()){
+				Recipe recipe = new Recipe();
+				recipe.setCategory(rs.getString("category"));
+				recipe.setDate(rs.getDate("date"));
+				recipe.setDescription(rs.getString("description"));
+				recipe.setId(rs.getLong("recipe_id"));
+				recipe.setTitle(rs.getString("title"));
+				
+				User user=new User();
+				user.setId(rs.getLong("user_id"));
+				user.setUserName(rs.getString("username"));
+				recipe.setCreatingUser(user);
+				
+				Image primary_image = new Image();
+				primary_image.setId(rs.getLong("img_id"));
+				primary_image.setImgPath(rs.getString("img_path"));
+				primary_image.setIs_primary(rs.getShort("is_primary"));
+				
+				List<Image> images= new ArrayList<>();
+				images.add(0,primary_image);
+				recipe.setImages(images);
+				
+				foundRecipes.add(recipe);
+			}
+			
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (isAutoCommit) {
+					close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return foundRecipes;
 	}
 }

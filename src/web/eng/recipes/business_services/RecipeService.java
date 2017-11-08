@@ -10,4 +10,5 @@ import web.eng.recipes.models.Recipe_ingredient;
 public interface RecipeService {
 
 	String createRecipe(Recipe recipe, List<Part> images);
+	List<Recipe> searchRecipesPrimaryImageByUsername(String username);
 }

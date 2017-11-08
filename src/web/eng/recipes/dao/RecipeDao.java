@@ -8,5 +8,6 @@ public interface RecipeDao {
 
 	Recipe getRecipeByTitle(String title);
 	boolean createRecipe(Recipe recipe,List<String> imgPaths);
+	List<Recipe> getRecipesPrimaryImageByUsername(String username);
 	
 }

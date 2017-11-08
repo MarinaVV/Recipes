@@ -100,6 +100,10 @@
 	color: white;
 }
 
+.results {
+	overflow: auto;
+}
+
 .result_row {
 	margin: 0;
 	padding: 0 7px;
@@ -110,11 +114,12 @@
 	width: 49%;
 	cursor: pointer;
 	float: left;
-	padding-top: 35%;
+	height: 300px;
 	border: 1px ridge gray;
 	text-align: center;
 	background-repeat: no-repeat;
-	background-size: 100%;
+	background-size: 100% 100%;
+	border: 1px ridge gray;
 }
 
 .right_result {
@@ -122,7 +127,7 @@
 	margin-left: 50.63%;
 	padding-left: 5px;
 	padding-right: 5px;
-	padding-top: 35%;
+	height: 300px;
 	border: 1px ridge gray;
 	text-align: center;
 }

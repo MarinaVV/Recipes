@@ -71,6 +71,10 @@ public class RecipeControlServlet extends HttpServlet {
 		case "save_ingredients":
 			saveIngredientsAction(request);
 			break;
+		case "search_recipe_username":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(searchRecipesPrimaryImageByUsername(request));
 		}
 
 	}
@@ -162,6 +166,16 @@ public class RecipeControlServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private String searchRecipesPrimaryImageByUsername(HttpServletRequest request){
+		
+		String username = request.getParameter("username");
+		
+		List<Recipe> foundIngredients = recipeService.searchRecipesPrimaryImageByUsername(username);
+		
+		return new JSONArray(foundIngredients).toString();
+		
 	}
 
 }

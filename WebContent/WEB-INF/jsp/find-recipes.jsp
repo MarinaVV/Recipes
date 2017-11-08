@@ -12,7 +12,7 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/nav-bar.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/find-recipes.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/search-recipes.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/search-recipes-ajax-call.js"></script>
 </head>
 <body>
 
@@ -53,7 +53,7 @@
 					<button id=add_button onclick="add_ingredient()">+</button>
 				</div>
 				
-				<button id="search_button" onclick="search_recipes()">Search</button>			
+				<button id="search_button" onclick="search_recipe_U()">Search</button>			
 			</div>
 			
 			<div class="result_part">
@@ -67,7 +67,7 @@
 				<hr>
 				<div class="results">
 					<div class="result_row">
-						<div class="left_result">
+						<div class="left_result" id="left_result">
 							<label>Title</label>
 						</div>
 						<div class="right_result">
