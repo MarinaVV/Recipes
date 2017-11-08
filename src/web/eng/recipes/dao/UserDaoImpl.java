@@ -14,7 +14,7 @@ public class UserDaoImpl extends Dao implements UserDao {
 	public boolean createUser(User user) {
 
 		open();
-		PreparedStatement stmt;
+		PreparedStatement stmt=null;
 
 		try {
 			stmt = con.prepareStatement("INSERT INTO users (username, password) VALUES(?,?)");
@@ -29,7 +29,13 @@ public class UserDaoImpl extends Dao implements UserDao {
 			e.printStackTrace();
 			return false;
 		} finally {
-			System.out.println("vliza si");
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 			close();
 		}
 
@@ -40,7 +46,7 @@ public class UserDaoImpl extends Dao implements UserDao {
 
 		open();
 		User user;
-		PreparedStatement stmt;
+		PreparedStatement stmt=null;
 		ResultSet rs;
 
 		try {
@@ -61,6 +67,13 @@ public class UserDaoImpl extends Dao implements UserDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 			close();
 		}
 

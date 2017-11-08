@@ -13,9 +13,9 @@
 .search_part {
 	width: 17%;
 	height: 700px;
-	background: red;
 	float: left;
 	padding-top: 7px;
+	border: 1px ridge gray;
 }
 
 .search_part label {
@@ -34,14 +34,14 @@
 }
 
 .search_row input {
-	width:97%;
+	width: 97%;
 }
 
 .ingredient_lsit {
 	margin: 10px;
 	padding: 5px;
 	padding-bottom: 20px;
-	border: 1px solid white;
+	border: 1px solid gray;
 	overflow-y: auto;
 	max-height: 300px;
 }
@@ -52,11 +52,11 @@
 }
 
 .ingredient input {
-	width: 85%;
+	width: 80%;
 }
 
 .ingredient button {
-	margin-left: 4px;
+	margin-left: 5px;
 }
 
 #add_button {
@@ -78,6 +78,56 @@
 .result_part {
 	margin-left: 18%;
 	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 7px;
 	height: 700px;
-	background: black;
+	border: 1px ridge gray;
+}
+
+.category_bar {
+	background: gray;
+}
+
+.category_bar label {
+	display: inline-block;
+	width: 14%;
+	padding-left: 5%;
+	cursor: pointer;
+	font-size: 150%;
+}
+
+.category_bar label:hover {
+	color: white;
+}
+
+.result_row {
+	margin: 0;
+	padding: 0 7px;
+	overflow: hidden;
+}
+
+.left_result {
+	width: 49%;
+	cursor: pointer;
+	float: left;
+	padding-top: 35%;
+	border: 1px ridge gray;
+	text-align: center;
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+.right_result {
+	cursor: pointer;
+	margin-left: 50.63%;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 35%;
+	border: 1px ridge gray;
+	text-align: center;
+}
+
+.result_row label {
+	font-size: 250%;
+	background-color: red;
 }

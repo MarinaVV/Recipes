@@ -35,11 +35,4 @@ body {
 	padding: 8px 20px;
 }
 
-.button:hover{
-	background-color: #008000;
-}
 
-#response_text{
-	color:red;
-}
-}

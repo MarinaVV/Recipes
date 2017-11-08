@@ -11,9 +11,18 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/create-recipe.css">
  
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/nav-bar.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/create-recipe.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/create-recipe-ajax-call.js"></script>
 </head>
 <body>
+	<script type="text/javascript">
+		window.onload = function(){
+			getListIngredients();
+			setUnitsSuggestions();
+		}
+	</script>
+
 	<div class="outer_container">
 		<p>Create rec</p>
 		
@@ -29,8 +38,13 @@
 		<!--  BODY -->
 		<div class="body_container">
 			<div class="title_category_div">
-				<input id="title_input" type="text" value="Add Title">
-				<select id="category_select"></select> 
+				<input id="title_input" type="text" value="Add Title" onclick="deleteHintValueTitle(title_input)" onblur="setHintValueTitle(title_input)">
+				<select id="category_select">
+					<option>Breakfast</option>
+					<option>Lunch</option>
+					<option>Dinner</option>
+					<option>Snack</option>
+				</select> 
 			</div>
 			
 			<div class="ingredients_images_div">
@@ -83,29 +97,32 @@
 					<hr>
 					<div id="ingredients">
 						<div class="ingredient" id="div_ingredient_1">
-							<input class="ingredient_input" id="ingredient_input_1" type="text" name="ingredients_input" 
+							<input class="ingredient_input" id="ingredient_input_1" type="text" name="ingredient_input" list="suggestionsIngredients"
 							value="Add ingredient" onclick="deleteHintValueIngredient(ingredient_input_1)" onblur="setHintValueIngredient(ingredient_input_1)"><input 
-							class="quantity_input" id="quantity_input_1" type="text" name="quantity_input" value="Quantity"><input 
-							class="unit_input" id="unit_input_1" value="Units" name="units_input" list="suggestions"><button 
+							class="quantity_input" id="quantity_input_1" type="text" name="quantity_input" value="Quantity"
+							onclick="deleteHintValueQuantity(quantity_input_1)" onblur="setHintValueQuantity(quantity_input_1)"><input 
+							class="unit_input" id="unit_input_1" value="Units" name="units_input" list="suggestionsUnits"
+							onclick="deleteHintValueUnits(unit_input_1)" onblur="setHintValueUnits(unit_input_1)"><button 
 							class="delete_button" id="delete_button_1"  onclick="">-</button>
 						</div>		
 					</div>
 					<button id=add_button onclick="add_ingredient()">+</button>	
-					<datalist id="suggestions">
-						 <option value="Chrome">
-  						 <option value="Firefox">
+					
+					<datalist id="suggestionsIngredients">
+					</datalist>
+					<datalist id="suggestionsUnits">
 					</datalist>
 					
 				</div>
 			</div>
 			
 			<div class="description_div">
-				<textarea id="description_input" cols="40" rows="5"> Add Description</textarea>
+				<textarea id="description_input" cols="40" rows="5" onclick="deleteHintValueDescription(description_input)" onblur="setHintValueDescription(description_input)">Add Description</textarea>
 			</div>
 			
 			<div class="last_buttons_div">
 				<button>Review</button>
-				<button>Create recipe</button>
+				<button onclick="saveUnknownIngredients();createRecipe();">Create recipe</button>
 			</div>
 		</div>
 	</div>

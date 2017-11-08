@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class Dao {
 
-	Connection con;
+	protected Connection con;
 	private boolean isConnON = false;
 
 	private final String URL = "jdbc:mysql://localhost:3306/recipes_app";
@@ -16,12 +16,13 @@ public class Dao {
 	private final String PASS = "123";
 
 	protected void open() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
-		}
+
 		if (isConnON == false) {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException ex) {
+				ex.printStackTrace();
+			}
 			try {
 				con = DriverManager.getConnection(URL, USER, PASS);
 				isConnON = true;

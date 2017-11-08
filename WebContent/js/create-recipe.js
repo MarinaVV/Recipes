@@ -17,6 +17,7 @@ function add_ingredient() {
 			+ "input_ingredient_" + countIngredients + ")");
 	ingredientInput.setAttribute("onblur", "setHintValueIngredient("
 			+ "input_ingredient_" + countIngredients + ")");
+	ingredientInput.setAttribute("list", "suggestionsIngredients");
 
 	var quantityInput = document.createElement("input");
 	quantityInput.setAttribute("type", "text");
@@ -24,6 +25,10 @@ function add_ingredient() {
 	quantityInput.setAttribute("name", "quantity_input");
 	quantityInput.setAttribute("value", "Quantity");
 	quantityInput.setAttribute("class", "quantity_input");
+	quantityInput.setAttribute("onclick", "deleteHintValueQuantity("
+			+ "quantity_input_" + countIngredients + ")");
+	quantityInput.setAttribute("onblur", "setHintValueQuantity("
+			+ "quantity_input_" + countIngredients + ")");
 
 	var unitsInput = document.createElement("input");
 	unitsInput.setAttribute("type", "text");
@@ -31,6 +36,11 @@ function add_ingredient() {
 	unitsInput.setAttribute("name", "units_input");
 	unitsInput.setAttribute("value", "Units");
 	unitsInput.setAttribute("class", "unit_input");
+	unitsInput.setAttribute("onclick", "deleteHintValueUnits(" + "unit_input_"
+			+ countIngredients + ")");
+	unitsInput.setAttribute("onblur", "setHintValueUnits(" + "unit_input_"
+			+ countIngredients + ")");
+	unitsInput.setAttribute("list", "suggestionsUnits");
 
 	var deleteButton = document.createElement("button");
 	deleteButton.setAttribute("id", "delete_button_" + countIngredients);
@@ -52,6 +62,19 @@ function delete_ingredient(divId) {
 	document.getElementById("ingredients").removeChild(divId);
 }
 
+function setUnitsSuggestions(){
+	var unitsDatalist = document.getElementById("suggestionsUnits");
+	
+	var unitsList =["kg","g","mg","tbsp.","tsp.","ml","l","pint"];
+	
+	for(var index=0;index<unitsList.length;index++){
+		var option = document.createElement("option");
+		option.setAttribute("value", unitsList[index]);
+		
+		unitsDatalist.appendChild(option);
+	}
+}
+
 function previewImg(input) {
 
 	if (input.files && input.files[0]) {
@@ -65,7 +88,7 @@ function previewImg(input) {
 		// read the image file as a data URL.
 		reader.readAsDataURL(input.files[0]);
 	} else {
-		document.getElementById("previewHolder").src = "";	
+		document.getElementById("previewHolder").src = "";
 	}
 }
 
@@ -78,5 +101,53 @@ function deleteHintValueIngredient(element) {
 function setHintValueIngredient(element) {
 	if (element.value.trim() == "") {
 		element.setAttribute("value", "Add ingredient");
+	}
+}
+
+function deleteHintValueQuantity(element) {
+	if (element.value == "Quantity") {
+		element.setAttribute("value", "")
+	}
+}
+
+function setHintValueQuantity(element) {
+	if (element.value.trim() == "") {
+		element.setAttribute("value", "Quantity");
+	}
+}
+
+function deleteHintValueUnits(element) {
+	if (element.value == "Units") {
+		element.setAttribute("value", "")
+	}
+}
+
+function setHintValueUnits(element) {
+	if (element.value.trim() == "") {
+		element.setAttribute("value", "Units");
+	}
+}
+
+function deleteHintValueTitle(element) {
+	if (element.value == "Add Title") {
+		element.setAttribute("value", "")
+	}
+}
+
+function setHintValueTitle(element) {
+	if (element.value.trim() == "") {
+		element.setAttribute("value", "Add Title");
+	}
+}
+
+function deleteHintValueDescription(element) {
+	if (element.innerHTML == "Add Description") {
+		element.innerHTML = "";
+	}
+}
+
+function setHintValueDescription(element) {
+	if (element.innerHTML == "") {
+		element.innerHTML == "Add Description";
 	}
 }

@@ -39,11 +39,7 @@
 					<label>Recipe name: </label> 
 					<input id="recipe_name" type="text" name="recipe_name">
 				</div>
-				
-				<div class="search_row">
-					<label>Categorie: </label> 
-					<input id="categorie" type="text" name="categorie">
-				</div>
+		
 				
 				
 				<div class="ingredient_lsit">
@@ -61,7 +57,25 @@
 			</div>
 			
 			<div class="result_part">
-			fff
+				<div class="category_bar">
+					<label class="category">All</label>
+					<label class="category">Breakfast</label>
+					<label class="category">Lunch</label>
+					<label class="category">Dinner</label>
+					<label class="category">Snack</label>
+				</div>
+				<hr>
+				<div class="results">
+					<div class="result_row">
+						<div class="left_result">
+							<label>Title</label>
+						</div>
+						<div class="right_result">
+							<label>Title</label>
+						</div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</div>
