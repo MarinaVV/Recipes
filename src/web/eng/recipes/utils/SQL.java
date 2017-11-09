@@ -15,8 +15,8 @@ public  class SQL {
 																	+ "	users.id AS user_id, "
 																	+ "	users.username "
 																+ "FROM `images` "
-																	+ "	Inner JOIN `recipes` ON images.recipe_id=recipes.id 	"
-																	+ " Inner JOIN `users` ON recipes.user_id=users.id "
-																+ "WHERE users.username=? AND images.is_primary=1";
+																	+ "	RIGHT OUTER JOIN `recipes` ON images.recipe_id=recipes.id AND images.is_primary<>0"
+																	+ " INNER JOIN `users` ON recipes.user_id=users.id "
+																+ "WHERE users.username=?";
 	
 }

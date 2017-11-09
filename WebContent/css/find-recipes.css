@@ -100,13 +100,14 @@
 	color: white;
 }
 
-.results {
+#results {
 	overflow: auto;
+	height: 650px;
 }
 
 .result_row {
-	margin: 0;
-	padding: 0 7px;
+	margin: 10px 0;
+	padding: 5px 7px;
 	overflow: hidden;
 }
 
@@ -130,9 +131,16 @@
 	height: 300px;
 	border: 1px ridge gray;
 	text-align: center;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 
 .result_row label {
-	font-size: 250%;
+	display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 90%;
+	font-size: 200%;
 	background-color: red;
+	margin:10px auto;
 }

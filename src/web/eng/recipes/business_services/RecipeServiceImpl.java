@@ -69,11 +69,11 @@ public class RecipeServiceImpl implements RecipeService {
 		List<Recipe> foundRecipes = new ArrayList<>();
 
 		foundRecipes = recipeDao.getRecipesPrimaryImageByUsername(username);
-		int index = 0;
 		for (Recipe recipe : foundRecipes) {
-			String img = readImg(recipe.getImages().get(index).getImgPath());
-			recipe.getImages().get(index).setImage(img);
-			index++;
+			if (recipe.getImages().get(0).getImgPath() != null) {
+				String img = readImg(recipe.getImages().get(0).getImgPath());
+				recipe.getImages().get(0).setImage(img);
+			}
 		}
 		return foundRecipes;
 
@@ -83,7 +83,7 @@ public class RecipeServiceImpl implements RecipeService {
 
 		try {
 			Path path = Paths.get(imagePath);
-			String image = new String( java.util.Base64.getEncoder().encode(Files.readAllBytes(path)));
+			String image = new String(java.util.Base64.getEncoder().encode(Files.readAllBytes(path)));
 
 			return image;
 		} catch (IOException e) {
