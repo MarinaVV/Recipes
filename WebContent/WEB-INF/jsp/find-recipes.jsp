@@ -8,11 +8,13 @@
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/nav-bar.css"> 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/shared-design.css"> 
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/find-recipes.css"> 
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/find-recipes.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/modal.css">  
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/nav-bar.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/find-recipes.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/search-recipes-ajax-call.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/modal.js"></script>
 </head>
 <body>
 
@@ -68,6 +70,26 @@
 				<div id="results">
 				</div>
 				
+			</div>
+			
+					<!-- The Modal -->
+			<div id="myModal" class="modal">
+
+  				<!-- Modal content -->
+ 				<div class="modal-content">
+   			 		<div class="modal-header">
+    		 			<span class="close" onclick="closeModal()">&times;</span>
+     		 			<h2>Modal Header</h2>
+    				</div>
+   			 		<div class="modal-body">
+     					<p>Some text in the Modal Body</p>
+     			 		<p>Some other text...</p>
+    		 		</div>
+    				<div class="modal-footer">
+      					<h3>Modal Footer</h3>
+   			 		</div>
+  					</div>
+
 			</div>
 		</div>
 	</div>
