@@ -11,4 +11,5 @@ public interface RecipeService {
 
 	String createRecipe(Recipe recipe, List<Part> images);
 	List<Recipe> searchRecipesPrimaryImageByUsername(String username);
+	List<Recipe> searchRecipesPrimaryImageByIngredientsList(List<String> ingredients);
 }

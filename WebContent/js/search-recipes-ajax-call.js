@@ -29,6 +29,32 @@ function search_recipe_U() {
 	xhttp.send(formdata);
 }
 
+function search_recipe_I_L(){
+	// ToDo set as parameter
+	var ingredientInputElements = document.getElementsByName("ingredient_input");
+	var ingredientList = new Array();
+	
+	for(var index = 0 ; index<ingredientInputElements.length;index++){
+		ingredientList.push(ingredientInputElements[index].value);
+	}
+
+	var xhttp = new XMLHttpRequest();
+	var action = "search_recipe_ingredients_list";
+	var formdata = new FormData();
+
+	formdata.append("action", action);
+	formdata.append("ingredients_list", ingredientList);
+
+	xhttp.onreadystatechange = function() {
+		var response = JSON.parse(this.responseText);
+
+		displaySearchResult(response);
+	};
+
+	xhttp.open("POST", "RecipeControlServlet", true);
+	xhttp.send(formdata);
+}
+
 function displaySearchResult(listRecipes) {
 
 	var resultRowIndex = 1;

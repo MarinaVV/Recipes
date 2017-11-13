@@ -55,7 +55,7 @@
 					<button id=add_button onclick="add_ingredient()">+</button>
 				</div>
 				
-				<button id="search_button" onclick="search_recipe_U()">Search</button>			
+				<button id="search_button" onclick="search_recipe_I_L()">Search</button>			
 			</div>
 			
 			<div class="result_part">

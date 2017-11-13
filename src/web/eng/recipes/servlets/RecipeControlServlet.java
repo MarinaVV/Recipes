@@ -75,6 +75,12 @@ public class RecipeControlServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(searchRecipesPrimaryImageByUsername(request));
+			break;
+		case "search_recipe_ingredients_list":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(searchRecipesPrimaryImageByIngredientsList(request));
+			break;
 		}
 
 	}
@@ -147,19 +153,19 @@ public class RecipeControlServlet extends HttpServlet {
 		return new JSONArray(ingredientNames).toString();
 
 	}
-	
+
 	private void saveIngredientsAction(HttpServletRequest request) {
-		
+
 		JSONArray jArr = null;
 
 		try {
 			jArr = new JSONArray(request.getParameter("ingredients"));
 			List<String> ingredientsList = new ArrayList<>();
-			
-			for(int index=0;index<jArr.length();index++){
+
+			for (int index = 0; index < jArr.length(); index++) {
 				ingredientsList.add(jArr.getString(index));
 			}
-			
+
 			ingredientService.saveIngredients(ingredientsList);
 
 		} catch (JSONException e) {
@@ -167,15 +173,34 @@ public class RecipeControlServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
-	private String searchRecipesPrimaryImageByUsername(HttpServletRequest request){
-		
+
+	private String searchRecipesPrimaryImageByUsername(HttpServletRequest request) {
+
 		String username = request.getParameter("username");
-		
+
 		List<Recipe> foundIngredients = recipeService.searchRecipesPrimaryImageByUsername(username);
-		
+
 		return new JSONArray(foundIngredients).toString();
+
+	}
+
+	private String searchRecipesPrimaryImageByIngredientsList(HttpServletRequest request) {
+
+		String regex = "*,*";
+
+		String ingredients = request.getParameter("ingredients_list");
+		String[] ingredientsArray = ingredients.split(regex);
 		
+		List<String> ingredientsList = new ArrayList<>();
+
+		for (int index = 0; index < ingredientsArray.length; index++) {
+			ingredientsList.add(ingredientsArray[index]);
+		}
+
+		List<Recipe> foundIngredients =recipeService.searchRecipesPrimaryImageByIngredientsList(ingredientsList);
+
+		return new JSONArray(foundIngredients).toString();
+
 	}
 
 }

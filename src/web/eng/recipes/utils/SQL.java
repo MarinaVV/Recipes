@@ -19,4 +19,25 @@ public  class SQL {
 																	+ " INNER JOIN `users` ON recipes.user_id=users.id "
 																+ "WHERE users.username=?";
 	
+	//Must close the bracket in the end!
+	public static final String GET_RECIPES_IMAGES_BY_INGREDIENTS_LIST = "SELECT 	images.id AS img_id,   "
+																				+ "images.img_path,  "
+																				+ "images.is_primary,     "
+																				+ "recipes.id AS recipe_id,     "
+																				+ "recipes.description,     "
+																				+ "recipes.category,     "
+																				+ "recipes.date,     "
+																				+ "recipes.title,     "
+																				+ "users.id AS user_id,     "
+																				+ "users.username "
+																		+ "FROM `recipes` 	"
+																				+ "left outer join `images` on recipes.id=images.recipe_id 	"
+																				+ "INNER JOIN `users` ON recipes.user_id=users.id "
+																		+ "WHERE recipes.id in "
+																				+ "( SELECT DISTINCT recipe_id "
+																				+ "	 FROM recipe_ingredients "
+																				+ "  WHERE 	";
+
+	//Used to add ingredient for the recipe search by ingredient list
+	public static final String INGREDIENT_ROW_FOR_INGREDIENTS_LIST = "recipe_id in (SELECT recipe_id FROM recipe_ingredients WHERE ingredient=?) ";
 }

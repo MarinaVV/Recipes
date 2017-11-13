@@ -78,6 +78,21 @@ public class RecipeServiceImpl implements RecipeService {
 		return foundRecipes;
 
 	}
+	
+	public List<Recipe> searchRecipesPrimaryImageByIngredientsList(List<String> ingredients){
+		
+		List<Recipe> foundRecipes = new ArrayList<>();
+		
+		foundRecipes = recipeDao.getRecipesPrimaryImageByIngredientsList(ingredients);
+		for (Recipe recipe : foundRecipes) {
+			if (recipe.getImages().get(0).getImgPath() != null) {
+				String img = readImg(recipe.getImages().get(0).getImgPath());
+				recipe.getImages().get(0).setImage(img);
+			}
+		}
+		
+		return foundRecipes;
+	}
 
 	private String readImg(String imagePath) {
 
