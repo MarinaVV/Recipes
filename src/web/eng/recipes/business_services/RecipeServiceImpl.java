@@ -22,6 +22,7 @@ import org.apache.tomcat.util.http.fileupload.FileUtils;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import web.eng.recipes.dao.RecipeDao;
+import web.eng.recipes.models.Image;
 import web.eng.recipes.models.Recipe;
 import web.eng.recipes.models.Recipe_ingredient;
 
@@ -78,11 +79,11 @@ public class RecipeServiceImpl implements RecipeService {
 		return foundRecipes;
 
 	}
-	
-	public List<Recipe> searchRecipesPrimaryImageByIngredientsList(List<String> ingredients){
-		
+
+	public List<Recipe> searchRecipesPrimaryImageByIngredientsList(List<String> ingredients) {
+
 		List<Recipe> foundRecipes = new ArrayList<>();
-		
+
 		foundRecipes = recipeDao.getRecipesPrimaryImageByIngredientsList(ingredients);
 		for (Recipe recipe : foundRecipes) {
 			if (recipe.getImages().get(0).getImgPath() != null) {
@@ -90,8 +91,27 @@ public class RecipeServiceImpl implements RecipeService {
 				recipe.getImages().get(0).setImage(img);
 			}
 		}
-		
+
 		return foundRecipes;
+	}
+
+	public Recipe getSecondaryImagesRecipeIngredients(String recipeIdString) {
+
+		Recipe recipe = new Recipe();
+		long recipeIdLong = Long.parseLong(recipeIdString);
+
+		recipe = recipeDao.getSecondaryImagesIngredients(recipeIdLong);
+		if (recipe.getImages() != null) {
+			for (Image image : recipe.getImages()) {
+				if(image!=null) {
+					String img = readImg(image.getImgPath());
+					image.setImage(img);
+				}
+			}
+		}
+
+		return recipe;
+
 	}
 
 	private String readImg(String imagePath) {

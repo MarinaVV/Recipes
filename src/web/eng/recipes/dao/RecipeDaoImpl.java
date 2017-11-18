@@ -8,6 +8,7 @@ import java.util.List;
 
 import web.eng.recipes.business_services.RecipeServiceImpl;
 import web.eng.recipes.models.Image;
+import web.eng.recipes.models.Ingredient;
 import web.eng.recipes.models.Recipe;
 import web.eng.recipes.models.Recipe_ingredient;
 import web.eng.recipes.models.User;
@@ -273,7 +274,7 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		PreparedStatement stmt = null;
 		String sql = SQL.GET_RECIPES_IMAGES_BY_INGREDIENTS_LIST;
 
-		//set search criteria depending from the number of ingredients
+		// set search criteria depending from the number of ingredients
 		for (int index = 0; index < ingredients.size(); index++) {
 			if (index < ingredients.size() - 1) {
 				sql += SQL.INGREDIENT_ROW_FOR_INGREDIENTS_LIST + " and ";
@@ -288,10 +289,10 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		try {
 			stmt = con.prepareStatement(sql);
 
-			for(int index = 0; index < ingredients.size(); index++){
-				stmt.setString(index+1, ingredients.get(index));
+			for (int index = 0; index < ingredients.size(); index++) {
+				stmt.setString(index + 1, ingredients.get(index));
 			}
-			
+
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -340,5 +341,78 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 
 		return foundRecipes;
 
+	}
+
+	public Recipe getSecondaryImagesIngredients(long recipeId){
+		
+		open();
+		
+		PreparedStatement stmtImg = null;
+		PreparedStatement stmtRecIngr = null;
+		List<Image> imagesList = new ArrayList<>();
+		List<Recipe_ingredient> recipeIngredientsList = new ArrayList<>();
+		Recipe recipe = new Recipe();
+		String sqlImages = "Select * From images where recipe_id = ? and is_primary=0";
+		String sqlRecipeIngredients = "Select * From recipe_ingredients where recipe_id=?";
+		ResultSet rs;
+
+		try {
+			con.setAutoCommit(false);
+			isAutoCommit=false;
+			
+			stmtImg = con.prepareStatement(sqlImages);
+			stmtImg.setLong(1, recipeId);
+			rs = stmtImg.executeQuery();
+
+			while (rs.next()) {
+				Image image = new Image();
+				image.setImgPath(rs.getString("img_path"));
+				image.setId(rs.getLong("id"));
+				image.setIs_primary(rs.getShort("is_primary"));
+				
+				imagesList.add(image);
+			}
+			recipe.setImages(imagesList);
+			
+			
+			stmtRecIngr = con.prepareStatement(sqlRecipeIngredients);
+			stmtRecIngr.setLong(1, recipeId);
+			rs = stmtRecIngr.executeQuery();
+
+			while (rs.next()) {
+				Recipe_ingredient recipe_ingredient = new Recipe_ingredient();
+				recipe_ingredient.setId(rs.getLong("id"));
+				Ingredient ingredient = new Ingredient();
+				ingredient.setName(rs.getString("ingredient"));
+				recipe_ingredient.setIngredient(ingredient);
+				recipe_ingredient.setQuantity(rs.getInt("quantity"));
+				recipe_ingredient.setUnits(rs.getString("units"));
+				
+				recipeIngredientsList.add(recipe_ingredient);				
+			}
+			recipe.setRecipe_ingredients(recipeIngredientsList);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (stmtImg != null) {
+					stmtImg.close();
+				}
+				if (stmtRecIngr != null) {
+					stmtRecIngr.close();
+				}
+				close();
+				
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return recipe;
+		
 	}
 }

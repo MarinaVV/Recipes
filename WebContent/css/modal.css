@@ -1,81 +1,199 @@
 /* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height:100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    -webkit-animation-name: fadeIn; /* Fade in the background */
-    -webkit-animation-duration: 0.4s;
-    animation-name: fadeIn;
-    animation-duration: 0.4s;
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+ /* Enable scroll if needed */
+	background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+	-webkit-animation-name: fadeIn; /* Fade in the background */
+	-webkit-animation-duration: 0.4s;
+	animation-name: fadeIn;
+	animation-duration: 0.4s;
 }
 
 /* Modal Content */
 .modal-content {
-    
-    bottom: 0;
-    margin: 2.5% auto;
-    background-color: #fefefe;
-    width: 95%;
-    height:95%;
-    -webkit-animation-name: slideIn;
-    -webkit-animation-duration: 0.4s;
-    animation-name: slideIn;
-    animation-duration: 0.4s
+	bottom: 0;
+	margin: 2.5% auto;
+	background-color: #fefefe;
+	width: 95%;
+	height: 95%;
+	overflow:auto;
+	-webkit-animation-name: slideIn;
+	-webkit-animation-duration: 0.4s;
+	animation-name: slideIn;
+	animation-duration: 0.4s
 }
+
 
 /* The Close Button */
 .close {
-    color: black;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+	color: black;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 .modal-header {
-    padding: 2px 10px;
-    background-color: #5cb85c;
-    color: black;
+	padding: 2px 10px;
+	background-color: #5cb85c;
+	color: black;
 }
 
-.modal-body {padding: 2px 10px;}
-
-.modal-footer {
-    padding: 2px 10px;
-    background-color: #5cb85c;
-    color: black;
+.modal-body {
+	padding: 2px 10px;
 }
 
 /* Add Animation */
-@-webkit-keyframes slideIn {
-    from {bottom: -600px; opacity: 0} 
-    to {bottom: 300; opacity: 1}
+@
+-webkit-keyframes slideIn {
+	from {bottom: -600px;
+	opacity: 0
 }
 
-@keyframes slideIn {
-    from {bottom: -600px; opacity: 0}
-    to {bottom: 300; opacity: 1}
+to {
+	bottom: 300;
+	opacity: 1
 }
 
-@-webkit-keyframes fadeIn {
-    from {opacity: 0} 
-    to {opacity: 1}
+}
+@
+keyframes slideIn {
+	from {bottom: -600px;
+	opacity: 0
 }
 
-@keyframes fadeIn {
-    from {opacity: 0} 
-    to {opacity: 1}
+to {
+	bottom: 300;
+	opacity: 1
+}
+
+}
+@
+-webkit-keyframes fadeIn {from { opacity:0
+	
+}
+
+to {
+	opacity: 1
+}
+
+}
+@
+keyframes fadeIn {from { opacity:0
+	
+}
+
+to {
+	opacity: 1
+}
+
+}
+
+/*Elements in modal*/
+.modal-header{
+	text-align:center;
+}
+
+.modal_image_ingredients {
+	margin: 0;
+	padding: 10px 30px;
+	overflow: hidden;
+}
+
+.modal_image_part {
+	width: 54%;
+	height: 400px;
+	border: 1px solid;
+	float: left;
+	padding-left: 10px;
+	padding-top: 10px;
+	text-align: center;
+	max-height: 400px;
+	overflow: auto;
+}
+
+.modal_previwe_image {
+	width: 50%;
+	height: 75%;
+	border: 1px solid;
+	margin: 10px auto;
+}
+
+.modal_all_images {
+	width: 50%;
+	height: 40px;
+	border: 1px solid;
+	margin: 10px auto;
+	 overflow: hidden;
+}
+
+#primary_img{
+	float:left;
+	width: 19%;
+	height:40px;
+	border: 1px solid;
+}
+
+#secondery_img_1{
+	float:left;
+	width: 19%;
+	height:40px;
+	border: 1px solid;
+}
+
+#secondery_img_2{
+	float:left;
+	width: 19%;
+	height:40px;
+	border: 1px solid;
+
+}
+
+#secondery_img_3{
+	float:left;
+	width: 19%;
+	height:40px;
+	border: 1px solid;
+
+}
+
+#secondery_img_4{
+	float:left;
+	width: 19%;
+	height:40px;
+	border: 1px solid;
+}
+
+.modal_ingredients_part {
+	margin-left: 56%;
+	padding-left: 5px;
+	height: 400px;
+	border: 1px solid;
+	padding-left: 10px;
+	padding-top: 10px;
+	text-align: center;
+	overflow: hidden;
+}
+
+.modal_description{
+	padding:10px;
+}
+
+.modal_description textarea {
+	width: 100%;
+	height: 200px;
+	overflow: auto;
+	padding-left: 5px;
+	padding-top: 5px;
 }

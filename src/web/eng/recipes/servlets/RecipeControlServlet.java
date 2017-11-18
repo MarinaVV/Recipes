@@ -81,6 +81,12 @@ public class RecipeControlServlet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(searchRecipesPrimaryImageByIngredientsList(request));
 			break;
+
+		case "get_secondary_images_ingredients":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(getSecondaryImagesIngredients(request));
+			break;
 		}
 
 	}
@@ -186,21 +192,29 @@ public class RecipeControlServlet extends HttpServlet {
 
 	private String searchRecipesPrimaryImageByIngredientsList(HttpServletRequest request) {
 
-		String regex = "*,*";
+		String regex = ",";
 
 		String ingredients = request.getParameter("ingredients_list");
 		String[] ingredientsArray = ingredients.split(regex);
-		
+
 		List<String> ingredientsList = new ArrayList<>();
 
 		for (int index = 0; index < ingredientsArray.length; index++) {
 			ingredientsList.add(ingredientsArray[index]);
 		}
 
-		List<Recipe> foundIngredients =recipeService.searchRecipesPrimaryImageByIngredientsList(ingredientsList);
+		List<Recipe> foundIngredients = recipeService.searchRecipesPrimaryImageByIngredientsList(ingredientsList);
 
 		return new JSONArray(foundIngredients).toString();
 
+	}
+	
+	private String getSecondaryImagesIngredients(HttpServletRequest request) {
+		
+		String recipeId = request.getParameter("recipe_id");
+		Recipe recipe = recipeService.getSecondaryImagesRecipeIngredients(recipeId);
+		JSONObject jObj = new JSONObject(recipe);
+		return jObj.toString();
 	}
 
 }

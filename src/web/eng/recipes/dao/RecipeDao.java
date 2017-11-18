@@ -10,5 +10,6 @@ public interface RecipeDao {
 	boolean createRecipe(Recipe recipe,List<String> imgPaths);
 	List<Recipe> getRecipesPrimaryImageByUsername(String username);
 	List<Recipe> getRecipesPrimaryImageByIngredientsList(List<String> ingredients);
+	Recipe getSecondaryImagesIngredients(long recipeId);
 	
 }

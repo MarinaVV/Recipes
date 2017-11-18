@@ -79,16 +79,32 @@
  				<div class="modal-content">
    			 		<div class="modal-header">
     		 			<span class="close" onclick="closeModal()">&times;</span>
-     		 			<h2>Modal Header</h2>
+     		 			<label id="modal_title"></label>
+     		 			<label id="modal_category"></label>
     				</div>
    			 		<div class="modal-body">
-     					<p>Some text in the Modal Body</p>
-     			 		<p>Some other text...</p>
+   			 			<div class="modal_image_ingredients">
+     						<div class = "modal_image_part">
+     							<div class="modal_previwe_image" id="modal_previwe_image">
+     							
+     							</div>
+     							<div class="modal_all_images">
+     								<div id="primary_img"></div>
+     								<div id="secondery_img_1"></div>
+     								<div id="secondery_img_2"></div>
+     								<div id="secondery_img_3"></div>
+     								<div id="secondery_img_4"></div>
+     							</div>
+     						</div>
+     						<div class="modal_ingredients_part">
+     						</div>
+     					</div>
+     					<div class="modal_description">
+     						<textarea id="modal_description_ta" rows="40" cols="5" readonly></textarea>
+     					</div>
+     					<button id="modal_add_favorite">Add to Favorites</button>
     		 		</div>
-    				<div class="modal-footer">
-      					<h3>Modal Footer</h3>
-   			 		</div>
-  					</div>
+  				</div>
 
 			</div>
 		</div>
