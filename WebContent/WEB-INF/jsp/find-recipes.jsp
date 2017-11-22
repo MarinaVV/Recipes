@@ -97,6 +97,9 @@
      							</div>
      						</div>
      						<div class="modal_ingredients_part">
+     							<div id="modal_recipe_ingredients">
+     							
+     							</div>
      						</div>
      					</div>
      					<div class="modal_description">

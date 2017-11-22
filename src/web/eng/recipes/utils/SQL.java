@@ -31,9 +31,9 @@ public  class SQL {
 																				+ "users.id AS user_id,     "
 																				+ "users.username "
 																		+ "FROM `recipes` 	"
-																				+ "left outer join `images` on recipes.id=images.recipe_id 	"
+																				+ "LEFT OUTER join `images` on recipes.id=images.recipe_id 	"
 																				+ "INNER JOIN `users` ON recipes.user_id=users.id "
-																		+ "WHERE recipes.id in "
+																		+ "WHERE images.is_primary=1 AND recipes.id in "
 																				+ "( SELECT DISTINCT recipe_id "
 																				+ "	 FROM recipe_ingredients "
 																				+ "  WHERE 	";

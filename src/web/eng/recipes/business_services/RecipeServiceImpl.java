@@ -56,6 +56,8 @@ public class RecipeServiceImpl implements RecipeService {
 			} catch (IOException ex) {
 				return "IMAGES_ERROR";
 			}
+		} else {
+			imgPaths.add(0, "no_image_provided");
 		}
 
 		if (recipeDao.createRecipe(recipe, imgPaths)) {
@@ -103,7 +105,7 @@ public class RecipeServiceImpl implements RecipeService {
 		recipe = recipeDao.getSecondaryImagesIngredients(recipeIdLong);
 		if (recipe.getImages() != null) {
 			for (Image image : recipe.getImages()) {
-				if(image!=null) {
+				if (image != null) {
 					String img = readImg(image.getImgPath());
 					image.setImage(img);
 				}
@@ -116,10 +118,15 @@ public class RecipeServiceImpl implements RecipeService {
 
 	private String readImg(String imagePath) {
 
-		try {
-			Path path = Paths.get(imagePath);
-			String image = new String(java.util.Base64.getEncoder().encode(Files.readAllBytes(path)));
+		String image;
 
+		try {
+			if (!imagePath.equals("no_image_provided")) {
+				Path path = Paths.get(imagePath);
+				image = new String(java.util.Base64.getEncoder().encode(Files.readAllBytes(path)));
+			} else {
+				image = "no_image_provided";
+			}
 			return image;
 		} catch (IOException e) {
 			e.printStackTrace();

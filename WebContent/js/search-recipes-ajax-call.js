@@ -22,6 +22,7 @@ function search_recipe_U() {
 	xhttp.onreadystatechange = function() {
 		var response = JSON.parse(this.responseText);
 
+		clearSearchResult
 		displaySearchResult(response);
 	};
 
@@ -49,6 +50,7 @@ function search_recipe_I_L() {
 	xhttp.onreadystatechange = function() {
 		var response = JSON.parse(this.responseText);
 
+		clearSearchResult();
 		displaySearchResult(response);
 	};
 
@@ -56,11 +58,22 @@ function search_recipe_I_L() {
 	xhttp.send(formdata);
 }
 
+function clearSearchResult() {
+
+	var results_div = document.getElementById("results");
+	var result_rows = document.getElementsByName("result_row");
+	var length = result_rows.length;
+
+	for (var i = 0; i < length; i++) {
+		results_div.removeChild(result_rows[0]);
+	}
+}
+
 function displaySearchResult(listRecipes) {
 
 	var resultRowIndex = 1;
 	for (var indexOfList = 0; indexOfList < listRecipes.length; indexOfList++) {
-		var imgBase64 = listRecipes[indexOfList].images[0].image;
+
 		var title = listRecipes[indexOfList].title;
 		var category = listRecipes[indexOfList].category;
 
@@ -69,10 +82,20 @@ function displaySearchResult(listRecipes) {
 		var creatingUser = listRecipes[indexOfList].creatingUser.username;
 		var date = listRecipes[indexOfList].date;
 
-		var imgSRC = "data:image/png;base64," + imgBase64;
+		var imgBase64 = listRecipes[indexOfList].images[0].image;
+		if (imgBase64 == "no_image_provided") {
+			var imgSRC = "img/No-image-available.jpg";
+		} else {
+			var imgSRC = "data:image/png;base64," + imgBase64;
+		}
 
 		if (indexOfList % 2 == 0) {
-			createResultRow(resultRowIndex);
+			if (listRecipes.length % 2 == 1
+					&& indexOfList == listRecipes.length - 1) {
+				createResultRow(resultRowIndex, false);
+			} else {
+				createResultRow(resultRowIndex, true);
+			}
 
 			document.getElementById("left_result_" + resultRowIndex).style.backgroundImage = "url(' "
 					+ imgSRC + "')";
@@ -116,9 +139,10 @@ function displaySearchResult(listRecipes) {
 
 }
 
-function createResultRow(rowIndex) {
+function createResultRow(rowIndex, createRightElement) {
 	var result_row_div = document.createElement("div");
 	result_row_div.setAttribute("class", "result_row");
+	result_row_div.setAttribute("name", "result_row");
 
 	var left_result_div = document.createElement("div");
 	left_result_div.setAttribute("class", "left_result");
@@ -168,53 +192,55 @@ function createResultRow(rowIndex) {
 			+ ")");
 	result_row_div.appendChild(left_result_div);
 
-	var right_result_div = document.createElement("div");
-	right_result_div.setAttribute("class", "right_result");
-	var right_result_div_id = "right_result_" + rowIndex;
-	right_result_div.setAttribute("id", right_result_div_id);
+	if (createRightElement) {
+		var right_result_div = document.createElement("div");
+		right_result_div.setAttribute("class", "right_result");
+		var right_result_div_id = "right_result_" + rowIndex;
+		right_result_div.setAttribute("id", right_result_div_id);
 
-	var right_result_label = document.createElement("label");
-	var right_title_id = "right_label_" + rowIndex;
-	right_result_label.setAttribute("id", right_title_id)
-	right_result_label.setAttribute("class", "result_title_label")
+		var right_result_label = document.createElement("label");
+		var right_title_id = "right_label_" + rowIndex;
+		right_result_label.setAttribute("id", right_title_id)
+		right_result_label.setAttribute("class", "result_title_label")
 
-	var right_category_label = document.createElement("label");
-	var right_category_id = "right_category_" + rowIndex;
-	right_category_label.setAttribute("id", right_category_id);
-	right_category_label.setAttribute("class", "result_category_label");
+		var right_category_label = document.createElement("label");
+		var right_category_id = "right_category_" + rowIndex;
+		right_category_label.setAttribute("id", right_category_id);
+		right_category_label.setAttribute("class", "result_category_label");
 
-	var right_hidden_recipeId = document.createElement("input");
-	var right_hidden_recipeId_id = "right_hidden_recipeId_" + rowIndex;
-	right_hidden_recipeId.setAttribute("id", right_hidden_recipeId_id);
-	right_hidden_recipeId.setAttribute("class", "hidden_inputs");
+		var right_hidden_recipeId = document.createElement("input");
+		var right_hidden_recipeId_id = "right_hidden_recipeId_" + rowIndex;
+		right_hidden_recipeId.setAttribute("id", right_hidden_recipeId_id);
+		right_hidden_recipeId.setAttribute("class", "hidden_inputs");
 
-	var right_hidden_description = document.createElement("input");
-	var right_hidden_descript_id = "right_hidden_description_" + rowIndex;
-	right_hidden_description.setAttribute("id", right_hidden_descript_id);
-	right_hidden_description.setAttribute("class", "hidden_inputs");
+		var right_hidden_description = document.createElement("input");
+		var right_hidden_descript_id = "right_hidden_description_" + rowIndex;
+		right_hidden_description.setAttribute("id", right_hidden_descript_id);
+		right_hidden_description.setAttribute("class", "hidden_inputs");
 
-	var right_hidden_date = document.createElement("input");
-	var right_hidden_date_id = "right_hidden_date_" + rowIndex;
-	right_hidden_date.setAttribute("id", right_hidden_date_id);
-	right_hidden_date.setAttribute("class", "hidden_inputs");
+		var right_hidden_date = document.createElement("input");
+		var right_hidden_date_id = "right_hidden_date_" + rowIndex;
+		right_hidden_date.setAttribute("id", right_hidden_date_id);
+		right_hidden_date.setAttribute("class", "hidden_inputs");
 
-	var right_hidden_userName = document.createElement("input");
-	var right_hidden_userName_id = "right_hidden_userName_" + rowIndex;
-	right_hidden_userName.setAttribute("id", right_hidden_userName_id);
-	right_hidden_userName.setAttribute("class", "hidden_inputs");
+		var right_hidden_userName = document.createElement("input");
+		var right_hidden_userName_id = "right_hidden_userName_" + rowIndex;
+		right_hidden_userName.setAttribute("id", right_hidden_userName_id);
+		right_hidden_userName.setAttribute("class", "hidden_inputs");
 
-	right_result_div.appendChild(right_hidden_recipeId);
-	right_result_div.appendChild(right_hidden_description);
-	right_result_div.appendChild(right_hidden_date);
-	right_result_div.appendChild(right_hidden_userName);
-	right_result_div.appendChild(right_result_label);
-	right_result_div.appendChild(right_category_label);
-	right_result_div.setAttribute("onclick", "openModal("
-			+ right_hidden_recipeId_id + "," + right_hidden_descript_id + ","
-			+ right_hidden_date_id + "," + right_hidden_userName_id + ","
-			+ right_title_id + "," + right_category_id + ","
-			+ right_result_div_id + ")");
-	result_row_div.appendChild(right_result_div);
+		right_result_div.appendChild(right_hidden_recipeId);
+		right_result_div.appendChild(right_hidden_description);
+		right_result_div.appendChild(right_hidden_date);
+		right_result_div.appendChild(right_hidden_userName);
+		right_result_div.appendChild(right_result_label);
+		right_result_div.appendChild(right_category_label);
+		right_result_div.setAttribute("onclick", "openModal("
+				+ right_hidden_recipeId_id + "," + right_hidden_descript_id
+				+ "," + right_hidden_date_id + "," + right_hidden_userName_id
+				+ "," + right_title_id + "," + right_category_id + ","
+				+ right_result_div_id + ")");
+		result_row_div.appendChild(right_result_div);
+	}
 
 	var results_div = document.getElementById("results");
 	results_div.appendChild(result_row_div);

@@ -7,7 +7,7 @@
 	top: 0;
 	width: 100%; /* Full width */
 	height: 100%; /* Full height */
- /* Enable scroll if needed */
+	/* Enable scroll if needed */
 	background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
 	-webkit-animation-name: fadeIn; /* Fade in the background */
 	-webkit-animation-duration: 0.4s;
@@ -22,13 +22,12 @@
 	background-color: #fefefe;
 	width: 95%;
 	height: 95%;
-	overflow:auto;
+	overflow: auto;
 	-webkit-animation-name: slideIn;
 	-webkit-animation-duration: 0.4s;
 	animation-name: slideIn;
 	animation-duration: 0.4s
 }
-
 
 /* The Close Button */
 .close {
@@ -101,8 +100,8 @@ to {
 }
 
 /*Elements in modal*/
-.modal-header{
-	text-align:center;
+.modal-header {
+	text-align: center;
 }
 
 .modal_image_ingredients {
@@ -120,7 +119,6 @@ to {
 	padding-top: 10px;
 	text-align: center;
 	max-height: 400px;
-	overflow: auto;
 }
 
 .modal_previwe_image {
@@ -128,6 +126,8 @@ to {
 	height: 75%;
 	border: 1px solid;
 	margin: 10px auto;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 
 .modal_all_images {
@@ -135,44 +135,52 @@ to {
 	height: 40px;
 	border: 1px solid;
 	margin: 10px auto;
-	 overflow: hidden;
+	overflow: hidden;
 }
 
-#primary_img{
-	float:left;
+#primary_img {
+	float: left;
 	width: 19%;
-	height:40px;
+	height: 40px;
 	border: 1px solid;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 
-#secondery_img_1{
-	float:left;
+#secondery_img_1 {
+	float: left;
 	width: 19%;
-	height:40px;
+	height: 40px;
 	border: 1px solid;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 
-#secondery_img_2{
-	float:left;
+#secondery_img_2 {
+	float: left;
 	width: 19%;
-	height:40px;
+	height: 40px;
 	border: 1px solid;
-
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 
-#secondery_img_3{
-	float:left;
+#secondery_img_3 {
+	float: left;
 	width: 19%;
-	height:40px;
+	height: 40px;
 	border: 1px solid;
-
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 
-#secondery_img_4{
-	float:left;
+#secondery_img_4 {
+	float: left;
 	width: 19%;
-	height:40px;
+	height: 40px;
 	border: 1px solid;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 
 .modal_ingredients_part {
@@ -186,8 +194,8 @@ to {
 	overflow: hidden;
 }
 
-.modal_description{
-	padding:10px;
+.modal_description {
+	padding: 10px;
 }
 
 .modal_description textarea {
