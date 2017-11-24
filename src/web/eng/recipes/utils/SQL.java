@@ -15,9 +15,9 @@ public  class SQL {
 																	+ "	users.id AS user_id, "
 																	+ "	users.username "
 																+ "FROM `images` "
-																	+ "	RIGHT OUTER JOIN `recipes` ON images.recipe_id=recipes.id AND images.is_primary<>0"
+																	+ "	INNER JOIN `recipes` ON images.recipe_id=recipes.id AND images.is_primary<>0"
 																	+ " INNER JOIN `users` ON recipes.user_id=users.id "
-																+ "WHERE users.username=?";
+																+ "WHERE images.is_primary=1 AND users.username=?";
 	
 	//Must close the bracket in the end!
 	public static final String GET_RECIPES_IMAGES_BY_INGREDIENTS_LIST = "SELECT 	images.id AS img_id,   "
@@ -31,7 +31,7 @@ public  class SQL {
 																				+ "users.id AS user_id,     "
 																				+ "users.username "
 																		+ "FROM `recipes` 	"
-																				+ "LEFT OUTER join `images` on recipes.id=images.recipe_id 	"
+																				+ "INNER JOIN `images` on recipes.id=images.recipe_id 	"
 																				+ "INNER JOIN `users` ON recipes.user_id=users.id "
 																		+ "WHERE images.is_primary=1 AND recipes.id in "
 																				+ "( SELECT DISTINCT recipe_id "
@@ -40,4 +40,19 @@ public  class SQL {
 
 	//Used to add ingredient for the recipe search by ingredient list
 	public static final String INGREDIENT_ROW_FOR_INGREDIENTS_LIST = "recipe_id in (SELECT recipe_id FROM recipe_ingredients WHERE ingredient=?) ";
+
+	public static final String GET_RECIPES_IMAGES_BY_RECIPE_NAME = "SELECT  images.id AS img_id, "
+			+ "	images.img_path, 	"
+			+ "	images.is_primary, "
+			+ "	recipes.id AS recipe_id,"
+			+ " recipes.description, "
+			+ " recipes.category,"
+			+ "	recipes.date, "
+			+ "	recipes.title, 	"
+			+ "	users.id AS user_id, "
+			+ "	users.username "
+		+ "FROM `images` "
+			+ "	INNER JOIN `recipes` ON images.recipe_id=recipes.id AND images.is_primary<>0"
+			+ " INNER JOIN `users` ON recipes.user_id=users.id "
+		+ "WHERE images.is_primary=1 AND recipes.title=?";
 }

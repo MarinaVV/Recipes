@@ -72,9 +72,9 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 			stmt = con.prepareStatement(SQL.INSERT_RECIPE);
 
 			stmt.setString(1, recipe.getDescription());
-			stmt.setString(2, recipe.getTitle());
+			stmt.setString(2, recipe.getTitle().toLowerCase());
 			stmt.setString(3, recipe.getCategory());
-			stmt.setString(4, recipe.getCreatingUser().getUserName());
+			stmt.setString(4, recipe.getCreatingUser().getUserName().toLowerCase());
 			stmt.execute();
 
 			Recipe newRecipe = getRecipeByTitle(recipe.getTitle());
@@ -127,7 +127,7 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 				indexNumber++;
 				stmt.setLong(indexNumber, recipe_id);
 				indexNumber++;
-				stmt.setString(indexNumber, recipe_ingredients.get(index).getIngredient().getName());
+				stmt.setString(indexNumber, recipe_ingredients.get(index).getIngredient().getName().toLowerCase());
 				indexNumber++;
 				stmt.setInt(indexNumber, recipe_ingredients.get(index).getQuantity());
 				indexNumber++;
@@ -218,30 +218,11 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		try {
 			stmt = con.prepareStatement(sql);
 
-			stmt.setString(1, username);
+			stmt.setString(1, username.toLowerCase());
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				Recipe recipe = new Recipe();
-				recipe.setCategory(rs.getString("category"));
-				recipe.setDate(rs.getDate("date"));
-				recipe.setDescription(rs.getString("description"));
-				recipe.setId(rs.getLong("recipe_id"));
-				recipe.setTitle(rs.getString("title"));
-
-				User user = new User();
-				user.setId(rs.getLong("user_id"));
-				user.setUserName(rs.getString("username"));
-				recipe.setCreatingUser(user);
-
-				Image primary_image = new Image();
-				primary_image.setId(rs.getLong("img_id"));
-				primary_image.setImgPath(rs.getString("img_path"));
-				primary_image.setIs_primary(rs.getShort("is_primary"));
-
-				List<Image> images = new ArrayList<>();
-				images.add(0, primary_image);
-				recipe.setImages(images);
+				Recipe recipe = mapResultToRecipe(rs);
 
 				foundRecipes.add(recipe);
 			}
@@ -290,32 +271,13 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 			stmt = con.prepareStatement(sql);
 
 			for (int index = 0; index < ingredients.size(); index++) {
-				stmt.setString(index + 1, ingredients.get(index));
+				stmt.setString(index + 1, ingredients.get(index).toLowerCase());
 			}
 
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				Recipe recipe = new Recipe();
-				recipe.setCategory(rs.getString("category"));
-				recipe.setDate(rs.getDate("date"));
-				recipe.setDescription(rs.getString("description"));
-				recipe.setId(rs.getLong("recipe_id"));
-				recipe.setTitle(rs.getString("title"));
-
-				User user = new User();
-				user.setId(rs.getLong("user_id"));
-				user.setUserName(rs.getString("username"));
-				recipe.setCreatingUser(user);
-
-				Image primary_image = new Image();
-				primary_image.setId(rs.getLong("img_id"));
-				primary_image.setImgPath(rs.getString("img_path"));
-				primary_image.setIs_primary(rs.getShort("is_primary"));
-
-				List<Image> images = new ArrayList<>();
-				images.add(0, primary_image);
-				recipe.setImages(images);
+				Recipe recipe = mapResultToRecipe(rs);
 
 				foundRecipes.add(recipe);
 			}
@@ -343,10 +305,52 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 
 	}
 
-	public Recipe getSecondaryImagesIngredients(long recipeId){
-		
+	public List<Recipe> getRecipesPrimaryImageByRecipeName(String recipeName) {
 		open();
-		
+		PreparedStatement stmt = null;
+		String sql = SQL.GET_RECIPES_IMAGES_BY_RECIPE_NAME;
+		ResultSet rs;
+		List<Recipe> foundRecipes = new ArrayList<>();
+
+		try {
+			stmt = con.prepareStatement(sql);
+
+			stmt.setString(1, recipeName.toLowerCase());
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+
+				Recipe recipe = mapResultToRecipe(rs);
+
+				foundRecipes.add(recipe);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (isAutoCommit) {
+					close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return foundRecipes;
+	}
+
+	public Recipe getSecondaryImagesIngredients(long recipeId) {
+
+		open();
+
 		PreparedStatement stmtImg = null;
 		PreparedStatement stmtRecIngr = null;
 		List<Image> imagesList = new ArrayList<>();
@@ -358,8 +362,8 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 
 		try {
 			con.setAutoCommit(false);
-			isAutoCommit=false;
-			
+			isAutoCommit = false;
+
 			stmtImg = con.prepareStatement(sqlImages);
 			stmtImg.setLong(1, recipeId);
 			rs = stmtImg.executeQuery();
@@ -369,12 +373,11 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 				image.setImgPath(rs.getString("img_path"));
 				image.setId(rs.getLong("id"));
 				image.setIs_primary(rs.getShort("is_primary"));
-				
+
 				imagesList.add(image);
 			}
 			recipe.setImages(imagesList);
-			
-			
+
 			stmtRecIngr = con.prepareStatement(sqlRecipeIngredients);
 			stmtRecIngr.setLong(1, recipeId);
 			rs = stmtRecIngr.executeQuery();
@@ -387,8 +390,8 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 				recipe_ingredient.setIngredient(ingredient);
 				recipe_ingredient.setQuantity(rs.getInt("quantity"));
 				recipe_ingredient.setUnits(rs.getString("units"));
-				
-				recipeIngredientsList.add(recipe_ingredient);				
+
+				recipeIngredientsList.add(recipe_ingredient);
 			}
 			recipe.setRecipe_ingredients(recipeIngredientsList);
 
@@ -405,7 +408,6 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 					stmtRecIngr.close();
 				}
 				close();
-				
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -413,6 +415,32 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		}
 
 		return recipe;
-		
+
 	}
+
+	private Recipe mapResultToRecipe(ResultSet rs) throws SQLException {
+		Recipe recipe = new Recipe();
+		recipe.setCategory(rs.getString("category"));
+		recipe.setDate(rs.getDate("date"));
+		recipe.setDescription(rs.getString("description"));
+		recipe.setId(rs.getLong("recipe_id"));
+		recipe.setTitle(rs.getString("title"));
+
+		User user = new User();
+		user.setId(rs.getLong("user_id"));
+		user.setUserName(rs.getString("username"));
+		recipe.setCreatingUser(user);
+
+		Image primary_image = new Image();
+		primary_image.setId(rs.getLong("img_id"));
+		primary_image.setImgPath(rs.getString("img_path"));
+		primary_image.setIs_primary(rs.getShort("is_primary"));
+
+		List<Image> images = new ArrayList<>();
+		images.add(0, primary_image);
+		recipe.setImages(images);
+
+		return recipe;
+	}
+
 }

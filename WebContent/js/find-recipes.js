@@ -12,6 +12,7 @@ function add_ingredient(){
 	ingredientInput.setAttribute("type", "text");
 	ingredientInput.setAttribute("id", "input_ingredient_" + countIngredients);
 	ingredientInput.setAttribute("name", "ingredient_input");
+	ingredientInput.setAttribute("list", "suggestionsIngredients");
 	
 	
 	var deleteButton=document.createElement("button");

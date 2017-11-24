@@ -15,8 +15,15 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/find-recipes.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/search-recipes-ajax-call.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/modal.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils.js"></script>
 </head>
 <body>
+
+	<script type="text/javascript">
+		window.onload = function(){
+			getListIngredients();
+		}
+	</script>
 
 	<div class="outer_container">
 		<p>find rec</p>
@@ -49,13 +56,15 @@
 				<input type="hidden" value="1" id="count_ingredients_input">
 					<div id="ingredients">
 						<div id="div_ingredient_1" class="ingredient">
-							<input type="text" id="input_ingredient_1" name="ingredient_input"><button id="delete_button_1"  onclick="">-</button>
+							<input type="text" id="input_ingredient_1" name="ingredient_input" list="suggestionsIngredients"><button id="delete_button_1"  onclick="" >-</button>
 						</div>
 					</div>
 					<button id=add_button onclick="add_ingredient()">+</button>
+					<datalist id="suggestionsIngredients">
+					</datalist>
 				</div>
 				
-				<button id="search_button" onclick="search_recipe_I_L()">Search</button>			
+				<button id="search_button" onclick="search_recipe_R()">Search</button>			
 			</div>
 			
 			<div class="result_part">
@@ -89,11 +98,11 @@
      							
      							</div>
      							<div class="modal_all_images">
-     								<div id="primary_img"></div>
-     								<div id="secondery_img_1"></div>
-     								<div id="secondery_img_2"></div>
-     								<div id="secondery_img_3"></div>
-     								<div id="secondery_img_4"></div>
+     								<div id="primary_img" onclick="previewImage(primary_img)"></div>
+     								<div id="secondery_img_1" onclick="previewImage(secondery_img_1)"></div>
+     								<div id="secondery_img_2" onclick="previewImage(secondery_img_2)"></div>
+     								<div id="secondery_img_3" onclick="previewImage(secondery_img_3)"></div>
+     								<div id="secondery_img_4" onclick="previewImage(secondery_img_4)"></div>
      							</div>
      						</div>
      						<div class="modal_ingredients_part">

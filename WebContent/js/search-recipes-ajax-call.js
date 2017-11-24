@@ -20,10 +20,12 @@ function search_recipe_U() {
 	formdata.append("username", username);
 
 	xhttp.onreadystatechange = function() {
-		var response = JSON.parse(this.responseText);
+		if (this.readyState == 4 && this.status == 200) {
+			var response = JSON.parse(this.responseText);
 
-		clearSearchResult
-		displaySearchResult(response);
+			clearSearchResult();
+			displaySearchResult(response);
+		}
 	};
 
 	xhttp.open("POST", "RecipeControlServlet", true);
@@ -48,10 +50,37 @@ function search_recipe_I_L() {
 	formdata.append("ingredients_list", ingredientList);
 
 	xhttp.onreadystatechange = function() {
-		var response = JSON.parse(this.responseText);
+		if (this.readyState == 4 && this.status == 200) {
+			var response = JSON.parse(this.responseText);
 
-		clearSearchResult();
-		displaySearchResult(response);
+			clearSearchResult();
+			displaySearchResult(response);
+		}
+	};
+
+	xhttp.open("POST", "RecipeControlServlet", true);
+	xhttp.send(formdata);
+}
+
+function search_recipe_R() {
+
+	// ToDo set as parameter
+	var username = document.getElementById("recipe_name").value;
+
+	var xhttp = new XMLHttpRequest();
+	var action = "search_recipe_recipe_name";
+	var formdata = new FormData();
+
+	formdata.append("action", action);
+	formdata.append("recipe_name", username);
+
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var response = JSON.parse(this.responseText);
+
+			clearSearchResult();
+			displaySearchResult(response);
+		}
 	};
 
 	xhttp.open("POST", "RecipeControlServlet", true);

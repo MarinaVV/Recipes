@@ -81,7 +81,11 @@ public class RecipeControlServlet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(searchRecipesPrimaryImageByIngredientsList(request));
 			break;
-
+		case "search_recipe_recipe_name":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(searchRecipesPrimaryImageByRecipeName(request));
+			break;
 		case "get_secondary_images_ingredients":
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
@@ -204,6 +208,16 @@ public class RecipeControlServlet extends HttpServlet {
 		}
 
 		List<Recipe> foundIngredients = recipeService.searchRecipesPrimaryImageByIngredientsList(ingredientsList);
+
+		return new JSONArray(foundIngredients).toString();
+
+	}
+	
+	private String searchRecipesPrimaryImageByRecipeName(HttpServletRequest request) {
+
+		String recipe_name = request.getParameter("recipe_name");
+
+		List<Recipe> foundIngredients = recipeService.searchRecipesPrimaryImageByRecipeName(recipe_name);
 
 		return new JSONArray(foundIngredients).toString();
 
