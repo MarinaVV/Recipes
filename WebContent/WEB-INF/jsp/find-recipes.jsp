@@ -41,12 +41,12 @@
 				<p> Choose your search criteria</p>
 				<div class="search_row">
 					<label>Username:</label> 
-					<input id="username" type="text" name="username">
+					<input id="username" type="text" name="username" oninput="disableOtherSearchInputs(username,recipe_name,input_ingredient_1)">
 				</div>
 				
 				<div class="search_row">
 					<label>Recipe name: </label> 
-					<input id="recipe_name" type="text" name="recipe_name">
+					<input id="recipe_name" type="text" name="recipe_name" oninput="disableOtherSearchInputs(recipe_name,username,input_ingredient_1)">
 				</div>
 		
 				
@@ -56,19 +56,20 @@
 				<input type="hidden" value="1" id="count_ingredients_input">
 					<div id="ingredients">
 						<div id="div_ingredient_1" class="ingredient">
-							<input type="text" id="input_ingredient_1" name="ingredient_input" list="suggestionsIngredients"><button id="delete_button_1"  onclick="" >-</button>
+							<input type="text" id="input_ingredient_1" name="ingredient_input" list="suggestionsIngredients" oninput="disableOtherSearchInputs(input_ingredient_1,recipe_name,username);enableAddButton();"><button id="delete_button_1"  onclick="" >-</button>
 						</div>
 					</div>
-					<button id=add_button onclick="add_ingredient()">+</button>
+					<button id=add_button onclick="add_ingredient();enableAddButton()" disabled="true">+</button>
 					<datalist id="suggestionsIngredients">
 					</datalist>
 				</div>
 				
-				<button id="search_button" onclick="search_recipe_R()">Search</button>			
+				<button id="search_button" onclick="search_recipes()">Search</button>			
 			</div>
 			
 			<div class="result_part">
 				<div class="category_bar">
+					<input id="hidden_result_input" type="hidden">
 					<label class="category">All</label>
 					<label class="category">Breakfast</label>
 					<label class="category">Lunch</label>

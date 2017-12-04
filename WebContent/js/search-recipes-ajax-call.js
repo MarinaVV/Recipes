@@ -1,9 +1,25 @@
 function search_recipes() {
 
-	var username = document.getElementById("username").value;
-	var recipeName = document.getElementById("recipe_name").value;
+	var usernameInput = document.getElementById("username");
+	var recipeNameInput = document.getElementById("recipe_name");
 
-	var ingredients = document.getElementsByName("ingredient_input");
+	var ingredientInputs = document.getElementsByName("ingredient_input");
+
+	//all search criteria inputs are empty
+	if (usernameInput.value == "" && recipeNameInput.value == ""
+			&& ingredientInputs[0].value == "") {
+		alert("Enter search criteria");
+	//username input is filled
+	} else if (recipeNameInput.disabled == true
+			&& ingredientInputs[0].disabled == true){
+		search_recipe_U()
+	}else if (usernameInput.disabled == true
+			&& ingredientInputs[0].disabled == true){
+		search_recipe_R();
+	}else if (usernameInput.disabled == true
+			&& recipeNameInput.disabled == true){
+		search_recipe_I_L();
+	}
 
 }
 
@@ -21,6 +37,8 @@ function search_recipe_U() {
 
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("hidden_result_input").value = this.responseText;
+
 			var response = JSON.parse(this.responseText);
 
 			clearSearchResult();
@@ -51,6 +69,8 @@ function search_recipe_I_L() {
 
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("hidden_result_input").value = this.responseText;
+
 			var response = JSON.parse(this.responseText);
 
 			clearSearchResult();
@@ -76,6 +96,8 @@ function search_recipe_R() {
 
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("hidden_result_input").value = this.responseText;
+
 			var response = JSON.parse(this.responseText);
 
 			clearSearchResult();
