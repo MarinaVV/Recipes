@@ -5,28 +5,34 @@ function search_recipes() {
 
 	var ingredientInputs = document.getElementsByName("ingredient_input");
 
-	//all search criteria inputs are empty
+	// all search criteria inputs are empty
 	if (usernameInput.value == "" && recipeNameInput.value == ""
 			&& ingredientInputs[0].value == "") {
 		alert("Enter search criteria");
-	//username input is filled
+		// username input is filled
 	} else if (recipeNameInput.disabled == true
-			&& ingredientInputs[0].disabled == true){
-		search_recipe_U()
-	}else if (usernameInput.disabled == true
-			&& ingredientInputs[0].disabled == true){
-		search_recipe_R();
-	}else if (usernameInput.disabled == true
-			&& recipeNameInput.disabled == true){
-		search_recipe_I_L();
+			&& ingredientInputs[0].disabled == true) {
+		
+		var username = document.getElementById("username").value;
+		search_recipe_U(username);
+		
+	} else if (usernameInput.disabled == true
+			&& ingredientInputs[0].disabled == true) {
+
+		var recipe_name = document.getElementById("recipe_name").value;
+		search_recipe_R(recipe_name);
+
+	} else if (usernameInput.disabled == true
+			&& recipeNameInput.disabled == true) {
+
+		var ingredientInputElements = document.getElementsByName("ingredient_input");
+		search_recipe_I_L(ingredientInputElements);
 	}
 
 }
 
-function search_recipe_U() {
 
-	// ToDo set as parameter
-	var username = document.getElementById("username").value;
+function search_recipe_U(username) {
 
 	var xhttp = new XMLHttpRequest();
 	var action = "search_recipe_username";
@@ -50,10 +56,8 @@ function search_recipe_U() {
 	xhttp.send(formdata);
 }
 
-function search_recipe_I_L() {
-	// ToDo set as parameter
-	var ingredientInputElements = document
-			.getElementsByName("ingredient_input");
+function search_recipe_I_L(ingredientInputElements) {
+
 	var ingredientList = new Array();
 
 	for (var index = 0; index < ingredientInputElements.length; index++) {
@@ -82,17 +86,14 @@ function search_recipe_I_L() {
 	xhttp.send(formdata);
 }
 
-function search_recipe_R() {
-
-	// ToDo set as parameter
-	var username = document.getElementById("recipe_name").value;
+function search_recipe_R(recipe_name) {
 
 	var xhttp = new XMLHttpRequest();
 	var action = "search_recipe_recipe_name";
 	var formdata = new FormData();
 
 	formdata.append("action", action);
-	formdata.append("recipe_name", username);
+	formdata.append("recipe_name", recipe_name);
 
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {

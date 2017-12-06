@@ -32,7 +32,7 @@ function getSecondaryImages_Ingredients(recipeId, descriptionInput, dateInput,
 			var response = JSON.parse(this.responseText);
 
 			displayModalData(descriptionInput, dateInput, userNameInput,
-					titleLabel, categoryLabel, resultDiv, response);
+					titleLabel, categoryLabel, resultDiv, response, recipeId);
 		}
 	};
 
@@ -41,11 +41,12 @@ function getSecondaryImages_Ingredients(recipeId, descriptionInput, dateInput,
 }
 
 function displayModalData(descriptionInput, dateInput, userNameInput,
-		titleLabel, categoryLabel, resultDiv, secondaryImagesIngredients) {
+		titleLabel, categoryLabel, resultDiv, secondaryImagesIngredients, recipeId) {
 
 	document.getElementById('modal_title').innerHTML = titleLabel.innerHTML;
 	document.getElementById('modal_category').innerHTML = categoryLabel.innerHTML;
 	document.getElementById('modal_description_ta').value = descriptionInput.value;
+	document.getElementById('modal_hidden_recipeId').value = recipeId;
 
 	document.getElementById("modal_previwe_image").style.backgroundImage = resultDiv.style.backgroundImage;
 	document.getElementById("primary_img").style.backgroundImage = resultDiv.style.backgroundImage;
@@ -111,4 +112,30 @@ function previewImage(element) {
 		document.getElementById("modal_previwe_image").style.backgroundImage = element.style.backgroundImage;
 	}
 
+}
+
+function addRecipeToFavorites(recipeIdInput){
+	var xhttp = new XMLHttpRequest();
+	var action = "add_recipe_favorites";
+	var formdata = new FormData();
+
+	
+	formdata.append("action", action);
+	formdata.append("recipe_id", recipeIdInput.value);
+	formdata.append("username", sessionStorage.getItem("uname"));
+
+	xhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			var response = this.responseText;
+			if(response == "OK"){
+				alert("Added to favorites");
+			}else{
+				alert("ERROR");
+			}
+			
+		}
+	};
+
+	xhttp.open("POST", "RecipeControlServlet", true);
+	xhttp.send(formdata);
 }

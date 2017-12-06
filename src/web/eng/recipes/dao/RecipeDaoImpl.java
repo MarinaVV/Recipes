@@ -77,7 +77,7 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 			stmt.setString(4, recipe.getCreatingUser().getUserName().toLowerCase());
 			stmt.execute();
 
-			Recipe newRecipe = getRecipeByTitle(recipe.getTitle());
+			Recipe newRecipe = getRecipeByTitle(recipe.getTitle().toLowerCase());
 			if (imgPaths != null && !imgPaths.isEmpty()) {
 				insertImage(imgPaths, (short) 1, newRecipe.getId());
 			}
@@ -416,6 +416,119 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 
 		return recipe;
 
+	}
+
+	public boolean insertToFavorites(String recipeId, String username) {
+		open();
+		PreparedStatement stmt = null;
+
+		try {
+
+			stmt = con.prepareStatement(SQL.INSERT_FAVORITE_RECIPE);
+
+			stmt.setString(1, recipeId);
+			stmt.setString(2, username);
+			stmt.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (isAutoCommit) {
+					close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return true;
+	}
+
+	public List<Image> deleteRecipeByRecipeId(long recipeId) {
+		open();
+		PreparedStatement stmtDelete = null;
+		List<Image> images;
+		
+		try {
+			con.setAutoCommit(false);
+			isAutoCommit = false;
+			
+			images=getAllImagesByRecipeId(recipeId);
+			
+			stmtDelete = con.prepareStatement(SQL.DELETE_RECIPE);
+
+			stmtDelete.setLong(1, recipeId);
+			stmtDelete.execute();
+			
+			con.commit();
+			return images;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (stmtDelete != null) {
+					stmtDelete.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			close();
+
+		}
+
+	}
+	
+	public List<Image> getAllImagesByRecipeId(Long recipe_id) {
+		open();
+		PreparedStatement stmt = null;
+		ResultSet rs;
+		List<Image> images = new ArrayList<>();
+		
+		String sql = "Select * from images where recipe_id=?";
+
+		try {
+			stmt = con.prepareStatement(sql);
+
+			stmt.setLong(1, recipe_id);
+
+			rs=stmt.executeQuery();
+			
+			while(rs.next()){
+				Image image = new Image();
+				image.setImgPath(rs.getString("img_path"));
+				images.add(image);
+			}
+			
+			return images;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (isAutoCommit) {
+					close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private Recipe mapResultToRecipe(ResultSet rs) throws SQLException {

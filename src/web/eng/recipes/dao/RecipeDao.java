@@ -2,6 +2,7 @@ package web.eng.recipes.dao;
 
 import java.util.List;
 
+import web.eng.recipes.models.Image;
 import web.eng.recipes.models.Recipe;
 
 public interface RecipeDao {
@@ -12,5 +13,6 @@ public interface RecipeDao {
 	List<Recipe> getRecipesPrimaryImageByIngredientsList(List<String> ingredients);
 	List<Recipe> getRecipesPrimaryImageByRecipeName(String recipeName);
 	Recipe getSecondaryImagesIngredients(long recipeId);
-	
+	boolean insertToFavorites(String recipeId, String username);
+	List<Image> deleteRecipeByRecipeId(long recipeId);
 }

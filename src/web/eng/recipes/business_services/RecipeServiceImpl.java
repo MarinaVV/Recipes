@@ -96,7 +96,7 @@ public class RecipeServiceImpl implements RecipeService {
 
 		return foundRecipes;
 	}
-	
+
 	public List<Recipe> searchRecipesPrimaryImageByRecipeName(String recipeName) {
 
 		List<Recipe> foundRecipes = new ArrayList<>();
@@ -129,6 +129,38 @@ public class RecipeServiceImpl implements RecipeService {
 
 		return recipe;
 
+	}
+
+	public String addFavoriteRecipe(String recipeId, String username) {
+		if (recipeDao.insertToFavorites(recipeId, username)) {
+			return "OK";
+		} else {
+			return "ERROR";
+		}
+	}
+
+	public String deleteRecipeByRecipeId(String recipeId) {
+		long recipeIdLong = Long.parseLong(recipeId);
+
+		List<Image> images = recipeDao.deleteRecipeByRecipeId(recipeIdLong);
+
+		if (images != null) {
+
+			for (Image image : images) {
+				if (!image.getImgPath().equals("no_image_provided")) {
+					deleteImage(image.getImgPath());
+				}
+			}
+			return "OK";
+		} else {
+			return "ERROR";
+		}
+	}
+
+	private void deleteImage(String imgPath) {
+		File file = new File(imgPath);
+
+		file.delete();
 	}
 
 	private String readImg(String imagePath) {

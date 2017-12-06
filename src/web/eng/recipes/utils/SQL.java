@@ -4,6 +4,15 @@ public  class SQL {
 
 	public static final String INSERT_RECIPE = "INSERT INTO `recipes`(`description`,`title`, `category`, `user_id`) SELECT  ?, ?,?, id FROM users WHERE `username`=?";
 	
+	public static final String INSERT_FAVORITE_RECIPE = "INSERT INTO `favorites`(`recipe_id`,`user_id`) SELECT  ?, id FROM users WHERE `username`=?";
+	
+	
+	
+	
+	public static final String DELETE_RECIPE = "DELETE FROM recipes WHERE id=?";
+	
+	
+	
 	public static final String GET_RECIPES_IMAGES_BY_USERNAME = "SELECT  images.id AS img_id, "
 																	+ "	images.img_path, 	"
 																	+ "	images.is_primary, "

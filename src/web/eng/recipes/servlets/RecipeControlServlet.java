@@ -91,7 +91,17 @@ public class RecipeControlServlet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(getSecondaryImagesIngredients(request));
 			break;
+		case "add_recipe_favorites":
+			response.getWriter().write(addFavoriteRecipe(request));
+			break;
+		case "delete_recipe_title":
+			response.getWriter().write(deleteRecipeByRecipeId(request));
+			
+			break;
 		}
+		
+		
+		
 
 	}
 
@@ -229,6 +239,27 @@ public class RecipeControlServlet extends HttpServlet {
 		Recipe recipe = recipeService.getSecondaryImagesRecipeIngredients(recipeId);
 		JSONObject jObj = new JSONObject(recipe);
 		return jObj.toString();
+	}
+	
+	private String addFavoriteRecipe(HttpServletRequest request){
+		String responseMsg;
+		
+		String recipeId = request.getParameter("recipe_id");
+		String username = request.getParameter("username");
+		
+		responseMsg=recipeService.addFavoriteRecipe(recipeId,username);
+		
+		return responseMsg;
+	}
+	
+	private String deleteRecipeByRecipeId(HttpServletRequest request){
+		String responseMsg;
+		
+		String recipeId = request.getParameter("recipe_id");
+		
+		responseMsg=recipeService.deleteRecipeByRecipeId(recipeId);
+		
+		return responseMsg;
 	}
 
 }

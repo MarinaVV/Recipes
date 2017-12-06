@@ -68,13 +68,10 @@
 			</div>
 			
 			<div class="result_part">
-				<div class="category_bar">
-					<input id="hidden_result_input" type="hidden">
-					<label class="category">All</label>
-					<label class="category">Breakfast</label>
-					<label class="category">Lunch</label>
-					<label class="category">Dinner</label>
-					<label class="category">Snack</label>
+				<div id="category_bar" class="category_bar">
+					<script type="text/javascript">
+						createCategoryBar();
+					</script>
 				</div>
 				<hr>
 				<div id="results">
@@ -89,6 +86,7 @@
  				<div class="modal-content">
    			 		<div class="modal-header">
     		 			<span class="close" onclick="closeModal()">&times;</span>
+    		 			<input id="modal_hidden_recipeId" class="hidden_inputs" type="hidden">
      		 			<label id="modal_title"></label>
      		 			<label id="modal_category"></label>
     				</div>
@@ -115,7 +113,7 @@
      					<div class="modal_description">
      						<textarea id="modal_description_ta" rows="40" cols="5" readonly></textarea>
      					</div>
-     					<button id="modal_add_favorite">Add to Favorites</button>
+     					<button id="modal_add_favorite" onclick="addRecipeToFavorites(modal_hidden_recipeId)">Add to Favorites</button>
     		 		</div>
   				</div>
 
