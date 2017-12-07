@@ -3,7 +3,6 @@ function createNavBar(){
 	var mapOptions = {
 			home : "Home",
 			find_recipes : "Find Recipes",
-			fav_recipes : "Favorite Recipes",
 			create_recipe: "Create Recipe",
 			ingredients: "Our ingredients list",
 			account: "Account"

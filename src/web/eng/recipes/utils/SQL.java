@@ -64,4 +64,20 @@ public  class SQL {
 			+ "	INNER JOIN `recipes` ON images.recipe_id=recipes.id AND images.is_primary<>0"
 			+ " INNER JOIN `users` ON recipes.user_id=users.id "
 		+ "WHERE images.is_primary=1 AND recipes.title=?";
+	
+	public static final String GET_FAVORITE_RECIPES_IMAGES = "SELECT  images.id AS img_id, "
+				+ "images.img_path, 	 "
+				+ "images.is_primary, "
+				+ "recipes.id AS recipe_id, "
+				+ "recipes.description, "
+				+ "recipes.category, "
+				+ "recipes.date, "
+				+ "recipes.title, 	 "
+				+ "users.id AS user_id, "
+				+ "users.username "
+			+ "FROM `images` "
+				+ "INNER JOIN `recipes` ON images.recipe_id=recipes.id AND images.is_primary<>0 "
+				+ "INNER JOIN `users` ON recipes.user_id=users.id "
+				+ "INNER JOIN `favorites` ON recipes.id=favorites.recipe_id "
+			+ "WHERE images.is_primary=1 AND users.username=?";
 }

@@ -138,6 +138,20 @@ public class RecipeServiceImpl implements RecipeService {
 			return "ERROR";
 		}
 	}
+	
+	public List<Recipe> getFavoriteRecipes(String username){
+		
+		List<Recipe> foundRecipes = new ArrayList<>();
+
+		foundRecipes = recipeDao.getFavoriteRecipes(username);
+		for (Recipe recipe : foundRecipes) {
+			if (recipe.getImages().get(0).getImgPath() != null) {
+				String img = readImg(recipe.getImages().get(0).getImgPath());
+				recipe.getImages().get(0).setImage(img);
+			}
+		}
+		return foundRecipes;
+	}
 
 	public String deleteRecipeByRecipeId(String recipeId) {
 		long recipeIdLong = Long.parseLong(recipeId);

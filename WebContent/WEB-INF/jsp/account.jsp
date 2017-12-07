@@ -40,6 +40,9 @@
 				<div class="menu_item" onclick="showMyRecipes()">
 					<label>My recipes</label>
 				</div>
+				<div class="menu_item" onclick="showFavoriteRecipes()">
+					<label>Favorite recipes</label>
+				</div>
 			</div>
 			
 			<div id="information_div" class="information_div">

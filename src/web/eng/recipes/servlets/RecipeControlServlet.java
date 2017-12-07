@@ -98,6 +98,12 @@ public class RecipeControlServlet extends HttpServlet {
 			response.getWriter().write(deleteRecipeByRecipeId(request));
 			
 			break;
+		case "get_favorite_recipes":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(getFavoriteRecipes(request));
+			
+			break;
 		}
 		
 		
@@ -260,6 +266,15 @@ public class RecipeControlServlet extends HttpServlet {
 		responseMsg=recipeService.deleteRecipeByRecipeId(recipeId);
 		
 		return responseMsg;
+	}
+	
+	private String getFavoriteRecipes(HttpServletRequest request){
+
+		String username = request.getParameter("username");
+		
+		List<Recipe> foundIngredients = recipeService.getFavoriteRecipes(username);
+
+		return new JSONArray(foundIngredients).toString();
 	}
 
 }
