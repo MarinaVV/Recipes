@@ -346,6 +346,48 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 
 		return foundRecipes;
 	}
+	
+	public List<Recipe> getFavoriteRecipes(String username){
+		open();
+		PreparedStatement stmt = null;
+		String sql = SQL.GET_FAVORITE_RECIPES_IMAGES;
+		ResultSet rs;
+		List<Recipe> foundRecipes = new ArrayList<>();
+
+		try {
+			stmt = con.prepareStatement(sql);
+
+			stmt.setString(1, username);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+
+				Recipe recipe = mapResultToRecipe(rs);
+
+				foundRecipes.add(recipe);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (isAutoCommit) {
+					close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return foundRecipes;
+	}
 
 	public Recipe getSecondaryImagesIngredients(long recipeId) {
 

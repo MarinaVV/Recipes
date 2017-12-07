@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/nav-bar.css"> 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/shared-design.css"> 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/nav-bar.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/utils.js"></script>
 </head>
 <body>
 
@@ -18,6 +19,22 @@
 		<script>
 			createNavBar();
 		</script>
+		
+		<div class="padding_div"> </div>
+		
+			<!--  BODY -->
+		<div class="body_container">
+			<div id="category_bar" class="category_bar">
+					<script type="text/javascript">
+						createCategoryBar();
+					</script>
+				</div>
+				<hr>
+				<div id="results">
+				
+				</div>
+		</div>
+		
 		</div>
 	</div>
 </body>
