@@ -8,7 +8,7 @@
 	width: 100%; /* Full width */
 	height: 100%; /* Full height */
 	/* Enable scroll if needed */
-	background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+	background-color: rgba(0, 0, 0, 0.65); /* Black w/ opacity */
 	-webkit-animation-name: fadeIn; /* Fade in the background */
 	-webkit-animation-duration: 0.4s;
 	animation-name: fadeIn;
@@ -45,12 +45,12 @@
 
 .modal-header {
 	padding: 2px 10px;
-	background-color: #5cb85c;
+	background-color: #83e278;
 	color: black;
 }
 
 .modal-body {
-	padding: 2px 10px;
+	padding: 10px 10px;
 }
 
 /* Add Animation */
@@ -102,6 +102,42 @@ to {
 /*Elements in modal*/
 .modal-header {
 	text-align: center;
+	margin: 0;
+	overflow: hidden;
+}
+.modal_title_div {
+	width: 35.5%;
+	height: 40px;
+	float: left;
+	position: relative;
+	border: 1px solid;
+	margin-left:19%;
+
+}
+
+.modal_category_div {
+	margin-left: 55.7%;
+	height: 40px;
+	vertical-align: bottom;
+	position: relative;
+	border: 1px solid;
+	margin-right:20%;
+}
+
+#modal_title {
+	font-size: 36px;
+	position: absolute;
+	bottom: 0;
+	right:0;
+	left:0;
+}
+
+#modal_category {
+	font-size: 24px;
+	position: absolute;
+	bottom: 0;
+		right:0;
+	left:0;
 }
 
 .modal_image_ingredients {

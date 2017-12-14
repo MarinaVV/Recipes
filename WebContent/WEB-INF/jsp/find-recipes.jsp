@@ -87,8 +87,12 @@
    			 		<div class="modal-header">
     		 			<span class="close" onclick="closeModal()">&times;</span>
     		 			<input id="modal_hidden_recipeId" class="hidden_inputs" type="hidden">
-     		 			<label id="modal_title"></label>
-     		 			<label id="modal_category"></label>
+     		 			<div class="modal_title_div">
+     		 				<label id="modal_title"></label>
+     		 			</div>
+     		 			<div class="modal_category_div">
+     		 				<label id="modal_category"></label>
+     		 			</div>
     				</div>
    			 		<div class="modal-body">
    			 			<div class="modal_image_ingredients">

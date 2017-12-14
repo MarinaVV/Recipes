@@ -139,3 +139,150 @@ function addRecipeToFavorites(recipeIdInput){
 	xhttp.open("POST", "RecipeControlServlet", true);
 	xhttp.send(formdata);
 }
+
+function createBaseModal(){
+	
+	//get the modalDiv from html
+	var myModalDiv = document.getElementById("myModal");
+	
+	//create div containing modal content
+	var modalContentDiv = document.createElement("div");
+	modalContentDiv.setAttribute("class", "modal-content");
+	
+	//create div containing header content
+	var modalHeaderDiv = document.createElement("div");
+	modalHeaderDiv.setAttribute("class", "modal-header");
+	
+	//create close X
+	var closeSpan = document.createElement("span");
+	closeSpan.setAttribute("class", "close");
+	closeSpan.setAttribute("onclick", "closeModal()");
+	closeSpan.innerHTML = "&times";
+	
+	//attach close button to header
+	modalHeaderDiv.appendChild(closeSpan);
+	
+	//create hidden input for recipeId
+	var recipeIdHiddenInput = document.createElement("input");
+	recipeIdHiddenInput.setAttribute("id", "modal_hidden_recipeId");
+	recipeIdHiddenInput.setAttribute("class", "hidden_inputs");
+	recipeIdHiddenInput.setAttribute("type", "hidden");
+	
+	//attach hidden input recipe Id to header
+	modalHeaderDiv.appendChild(recipeIdHiddenInput);
+	
+	//create div containing recipe Title label
+	var titleDiv=document.createElement("div");
+	titleDiv.setAttribute("class", "modal_title_div");
+	
+	//create label containing recipe Title
+	var titleLabel = document.createElement("label");
+	titleLabel.setAttribute("id", "modal_title");
+	
+	//attach title label to title div
+	titleDiv.appendChild(titleLabel);
+	//attach title div to header div
+	modalHeaderDiv.appendChild(titleDiv);
+	
+	//create category div containing recipe category label
+	var categoryDiv = document.createElement("div");
+	categoryDiv.setAttribute("class", "modal_category_div")
+	
+	//create category label containing recipe category
+	var categoryLabel = document.createElement("label");
+	categoryLabel.setAttribute("id", "modal_category");
+	
+	//attach category label to category div
+	categoryDiv.appendChild(categoryLabel);
+	//attach category fiv to header div
+	modalHeaderDiv.appendChild(categoryDiv);
+	
+	//attach modal header to modal content div
+	modalContentDiv.appendChild(modalHeaderDiv);
+	
+	//create BODY div containing body content
+	var modalBodyDiv = document.createElement("div");
+	
+	//create image ingredients div containing iamges and ingredients
+	var imageIngredientsDiv = document.createElement("div");
+	
+	//create image part div containing images
+	var imagePartDiv = document.createElement("div");
+	imagePartDiv.setAttribute("class", "modal_image_part");
+	
+	//create div for image preview
+	var previewImageDiv = document.createElement("div");
+	previewImageDiv.setAttribute("id", "modal_previwe_image");
+	previewImageDiv.setAttribute("class", "modal_previwe_image");
+	
+	//attach previewImage div to image part div
+	imagePartDiv.appendChild(previewImageDiv);
+	
+	//create div containing all the small images
+	var allImagesDiv = document.createElement("div");
+	allImagesDiv.setAttribute("class", "modal_all_images");
+	
+	var primaryImgDiv = document.createElement("div");
+	primaryImgDiv.setAttribute("id", "primary_img");
+	primaryImgDiv.setAttribute("onclick", "previewImage(primary_img)");
+	
+	allImagesDiv.appendChild(primaryImgDiv);
+	
+	var secondaryImgDiv1 = document.createElement("div");
+	secondaryImgDiv1.setAttribute("id", "secondery_img_1");
+	secondaryImgDiv1.setAttribute("onclick", "previewImage(secondery_img_1)");
+
+	allImagesDiv.appendChild(secondaryImgDiv1);
+	
+	var secondaryImgDiv2 = document.createElement("div");
+	secondaryImgDiv2.setAttribute("id", "secondery_img_2");
+	secondaryImgDiv2.setAttribute("onclick", "previewImage(secondery_img_2)");
+	
+	allImagesDiv.appendChild(secondaryImgDiv2);
+	
+	var secondaryImgDiv3 = document.createElement("div");
+	secondaryImgDiv3.setAttribute("id", "secondery_img_3");
+	secondaryImgDiv3.setAttribute("onclick", "previewImage(secondery_img_3)");
+	
+	allImagesDiv.appendChild(secondaryImgDiv3);
+	
+	var secondaryImgDiv4 = document.createElement("div");
+	secondaryImgDiv4.setAttribute("id", "secondery_img_4");
+	secondaryImgDiv4.setAttribute("onclick", "previewImage(secondery_img_4)");
+	
+	allImagesDiv.appendChild(secondaryImgDiv4);
+	
+	//attach all images div to images part div
+	imagePartDiv.appendChild(allImagesDiv);
+	
+	//attach images part div to image ingredients div
+	imageIngredientsDiv.appendChild(imagePartDiv);
+	
+	var ingredientsPartDiv = document.createElement("div");
+	ingredientsPartDiv.setAttribute("class", "modal_ingredients_part");
+	
+	//create div wich will be used to add recipe ingredients rows
+	var recipeIngredientsDiv = document.createElement("div");
+	recipeIngredientsDiv.setAttribute("id", "modal_recipe_ingredients");
+	
+	ingredientsPartDiv.appendChild(recipeIngredientsDiv);
+	imageIngredientsDiv.appendChild(ingredientsPartDiv);
+	modalBodyDiv.appendChild(imageIngredientsDiv);
+	
+	var descriptionDiv = document.createElement("div");
+	descriptionDiv.setAttribute("class", "modal_description");
+	
+	var descriptionTextArea = document.createElement("textarea");
+	descriptionTextArea.setAttribute("id", "modal_description_ta");
+	descriptionTextArea.setAttribute("rows", "40");
+	descriptionTextArea.setAttribute("cols", "5");
+	descriptionTextArea.setAttribute("readonly", "");
+	
+	descriptionDiv.appendChild(descriptionTextArea);
+	modalBodyDiv.appendChild(descriptionDiv);
+	
+	//attach modal body to modal content div
+	modalContentDiv.appendChild(modalBodyDiv);
+	
+	myModalDiv.appendChild(modalContentDiv);
+}
