@@ -13,6 +13,7 @@ public interface RecipeDao {
 	List<Recipe> getRecipesPrimaryImageByIngredientsList(List<String> ingredients);
 	List<Recipe> getRecipesPrimaryImageByRecipeName(String recipeName);
 	Recipe getSecondaryImagesIngredients(long recipeId);
+	boolean isRecipeFavorited(String recipeId, String username);
 	boolean insertToFavorites(String recipeId, String username);
 	List<Image> deleteRecipeByRecipeId(long recipeId);
 	List<Recipe> getFavoriteRecipes(String username);

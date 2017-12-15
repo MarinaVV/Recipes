@@ -140,6 +140,19 @@ function addRecipeToFavorites(recipeIdInput){
 	xhttp.send(formdata);
 }
 
+function createFindRecipesModal(){
+	createBaseModal();
+	
+	var modalBodyDiv=document.getElementById("modal-body");
+	
+	var addToFavButton =document.createElement("button");
+	addToFavButton.setAttribute("id", "modal_add_favorite");
+	addToFavButton.setAttribute("onclick", "addRecipeToFavorites(modal_hidden_recipeId)");
+	addToFavButton.innerHTML = "Add to Favorites";
+	
+	modalBodyDiv.appendChild(addToFavButton);
+}
+
 function createBaseModal(){
 	
 	//get the modalDiv from html
@@ -202,9 +215,12 @@ function createBaseModal(){
 	
 	//create BODY div containing body content
 	var modalBodyDiv = document.createElement("div");
+	modalBodyDiv.setAttribute("id", "modal-body");
+	modalBodyDiv.setAttribute("class", "modal-body");
 	
 	//create image ingredients div containing iamges and ingredients
 	var imageIngredientsDiv = document.createElement("div");
+	imageIngredientsDiv.setAttribute("class", "modal_image_ingredients");
 	
 	//create image part div containing images
 	var imagePartDiv = document.createElement("div");

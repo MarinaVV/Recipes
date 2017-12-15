@@ -132,6 +132,10 @@ public class RecipeServiceImpl implements RecipeService {
 	}
 
 	public String addFavoriteRecipe(String recipeId, String username) {
+		
+		if(recipeDao.isRecipeFavorited(recipeId, username)){
+			return "REC"
+		}
 		if (recipeDao.insertToFavorites(recipeId, username)) {
 			return "OK";
 		} else {

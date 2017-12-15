@@ -13,6 +13,13 @@ public  class SQL {
 	
 	
 	
+	public static final String GET_FAVORITE_RECIPE_BY_RECIPE_ID_USERNAME = "SELECT * "
+																		 + "FROM `favorites` "
+																		 + "WHERE recipe_id=? and user_id in "
+																		 		+ "(SELECT id "
+																		 		+ "FROM users "
+																		 		+ "WHERE username=?)";
+	
 	public static final String GET_RECIPES_IMAGES_BY_USERNAME = "SELECT  images.id AS img_id, "
 																	+ "	images.img_path, 	"
 																	+ "	images.is_primary, "

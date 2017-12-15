@@ -459,6 +459,43 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		return recipe;
 
 	}
+	
+	public boolean isRecipeFavorited(String recipeId, String username){
+		open();
+		PreparedStatement stmt = null;
+		ResultSet rs;
+		
+		try {
+
+			stmt = con.prepareStatement(SQL.GET_FAVORITE_RECIPE_BY_RECIPE_ID_USERNAME);
+
+			stmt.setString(1, recipeId);
+			stmt.setString(2, username);
+			rs = stmt.executeQuery();
+
+			if(rs.next()){
+				return true;
+			}
+			
+			return false;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (isAutoCommit) {
+					close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}	
+	}
 
 	public boolean insertToFavorites(String recipeId, String username) {
 		open();
