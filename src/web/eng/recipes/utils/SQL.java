@@ -7,7 +7,7 @@ public  class SQL {
 	public static final String INSERT_FAVORITE_RECIPE = "INSERT INTO `favorites`(`recipe_id`,`user_id`) SELECT  ?, id FROM users WHERE `username`=?";
 	
 	
-	
+	public static final String DELETE_FAVORITE_RECIPE = "DELETE FROM `favorites` WHERE recipe_id = ? and user_id in (SELECT id FROM users WHERE username=?)";
 	
 	public static final String DELETE_RECIPE = "DELETE FROM recipes WHERE id=?";
 	

@@ -1,6 +1,8 @@
 function showMyRecipes() {
-	createResultArea();
-
+	createResultArea();	
+	clearModal();
+	createMyRecipesModal();
+	
 	var username = sessionStorage.uname;
 	search_recipe_U(username);
 }
@@ -9,12 +11,14 @@ function showFavoriteRecipes() {
 	var xhttp = new XMLHttpRequest();
 	var action = "get_favorite_recipes";
 	var formdata = new FormData();
-
+	
 	formdata.append("action", action);
 	var username = sessionStorage.uname;
 	formdata.append("username", username);
 
 	createResultArea();
+	clearModal();
+	createFavoritedRecipesModal();
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 
@@ -30,6 +34,11 @@ function showFavoriteRecipes() {
 
 	xhttp.open("POST", "RecipeControlServlet", true);
 	xhttp.send(formdata);
+}
+
+function clearModal(){
+	var modalDiv = document.getElementById("myModal");
+	modalDiv.removeChild(modalDiv.childNodes[0]);
 }
 
 function createResultArea() {

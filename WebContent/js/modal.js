@@ -129,8 +129,8 @@ function addRecipeToFavorites(recipeIdInput){
 			var response = this.responseText;
 			if(response == "OK"){
 				alert("Added to favorites");
-			}else{
-				alert("ERROR");
+			}else {
+				alert(response);
 			}
 			
 		}
@@ -138,6 +138,75 @@ function addRecipeToFavorites(recipeIdInput){
 
 	xhttp.open("POST", "RecipeControlServlet", true);
 	xhttp.send(formdata);
+}
+
+function removeRecipeFromFavorites(recipeIdInput){
+	var xhttp = new XMLHttpRequest();
+	var action = "remove_recipe_favorites";
+	var formdata = new FormData();
+
+	
+	formdata.append("action", action);
+	formdata.append("recipe_id", recipeIdInput.value);
+	formdata.append("username", sessionStorage.getItem("uname"));
+
+	xhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			var response = this.responseText;
+			
+			alert(response);
+			
+			var recipes = JSON.parse(document
+					.getElementById("hidden_result_input").value);
+			for (var i = 0; i < recipes.length; i++) {
+				if (recipes[i].id == recipeIdInput.value) {
+					recipes.splice(i, 1);
+				}
+			}
+
+			clearSearchResult();
+			displaySearchResult(recipes);
+			closeModal();
+			
+		}
+	};
+
+	xhttp.open("POST", "RecipeControlServlet", true);
+	xhttp.send(formdata);
+}
+
+function createFavoritedRecipesModal(){
+	createBaseModal();
+	
+	var modalBodyDiv=document.getElementById("modal-body");
+	
+	var addDelButton =document.createElement("button");
+	addDelButton.setAttribute("id", "modal_delete");
+	addDelButton.setAttribute("onclick", "removeRecipeFromFavorites(modal_hidden_recipeId)");
+	addDelButton.innerHTML = "Remove from favorites";
+	
+	modalBodyDiv.appendChild(addDelButton);
+	
+}
+
+function createMyRecipesModal(){
+	createBaseModal();
+	
+	var modalBodyDiv=document.getElementById("modal-body");
+	
+	var addDelButton =document.createElement("button");
+	addDelButton.setAttribute("id", "modal_delete");
+	addDelButton.setAttribute("onclick", "deleteRecipe(modal_hidden_recipeId)");
+	addDelButton.innerHTML = "Delete Recipe";
+	
+	modalBodyDiv.appendChild(addDelButton);
+	
+	var addUpdateButton =document.createElement("button");
+	addUpdateButton.setAttribute("id", "modal_update");
+	addUpdateButton.setAttribute("onclick", "");
+	addUpdateButton.innerHTML = "Update Recipe";
+	
+	modalBodyDiv.appendChild(addUpdateButton);
 }
 
 function createFindRecipesModal(){

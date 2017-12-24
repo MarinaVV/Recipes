@@ -15,6 +15,7 @@ public interface RecipeService {
 	List<Recipe> searchRecipesPrimaryImageByRecipeName(String recipe_name);
 	Recipe getSecondaryImagesRecipeIngredients(String recipeId);
 	String addFavoriteRecipe(String recipeId, String username);
+	String removeFavoriteRecipe(String recipeId, String username);
 	String deleteRecipeByRecipeId(String recipeId);
 	List<Recipe> getFavoriteRecipes(String username);
 }

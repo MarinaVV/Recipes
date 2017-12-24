@@ -528,6 +528,38 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 
 		return true;
 	}
+	
+	public boolean deleteFromFavorites(String recipeId, String username) {
+		open();
+		PreparedStatement stmt = null;
+
+		try {
+
+			stmt = con.prepareStatement(SQL.DELETE_FAVORITE_RECIPE);
+
+			stmt.setString(1, recipeId);
+			stmt.setString(2, username);
+			stmt.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (isAutoCommit) {
+					close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return true;
+	}
 
 	public List<Image> deleteRecipeByRecipeId(long recipeId) {
 		open();

@@ -104,6 +104,8 @@ public class RecipeControlServlet extends HttpServlet {
 			response.getWriter().write(getFavoriteRecipes(request));
 			
 			break;
+		case "remove_recipe_favorites":
+			response.getWriter().write(removeFavoriteRecipe(request));
 		}
 		
 		
@@ -254,6 +256,17 @@ public class RecipeControlServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		
 		responseMsg=recipeService.addFavoriteRecipe(recipeId,username);
+		
+		return responseMsg;
+	}
+	
+	private String removeFavoriteRecipe(HttpServletRequest request) {
+		String responseMsg;
+		
+		String recipeId = request.getParameter("recipe_id");
+		String username = request.getParameter("username");
+		
+		responseMsg=recipeService.removeFavoriteRecipe(recipeId,username);
 		
 		return responseMsg;
 	}
