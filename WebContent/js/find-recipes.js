@@ -1,4 +1,4 @@
-function add_ingredient(){
+function add_ingredient_find(){
 	var countIngredients = document.getElementById("count_ingredients_input").value;
 	countIngredients++;
 	var countIngredients = document.getElementById("count_ingredients_input").value=countIngredients;

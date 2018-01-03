@@ -18,4 +18,5 @@ public interface RecipeService {
 	String removeFavoriteRecipe(String recipeId, String username);
 	String deleteRecipeByRecipeId(String recipeId);
 	List<Recipe> getFavoriteRecipes(String username);
+	String updateRecipe(String recipeId,String recipeTitle,String recipeCategory,String recipeDescr);
 }

@@ -1,6 +1,8 @@
 window.onclick = function(event) {
 	if (event.target == document.getElementById('myModal')) {
 		closeModal();
+	}else if (event.target == document.getElementById('myModalUpdate')) {
+		closeModalUpdate();
 	}
 }
 
@@ -203,7 +205,8 @@ function createMyRecipesModal(){
 	
 	var addUpdateButton =document.createElement("button");
 	addUpdateButton.setAttribute("id", "modal_update");
-	addUpdateButton.setAttribute("onclick", "");
+	addUpdateButton.setAttribute("onclick", "openModalUpdate(modal_hidden_recipeId,modal_description_ta," +
+			"'','',modal_title, modal_category, '')");
 	addUpdateButton.innerHTML = "Update Recipe";
 	
 	modalBodyDiv.appendChild(addUpdateButton);

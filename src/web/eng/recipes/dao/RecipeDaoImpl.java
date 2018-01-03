@@ -25,7 +25,7 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		ResultSet rs;
 
 		try {
-			stmt = con.prepareStatement("Select * from recipes where title=?");
+			stmt = con.prepareStatement(SQL.GET_RECIPE_BY_RECIPE_TITLE);
 
 			stmt.setString(1, title);
 			rs = stmt.executeQuery();
@@ -398,8 +398,8 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		List<Image> imagesList = new ArrayList<>();
 		List<Recipe_ingredient> recipeIngredientsList = new ArrayList<>();
 		Recipe recipe = new Recipe();
-		String sqlImages = "Select * From images where recipe_id = ? and is_primary=0";
-		String sqlRecipeIngredients = "Select * From recipe_ingredients where recipe_id=?";
+		String sqlImages = SQL.GET_SECONDARY_IMAGES;
+		String sqlRecipeIngredients = SQL.GET_RECIPEINGREDIENTS;
 		ResultSet rs;
 
 		try {
@@ -605,7 +605,7 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		ResultSet rs;
 		List<Image> images = new ArrayList<>();
 		
-		String sql = "Select * from images where recipe_id=?";
+		String sql = SQL.GET_ALL_IMAGES_RECIPE_ID;
 
 		try {
 			stmt = con.prepareStatement(sql);
@@ -626,6 +626,45 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (isAutoCommit) {
+					close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public boolean updateRecipe(String recipeId, String recipeTitle, String recipeCategory, String recipeDescr) {
+		open();
+		PreparedStatement stmt = null;
+
+		
+		String sql = SQL.UPDATE_RECIPE;
+
+		try {
+			stmt = con.prepareStatement(sql);
+
+			stmt.setString(1, recipeTitle);
+			stmt.setString(2, recipeCategory);
+			stmt.setString(3, recipeDescr);
+			stmt.setString(4, recipeId);
+			
+			stmt.execute();
+			
+			return true;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
 		} finally {
 			try {
 				if (stmt != null) {

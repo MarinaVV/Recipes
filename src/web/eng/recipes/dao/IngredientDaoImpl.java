@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import web.eng.recipes.models.User;
+import web.eng.recipes.utils.SQL;
 
 public class IngredientDaoImpl extends Dao implements IngredientDao {
 
@@ -17,7 +18,7 @@ public class IngredientDaoImpl extends Dao implements IngredientDao {
 		List<String> ingredientNames = new ArrayList<>();
 
 		try {
-			stmt = con.prepareStatement("Select * from ingredients");
+			stmt = con.prepareStatement(SQL.GET_ALL_INGREDIENTS);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -45,7 +46,7 @@ public class IngredientDaoImpl extends Dao implements IngredientDao {
 	public void insertIngredients(List<String> ingredientsList) {
 		open();
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO ingredients (`name`) VALUES ";
+		String sql = SQL.INSERT_INGREDIENT;
 
 		// change the insert query depending on number of ingredients
 		for (int index = 0; index < ingredientsList.size(); index++) {

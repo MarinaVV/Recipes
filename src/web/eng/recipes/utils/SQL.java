@@ -1,7 +1,11 @@
 package web.eng.recipes.utils;
 
 public  class SQL {
+	
+	////////////  RECIPE DAO ////////////////////////////////////////////////
 
+	public static final String UPDATE_RECIPE = "UPDATE recipes SET title=?, category=?, description=? WHERE id=?";
+	
 	public static final String INSERT_RECIPE = "INSERT INTO `recipes`(`description`,`title`, `category`, `user_id`) SELECT  ?, ?,?, id FROM users WHERE `username`=?";
 	
 	public static final String INSERT_FAVORITE_RECIPE = "INSERT INTO `favorites`(`recipe_id`,`user_id`) SELECT  ?, id FROM users WHERE `username`=?";
@@ -12,6 +16,13 @@ public  class SQL {
 	public static final String DELETE_RECIPE = "DELETE FROM recipes WHERE id=?";
 	
 	
+	public static final String GET_RECIPE_BY_RECIPE_TITLE = "Select * from recipes where title=?";
+	
+	public static final String GET_SECONDARY_IMAGES ="Select * From images where recipe_id = ? and is_primary=0";
+	
+	public static final String GET_RECIPEINGREDIENTS = "Select * From recipe_ingredients where recipe_id=?";
+	
+	public static final String GET_ALL_IMAGES_RECIPE_ID = "Select * from images where recipe_id=?";
 	
 	public static final String GET_FAVORITE_RECIPE_BY_RECIPE_ID_USERNAME = "SELECT * "
 																		 + "FROM `favorites` "
@@ -87,4 +98,23 @@ public  class SQL {
 				+ "INNER JOIN `users` ON recipes.user_id=users.id "
 				+ "INNER JOIN `favorites` ON recipes.id=favorites.recipe_id "
 			+ "WHERE images.is_primary=1 AND users.username=?";
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	//////////////////////////////////////////  INGREDIENT DAO ///////////////////////////////////////////
+	
+	public static final String GET_ALL_INGREDIENTS = "Select * from ingredients";
+	
+	public static final String INSERT_INGREDIENT = "INSERT INTO ingredients (`name`) VALUES ";
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//////////////////////////////// USER DAO /////////////////////////////////////////////////////////////
+	
+	public static final String GET_USER_USERNAME ="Select * from users where username = ?";
+	
+	public static final String INSERT_USER = "INSERT INTO users (username, password) VALUES(?,?)";
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////
 }

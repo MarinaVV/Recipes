@@ -6,14 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import web.eng.recipes.utils.Properties;
+
 public class Dao {
 
 	protected Connection con;
 	private boolean isConnON = false;
 
-	private final String URL = "jdbc:mysql://localhost:3306/recipes_app";
-	private final String USER = "root";
-	private final String PASS = "123";
+	protected String URL = Properties.URL;
+	protected String USER = Properties.USER;
+	protected String PASS = Properties.PASS;
 
 	protected void open() {
 

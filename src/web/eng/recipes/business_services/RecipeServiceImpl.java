@@ -25,13 +25,14 @@ import web.eng.recipes.dao.RecipeDao;
 import web.eng.recipes.models.Image;
 import web.eng.recipes.models.Recipe;
 import web.eng.recipes.models.Recipe_ingredient;
+import web.eng.recipes.utils.Properties;
 
 public class RecipeServiceImpl implements RecipeService {
 
 	@Inject
 	RecipeDao recipeDao;
 
-	public static final String IMAGE_FOLDER = "C:\\Users\\Stanislav\\Documents\\uni\\WebIngPlaning\\images\\";
+	private String IMAGE_FOLDER = Properties.IMAGE_FOLDER;
 
 	public String createRecipe(Recipe recipe, List<Part> images) {
 
@@ -178,6 +179,15 @@ public class RecipeServiceImpl implements RecipeService {
 				}
 			}
 			return "OK";
+		} else {
+			return "ERROR";
+		}
+	}
+	
+	public String updateRecipe(String recipeId,String recipeTitle,String recipeCategory,String recipeDescr) {
+		
+		if (recipeDao.updateRecipe(recipeId, recipeTitle, recipeCategory, recipeDescr)) {
+			return "UPDATED";
 		} else {
 			return "ERROR";
 		}

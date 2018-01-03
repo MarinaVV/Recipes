@@ -104,9 +104,10 @@
 							class="unit_input" id="unit_input_1" value="Units" name="units_input" list="suggestionsUnits"
 							onclick="deleteHintValueUnits(unit_input_1)" onblur="setHintValueUnits(unit_input_1)"><button 
 							class="delete_button" id="delete_button_1"  onclick="">-</button>
+							<input class="hidden" id="hidden_ingredient_input_1" type="hidden" name="hidden_ingredient_input">
 						</div>		
 					</div>
-					<button id=add_button onclick="add_ingredient()">+</button>	
+					<button id=add_button onclick="add_ingredient_create_update('Add ingredient','Quantity','Units')">+</button>	
 					
 					<datalist id="suggestionsIngredients">
 					</datalist>

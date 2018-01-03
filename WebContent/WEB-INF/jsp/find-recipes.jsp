@@ -59,7 +59,7 @@
 							<input type="text" id="input_ingredient_1" name="ingredient_input" list="suggestionsIngredients" oninput="disableOtherSearchInputs(input_ingredient_1,recipe_name,username);enableAddButton();"><button id="delete_button_1"  onclick="" >-</button>
 						</div>
 					</div>
-					<button id=add_button onclick="add_ingredient();enableAddButton()" disabled="true">+</button>
+					<button id=add_button onclick="add_ingredient_find();enableAddButton()" disabled="true">+</button>
 					<datalist id="suggestionsIngredients">
 					</datalist>
 				</div>

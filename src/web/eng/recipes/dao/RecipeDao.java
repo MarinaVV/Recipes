@@ -18,4 +18,5 @@ public interface RecipeDao {
 	boolean deleteFromFavorites(String recipeId, String username);
 	List<Image> deleteRecipeByRecipeId(long recipeId);
 	List<Recipe> getFavoriteRecipes(String username);
+	boolean updateRecipe(String recipeId, String recipeTitle, String recipeCategory, String recipeDescr);
 }
