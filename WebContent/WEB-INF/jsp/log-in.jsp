@@ -14,16 +14,17 @@
 		window.onload = window.sessionStorage.clear();
 	</script>
 
-	<p id="is_invalid"></p>
-	<script>
-		var is_invalid=${is_invalid};
-		if(is_invalid == true){
-			document.getElementById("is_invalid").innerHTML="Username or password is incorrect!"
-		}
-	</script>
+	
 	<form id="log_in_form" action="${pageContext.request.contextPath}/UserControlServlet"
 		method="post">
 		<div class="outer">
+			<label id="is_invalid" class="error"></label>
+			<script>
+				var is_invalid=${is_invalid};
+				if(is_invalid == true){
+					document.getElementById("is_invalid").innerHTML="Username or password is incorrect!"
+				}
+			</script>
 			<div class="inner">
 				Username: <input id="uname" class="inner_input" type="text" name="username">
 			</div>
@@ -31,12 +32,13 @@
 				Password: <input id="pass" class="inner_input" type="password" name="password">
 			</div>
 			<input id="action" class="inner_input" type="hidden" name="action">
+			<div class="inner">
+				<input class="button" type="button" value="Log in" onclick="login()">
+				<input class="button" type="button" value="Register" onclick="document.location.href='UserControlServlet?action=register'">
+			</div>
 		</div>
 	</form>
-	<div class="inner">
-		<input class="button" type="button" value="Log in" onclick="login()">
-		<input class="button" type="button" value="Register" onclick="document.location.href='UserControlServlet?action=register'">
-	</div>
+
 	
 </body>
 </html>

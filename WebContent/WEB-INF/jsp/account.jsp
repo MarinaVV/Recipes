@@ -22,7 +22,16 @@
 </head>
 <body>
 	<div class="outer_container">
-		<p>ACc</p>
+		<p id="p_uname">${uname}</p>
+		<script>
+			var uname = window.sessionStorage.getItem("uname");
+			if(window.sessionStorage.getItem("uname") == null){
+				var name = document.getElementById("p_uname").innerHTML;
+				window.sessionStorage.setItem("uname", name)
+			}else{
+				document.getElementById("p_uname").innerHTML=window.sessionStorage.getItem("uname");
+			}
+		</script>
 		
 		<!-- Navigation bar -->
 		<div id="nav_bar_container">

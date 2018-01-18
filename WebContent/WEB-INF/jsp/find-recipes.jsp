@@ -26,7 +26,16 @@
 	</script>
 
 	<div class="outer_container">
-		<p>find rec</p>
+		<p id="p_uname">${uname}</p>
+		<script>
+			var uname = window.sessionStorage.getItem("uname");
+			if(window.sessionStorage.getItem("uname") == null){
+				var name = document.getElementById("p_uname").innerHTML;
+				window.sessionStorage.setItem("uname", name)
+			}else{
+				document.getElementById("p_uname").innerHTML=window.sessionStorage.getItem("uname");
+			}
+		</script>
 		<div id="nav_bar_container">
 		<script>
 			createNavBar();

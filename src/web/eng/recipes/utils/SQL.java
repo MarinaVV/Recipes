@@ -93,10 +93,10 @@ public  class SQL {
 				+ "recipes.title, 	 "
 				+ "users.id AS user_id, "
 				+ "users.username "
-			+ "FROM `images` "
-				+ "INNER JOIN `recipes` ON images.recipe_id=recipes.id AND images.is_primary<>0 "
-				+ "INNER JOIN `users` ON recipes.user_id=users.id "
-				+ "INNER JOIN `favorites` ON recipes.id=favorites.recipe_id "
+			+ "FROM `favorites`"
+				+ "INNER JOIN `users` ON favorites.user_id=users.id "
+				+ "INNER JOIN `recipes` ON favorites.recipe_id=recipes.id "
+				+ "INNER JOIN `images` ON images.recipe_id=recipes.id AND images.is_primary<>0 "
 			+ "WHERE images.is_primary=1 AND users.username=?";
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////

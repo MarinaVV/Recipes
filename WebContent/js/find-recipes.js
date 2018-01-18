@@ -18,7 +18,7 @@ function add_ingredient_find(){
 	
 	var deleteButton=document.createElement("button");
 	deleteButton.setAttribute("id", "delete_button_"+countIngredients);
-	deleteButton.setAttribute("onclick", "delete_ingredient(div_ingredient_"+countIngredients+")");
+	deleteButton.setAttribute("onclick", "delete_ingredient(div_ingredient_"+countIngredients+");enableAddButton()");
 	deleteButton.innerHTML="-";
 	
 	ingredientDiv.appendChild(ingredientInput);
