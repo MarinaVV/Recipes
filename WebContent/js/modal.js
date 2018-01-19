@@ -20,6 +20,15 @@ function openModal(recipeIdInput, descriptionInput, dateInput, userNameInput,
 	document.getElementById('myModal').style.display = "block";
 }
 
+function openReviewModal() {
+
+	if(!reviewModal()){
+		return;
+	}
+	
+	document.getElementById('myModal').style.display = "block";
+}
+
 function getSecondaryImages_Ingredients(recipeId, descriptionInput, dateInput,
 		userNameInput, titleLabel, categoryLabel, resultDiv) {
 	var xhttp = new XMLHttpRequest();
@@ -56,7 +65,7 @@ function displayModalData(descriptionInput, dateInput, userNameInput,
 	var secondaryImages = secondaryImagesIngredients.images;
 	var recipe_ingredients = secondaryImagesIngredients.recipe_ingredients;
 
-	for (var i = 0; i < secondaryImages.length; i++) {
+	for (var i = 0; i <= secondaryImages.length; i++) {
 		var imgSRC = "data:image/png;base64," + secondaryImages[i].image;
 		document.getElementById("secondery_img_" + (i + 1)).style.backgroundImage = "url(' "
 				+ imgSRC + "')";
@@ -175,6 +184,41 @@ function removeRecipeFromFavorites(recipeIdInput){
 
 	xhttp.open("POST", "RecipeControlServlet", true);
 	xhttp.send(formdata);
+}
+
+function createReviewModal(){
+	createBaseModal();
+	
+	var modalPreviewDiv=document.getElementById("modal_previwe_image");
+	var imgDiv =document.createElement("img");
+	imgDiv.setAttribute("class", "previewImgInDiv");
+	modalPreviewDiv.appendChild(imgDiv);
+	
+	var modalPrimaryImgDiv=document.getElementById("primary_img");
+	var imgPrimaryDiv =document.createElement("img");
+	imgPrimaryDiv.setAttribute("class", "previewImgInDivSmall");
+	modalPrimaryImgDiv.appendChild(imgPrimaryDiv);
+	
+	var modalSecondaryImgDiv1=document.getElementById("secondery_img_1");
+	var imgSec1Div =document.createElement("img");
+	imgSec1Div.setAttribute("class", "previewImgInDivSmall");
+	modalSecondaryImgDiv1.appendChild(imgSec1Div);
+	
+	var modalSecondaryImgDiv2=document.getElementById("secondery_img_2");
+	var imgSec2Div =document.createElement("img");
+	imgSec2Div.setAttribute("class", "previewImgInDivSmall");
+	modalSecondaryImgDiv2.appendChild(imgSec2Div);
+	
+	var modalSecondaryImgDiv3=document.getElementById("secondery_img_3");
+	var imgSec3Div =document.createElement("img");
+	imgSec3Div.setAttribute("class", "previewImgInDivSmall");
+	modalSecondaryImgDiv3.appendChild(imgSec3Div);
+	
+	var modalSecondaryImgDiv4=document.getElementById("secondery_img_4");
+	var imgSec4Div =document.createElement("img");
+	imgSec4Div.setAttribute("class", "previewImgInDivSmall");
+	modalSecondaryImgDiv4.appendChild(imgSec4Div);
+	
 }
 
 function createFavoritedRecipesModal(){

@@ -9,11 +9,13 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/nav-bar.css"> 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/shared-design.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/create-recipe.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/modal.css"> 
  
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/nav-bar.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/utils.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/create-recipe.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/create-recipe-ajax-call.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/modal.js"></script>
 </head>
 <body>
 	<script type="text/javascript">
@@ -67,36 +69,36 @@
 							<div>
 							<label>Primary image</label>
 							</div>
-							<input id="primary_img" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(primary_img)">
-							<button onclick="previewImg(primary_img)">Peview	image</button>
+							<input id="primary_img_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(primary_img_input, previewHolder)">
+							<button onclick="previewImg(primary_img_input, previewHolder)">Preview	image</button>
 						</div>
 						<div>
 							<div>
 							<label>Image</label>
 							</div>
-							<input id="secondary_img_1" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_1)">
-							<button onclick="previewImg(secondary_img_1)">Peview	image</button>
+							<input id="secondary_img_1_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_1_input,previewHolder)">
+							<button onclick="previewImg(secondary_img_1_input, previewHolder)">Preview	image</button>
 						</div>
 						<div>
 							<div>
 							<label>Image</label>
 							</div>
-							<input id="secondary_img_2" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_2)">
-							<button onclick="previewImg(secondary_img_2)">Peview	image</button>
+							<input id="secondary_img_2_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_2_input,previewHolder)">
+							<button onclick="previewImg(secondary_img_2_input, previewHolder)">Preview	image</button>
 						</div>
 						<div>
 							<div>
 							<label>Image</label>
 							</div>
-							<input id="secondary_img_3" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_3)">
-							<button onclick="previewImg(secondary_img_3)">Peview	image</button>
+							<input id="secondary_img_3_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_3_input,previewHolder)">
+							<button onclick="previewImg(secondary_img_3_input, previewHolder)">Preview	image</button>
 						</div>
 						<div>
 							<div>
 							<label>Image</label>
 							</div>
-							<input id="secondary_img_4" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_4)">
-							<button onclick="previewImg(secondary_img_4)">Peview image</button>
+							<input id="secondary_img_4_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_4_input,previewHolder)">
+							<button onclick="previewImg(secondary_img_4_input, previewHolder)">Preview image</button>
 						</div>
 					</div>
 				</div>
@@ -132,9 +134,18 @@
 			</div>
 			
 			<div class="last_buttons_div">
-				<button>Review</button>
+				<button onclick="openReviewModal()">Review</button>
 				<button onclick="saveUnknownIngredients();createRecipe();">Create recipe</button>
 			</div>
+		</div>
+		
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+
+  			<!-- Modal content -->
+  			<script type="text/javascript">createReviewModal();</script>
+ 				
+
 		</div>
 	</div>
 </body>

@@ -1,5 +1,9 @@
 function createRecipe() {
 
+	if(!checkFieldValues()){
+		return;
+	}
+	
 	elementsMap = getElementsValues();
 	var xhttp = new XMLHttpRequest();
 	var action = "create_recipe";
@@ -96,40 +100,3 @@ function saveUnknownIngredients() {
 	}
 }
 
-function getElementsValues() {
-
-	var elementsMap = {};
-
-	elementsMap.title = document.getElementById("title_input").value;
-	elementsMap.category = document.getElementById("category_select").value;
-	elementsMap.description = document.getElementById("description_input").value;
-
-	elementsMap.primary_img = document.getElementById("primary_img").files[0];
-	var secondary_img_list = [];
-	secondary_img_list
-			.push(document.getElementById("secondary_img_1").files[0]);
-	secondary_img_list
-			.push(document.getElementById("secondary_img_2").files[0]);
-	secondary_img_list
-			.push(document.getElementById("secondary_img_3").files[0]);
-	secondary_img_list
-			.push(document.getElementById("secondary_img_4").files[0]);
-	elementsMap.secondary_imag_list = secondary_img_list;
-
-	var listRecipeIngredients = [];
-	var listIngredientInputs = document.getElementsByName("ingredient_input");
-	var listQunatitiesInputs = document.getElementsByName("quantity_input");
-	var listUnitsInputs = document.getElementsByName("units_input");
-	for (var index = 0; index < listIngredientInputs.length; index++) {
-		if (listIngredientInputs[index].value != "Add ingredient") {
-			var recipe_ingredient = {};
-			recipe_ingredient.ingredient = listIngredientInputs[index].value;
-			recipe_ingredient.quantity = listQunatitiesInputs[index].value;
-			recipe_ingredient.units = listUnitsInputs[index].value;
-			listRecipeIngredients.push(recipe_ingredient);
-		}
-	}
-	elementsMap.recipeIngredientsList = listRecipeIngredients;
-
-	return elementsMap;
-}

@@ -135,20 +135,20 @@ function add_ingredient_create_update(ingredient,quantity,unit) {
 }
 
 
-function previewImg(input) {
+function previewImg(input, imgId) {
 
 	if (input.files && input.files[0]) {
 		var reader = new FileReader();
 
 		reader.onload = function(e) {
 			// get loaded data and render thumbnail.
-			document.getElementById("previewHolder").src = e.target.result;
+			imgId.src = e.target.result;
 		};
 
 		// read the image file as a data URL.
 		reader.readAsDataURL(input.files[0]);
 	} else {
-		document.getElementById("previewHolder").src = "";
+		imgId.src = "";
 	}
 }
 
