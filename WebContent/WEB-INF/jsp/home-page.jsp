@@ -36,13 +36,7 @@
 		
 		<!--  BODY -->
 		<div class="body_container">
-			<div class="search_part">
-			sss
-			</div>
-			
-			<div class="result_part">
-			fff
-			</div>
+			<div id="imageDiv"></div>
 		</div>
 	</div>
 

@@ -69,36 +69,36 @@
 							<div>
 							<label>Primary image</label>
 							</div>
-							<input id="primary_img_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(primary_img_input, previewHolder)">
-							<button onclick="previewImg(primary_img_input, previewHolder)">Preview	image</button>
+							<input id="primary_img_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(primary_img_input, previewHolder); unclockImageInput(primary_img_input, secondary_img_1_input, primary_img_button)">
+							<button id="primary_img_button" onclick="previewImg(primary_img_input, previewHolder)" disabled>Preview	image</button>
 						</div>
 						<div>
 							<div>
 							<label>Image</label>
 							</div>
-							<input id="secondary_img_1_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_1_input,previewHolder)">
-							<button onclick="previewImg(secondary_img_1_input, previewHolder)">Preview	image</button>
+							<input id="secondary_img_1_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_1_input,previewHolder); unclockImageInput(secondary_img_1_input, secondary_img_2_input, secondary_img_1_button)" disabled>
+							<button id="secondary_img_1_button" onclick="previewImg(secondary_img_1_input, previewHolder)" disabled>Preview	image</button>
 						</div>
 						<div>
 							<div>
 							<label>Image</label>
 							</div>
-							<input id="secondary_img_2_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_2_input,previewHolder)">
-							<button onclick="previewImg(secondary_img_2_input, previewHolder)">Preview	image</button>
+							<input id="secondary_img_2_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_2_input,previewHolder); unclockImageInput(secondary_img_2_input, secondary_img_3_input, secondary_img_2_button)" disabled>
+							<button id="secondary_img_2_button" onclick="previewImg(secondary_img_2_input, previewHolder)" disabled>Preview	image</button>
 						</div>
 						<div>
 							<div>
 							<label>Image</label>
 							</div>
-							<input id="secondary_img_3_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_3_input,previewHolder)">
-							<button onclick="previewImg(secondary_img_3_input, previewHolder)">Preview	image</button>
+							<input id="secondary_img_3_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_3_input,previewHolder); unclockImageInput(secondary_img_3_input, secondary_img_4_input, secondary_img_3_button)" disabled>
+							<button id="secondary_img_3_button" onclick="previewImg(secondary_img_3_input, previewHolder)" disabled>Preview	image</button>
 						</div>
 						<div>
 							<div>
 							<label>Image</label>
 							</div>
-							<input id="secondary_img_4_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_4_input,previewHolder)">
-							<button onclick="previewImg(secondary_img_4_input, previewHolder)">Preview image</button>
+							<input id="secondary_img_4_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_4_input,previewHolder); unclockImageInput(secondary_img_4_input, undefined, secondary_img_4_button)" disabled>
+							<button id="secondary_img_4_button" onclick="previewImg(secondary_img_4_input, previewHolder)" disabled>Preview image</button>
 						</div>
 					</div>
 				</div>
