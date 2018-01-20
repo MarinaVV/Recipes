@@ -65,7 +65,7 @@ function displayModalData(descriptionInput, dateInput, userNameInput,
 	var secondaryImages = secondaryImagesIngredients.images;
 	var recipe_ingredients = secondaryImagesIngredients.recipe_ingredients;
 
-	for (var i = 0; i <= secondaryImages.length; i++) {
+	for (var i = 0; i < secondaryImages.length; i++) {
 		var imgSRC = "data:image/png;base64," + secondaryImages[i].image;
 		document.getElementById("secondery_img_" + (i + 1)).style.backgroundImage = "url(' "
 				+ imgSRC + "')";
@@ -101,7 +101,7 @@ function clearModalData() {
 	document.getElementById("modal_previwe_image").style.backgroundImage = "";
 	document.getElementById("primary_img").style.backgroundImage = "";
 
-	for (var i = 0; i < 3; i++) {
+	for (var i = 0; i < 4; i++) {
 		document.getElementById("secondery_img_" + (i + 1)).style.backgroundImage = "";
 	}
 

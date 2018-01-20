@@ -184,9 +184,9 @@ public class RecipeServiceImpl implements RecipeService {
 		}
 	}
 	
-	public String updateRecipe(String recipeId,String recipeTitle,String recipeCategory,String recipeDescr) {
+	public String updateRecipe(String recipeId,String recipeTitle,String recipeCategory,String recipeDescr, List<Recipe_ingredient> recipeIngredList) {
 		
-		if (recipeDao.updateRecipe(recipeId, recipeTitle, recipeCategory, recipeDescr)) {
+		if (recipeDao.updateRecipe(recipeId, recipeTitle, recipeCategory, recipeDescr, recipeIngredList)) {
 			return "UPDATED";
 		} else {
 			return "ERROR";

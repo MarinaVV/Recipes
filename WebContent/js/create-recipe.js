@@ -3,18 +3,7 @@ function delete_ingredient(divId) {
 	document.getElementById("ingredients").removeChild(divId);
 }
 
-function setUnitsSuggestions() {
-	var unitsDatalist = document.getElementById("suggestionsUnits");
 
-	var unitsList = [ "kg", "g", "mg", "tbsp.", "tsp.", "ml", "l", "pint" ];
-
-	for (var index = 0; index < unitsList.length; index++) {
-		var option = document.createElement("option");
-		option.setAttribute("value", unitsList[index]);
-
-		unitsDatalist.appendChild(option);
-	}
-}
 
 function checkFieldValues() {
 	elementsMap = getElementsValues();
@@ -31,6 +20,10 @@ function checkFieldValues() {
 		return false;
 	} else {
 		recipe_ingredients = elementsMap.recipeIngredientsList;
+		if(recipe_ingredients.length<=0){
+			alert("No ingredients");
+			return false;
+		}
 		for (var index = 0; index < recipe_ingredients.length; index++) {
 			if (recipe_ingredients[index].ingredient.length <= 0) {
 				alert("Add ingredient name");

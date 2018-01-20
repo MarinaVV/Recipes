@@ -302,7 +302,28 @@ public class RecipeControlServlet extends HttpServlet {
 		String recipeTitle = request.getParameter("recipe_title");
 		String recipeCategory = request.getParameter("recipe_category");
 		
-		responseMsg=recipeService.updateRecipe(recipeId,recipeTitle,recipeCategory,recipeDescr);
+		List<Recipe_ingredient> recipeIngredList = new ArrayList<>();
+		
+		JSONArray jArr = null;
+
+		try {
+			jArr = new JSONArray(request.getParameter("recipe_ingredients"));
+			for (int index = 0; index < jArr.length(); index++) {
+				JSONObject obj = jArr.getJSONObject(index);
+				Ingredient ingredient = new Ingredient();
+				ingredient.setName(obj.getString("ingredient"));
+				recipeIngredList.add(index, new Recipe_ingredient());
+				recipeIngredList.get(index).setIngredient(ingredient);
+				recipeIngredList.get(index).setQuantity(obj.getInt("quantity"));
+				recipeIngredList.get(index).setUnits(obj.getString("units"));
+			}
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		responseMsg=recipeService.updateRecipe(recipeId,recipeTitle,recipeCategory,recipeDescr,recipeIngredList);
 		
 		return responseMsg;
 	}

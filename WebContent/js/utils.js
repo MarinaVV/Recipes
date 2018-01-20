@@ -134,6 +134,18 @@ function add_ingredient_create_update(ingredient,quantity,unit) {
 	document.getElementById("ingredients").appendChild(ingredientDiv);
 }
 
+function setUnitsSuggestions() {
+	var unitsDatalist = document.getElementById("suggestionsUnits");
+
+	var unitsList = [ "kg", "g", "mg", "tbsp.", "tsp.", "ml", "l", "pint" ];
+
+	for (var index = 0; index < unitsList.length; index++) {
+		var option = document.createElement("option");
+		option.setAttribute("value", unitsList[index]);
+
+		unitsDatalist.appendChild(option);
+	}
+}
 
 function previewImg(input, imgId) {
 

@@ -642,7 +642,7 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		}
 	}
 	
-	public boolean updateRecipe(String recipeId, String recipeTitle, String recipeCategory, String recipeDescr) {
+	public boolean updateRecipe(String recipeId, String recipeTitle, String recipeCategory, String recipeDescr, List<Recipe_ingredient> recipeIngredList) {
 		open();
 		PreparedStatement stmt = null;
 
@@ -650,12 +650,55 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		String sql = SQL.UPDATE_RECIPE;
 
 		try {
+			con.setAutoCommit(false);
+			isAutoCommit = false;
+			
+			this.deleteRecipeIngredients(recipeId);
+			this.insertRecipeIngredients(recipeIngredList, Long.valueOf(recipeId));
+			
 			stmt = con.prepareStatement(sql);
 
 			stmt.setString(1, recipeTitle);
 			stmt.setString(2, recipeCategory);
 			stmt.setString(3, recipeDescr);
 			stmt.setString(4, recipeId);
+			
+			stmt.execute();
+			
+			con.commit();
+			return true;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				
+				close();
+				
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public boolean deleteRecipeIngredients(String recipeId) {
+		open();
+		PreparedStatement stmt = null;
+
+		
+		String sql = SQL.DELETE_RECIPE_INGREDIENTS;
+
+		try {
+			stmt = con.prepareStatement(sql);
+
+			stmt.setString(1, recipeId);
 			
 			stmt.execute();
 			

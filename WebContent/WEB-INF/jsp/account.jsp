@@ -21,6 +21,12 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/modalUpdate.js"></script>
 </head>
 <body>
+	<script type="text/javascript">
+		window.onload = function(){
+			getListIngredients();
+			setUnitsSuggestions();
+		}
+	</script>
 	<div class="outer_container">
 		<p id="p_uname">${uname}</p>
 		<script>
@@ -159,10 +165,10 @@
     						<div class="ingredients_div">
 			
 								<label>Ingredients</label>
-								<input type="hidden" value="1" id="count_ingredients_input">
+								<input type="hidden" value="0" id="count_ingredients_input">
 								<hr>
 								<div id="ingredients">
-									<div class="ingredient" id="div_ingredient_1">
+							<!-- 		<div class="ingredient" id="div_ingredient_1">
 										<input class="ingredient_input" id="ingredient_input_1" type="text" name="ingredient_input" list="suggestionsIngredients"
 										value="Add ingredient" onclick="deleteHintValueIngredient(ingredient_input_1)" onblur="setHintValueIngredient(ingredient_input_1)"><input 
 										class="quantity_input" id="quantity_input_1" type="text" name="quantity_input" value="Quantity"
@@ -171,13 +177,14 @@
 										onclick="deleteHintValueUnits(unit_input_1)" onblur="setHintValueUnits(unit_input_1)"><button 
 										class="delete_button" id="delete_button_1"  onclick="">-</button>
 										<input class="hidden" id="hidden_ingredient_input_1" type="hidden" name="hidden_ingredient_input">
-									</div>		
+									</div>		 -->
 								</div>
 								<button id=add_button onclick="add_ingredient_create_update('Add ingredient','Quantity','Units')">+</button>	
-					
+								
 							</div>
-    					
-    					</div>
+							<datalist id="suggestionsIngredients"> </datalist>
+							<datalist id="suggestionsUnits"> </datalist>
+						</div>
     				</div>
       				<div class="modal_description">
       					<textarea id="modalUpdate_description" rows="40" cols="5"></textarea>

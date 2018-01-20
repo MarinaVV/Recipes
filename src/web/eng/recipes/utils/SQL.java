@@ -15,6 +15,8 @@ public  class SQL {
 	
 	public static final String DELETE_RECIPE = "DELETE FROM recipes WHERE id=?";
 	
+	public static final String DELETE_RECIPE_INGREDIENTS = "DELETE FROM `recipe_ingredients` WHERE recipe_id=?";
+	
 	
 	public static final String GET_RECIPE_BY_RECIPE_TITLE = "Select * from recipes where title=?";
 	
