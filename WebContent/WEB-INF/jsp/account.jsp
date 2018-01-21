@@ -99,7 +99,7 @@
     			</div>
     			<div class="modal-body">
     				<div class="modal_image_ingredients">
-    					<div class="modal_image_part">
+    					<div class="modal_image_part" disabled>
     						<div class="previewHolder">
     						</div>
     						<div class="images">

@@ -27,7 +27,7 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		try {
 			stmt = con.prepareStatement(SQL.GET_RECIPE_BY_RECIPE_TITLE);
 
-			stmt.setString(1, title);
+			stmt.setString(1, title.toLowerCase());
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {

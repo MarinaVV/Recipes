@@ -164,7 +164,7 @@ function checkUpdateModalFieldValues() {
 			return false;
 		}
 		for (var index = 0; index < recipe_ingredients.length; index++) {
-			if (recipe_ingredients[index].ingredient.length <= 0) {
+			if (recipe_ingredients[index].ingredient.length <= 0 || recipe_ingredients[index].ingredient=="Add ingredient") {
 				alert("Add ingredient name");
 				return false
 			} else if (recipe_ingredients[index].quantity.length <= 0) {
@@ -173,7 +173,7 @@ function checkUpdateModalFieldValues() {
 			} else if (isNaN(recipe_ingredients[index].quantity)) {
 				alert("Quantity must be a number");
 				return false
-			} else if (recipe_ingredients[index].units.length <= 0) {
+			} else if (recipe_ingredients[index].units.length <= 0  || recipe_ingredients[index].units=="Units") {
 				alert("Add unit");
 				return false
 			}

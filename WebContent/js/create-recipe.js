@@ -25,7 +25,7 @@ function checkFieldValues() {
 			return false;
 		}
 		for (var index = 0; index < recipe_ingredients.length; index++) {
-			if (recipe_ingredients[index].ingredient.length <= 0) {
+			if (recipe_ingredients[index].ingredient.length <= 0 || recipe_ingredients[index].ingredient=="Add ingredient") {
 				alert("Add ingredient name");
 				return false
 			} else if (recipe_ingredients[index].quantity.length <= 0) {
@@ -34,7 +34,7 @@ function checkFieldValues() {
 			} else if (isNaN(recipe_ingredients[index].quantity)) {
 				alert("Quantity must be a number");
 				return false
-			} else if (recipe_ingredients[index].units.length <= 0) {
+			} else if (recipe_ingredients[index].units.length <= 0 || recipe_ingredients[index].units=="Units") {
 				alert("Add unit");
 				return false
 			}
@@ -97,37 +97,45 @@ function reviewModal() {
 
 	var input = document.getElementById('primary_img_input');
 	var img = document.getElementById('modal_previwe_image').childNodes[0];
-	if (img.childNodes.length > 0) {
+	if (input.value!="") {
 		previewImg(input, img);
 	} else {
 		img.src = "img/No-image-available.jpg";
 	}
 	input = document.getElementById('primary_img_input');
 	img = document.getElementById('primary_img').childNodes[0];
-	if (img.childNodes.length > 0) {
+	if (input.value!="") {
 		previewImg(input, img);
 	} else {
 		img.src = "img/No-image-available.jpg";
 	}
 	input = document.getElementById('secondary_img_1_input');
 	img = document.getElementById('secondery_img_1').childNodes[0];
-	if (img.childNodes.length > 0) {
+	if (input.value!="") {
 		previewImg(input, img);
+	}else {
+		img.src = "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=";
 	}
 	input = document.getElementById('secondary_img_2_input');
 	img = document.getElementById('secondery_img_2').childNodes[0];
-	if (img.childNodes.length > 0) {
+	if (input.value!="") {
 		previewImg(input, img);
+	}else {
+		img.src = "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=";
 	}
 	input = document.getElementById('secondary_img_3_input');
 	img = document.getElementById('secondery_img_3').childNodes[0];
-	if (img.childNodes.length > 0) {
+	if (input.value!="") {
 		previewImg(input, img);
+	}else {
+		img.src = "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=";
 	}
 	input = document.getElementById('secondary_img_4_input');
 	img = document.getElementById('secondery_img_4').childNodes[0];
-	if (img.childNodes.length > 0) {
+	if (input.value!="") {
 		previewImg(input, img);
+	}else {
+		img.src = "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=";
 	}
 
 	recipe_ingredients = elementsMap.recipeIngredientsList;

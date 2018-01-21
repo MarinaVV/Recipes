@@ -11,15 +11,15 @@
 <body>
 	<form id="register_form" action="${pageContext.request.contextPath}/UserControlServlet" method="post">
 		<div class="outer">
-			<p id="response_text" ></p>
+			<label id="response_text" ></label>
 			<div class="inner">
 				Username: <input id="username" class="inner_input" type="text" name="uname">
 			</div>
 			<div class="inner">
-				Password: <input id="password" class="inner_input" type="text" name="pass">
+				Password: <input id="password" class="inner_input" type="password" name="pass">
 			</div>
 			<div class="inner">
-				Password conformation: <input id="password_cofirm" class="inner_input" type="text" name="passconf">
+				Password conformation: <input id="password_cofirm" class="inner_input" type="password" name="passconf">
 			</div>
 			<input id="action" class="inner_input" type="hidden" name="action">
 			<div class="inner">
