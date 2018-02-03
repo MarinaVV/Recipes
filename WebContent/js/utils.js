@@ -25,6 +25,85 @@ function getListIngredients() {
 	xhttp.send();
 }
 
+function sortResults(category){
+	switch(category){
+	case "all": showAllResults(); break;
+	case "b": showBreackfastResults(); break;
+	case "l": showLunchResults(); break;
+	case "d": showDinnerResults(); break;
+	case "s": showSnackResults(); break;
+	}
+}
+
+function showAllResults(){
+	results = document.getElementById("hidden_result_input").value;
+	results = JSON.parse(results);
+	
+	clearSearchResult();
+	displaySearchResult(results);
+}
+
+function showBreackfastResults(){
+	results = document.getElementById("hidden_result_input").value;
+	results = JSON.parse(results);
+	var filteredResults=[];
+	
+	for(var i=0;i<results.length;i++){
+		if(results[i].category==="Breakfast"){
+			filteredResults.push(results[i]);
+		}
+	}
+	
+	clearSearchResult();
+	displaySearchResult(filteredResults);
+}
+
+function showLunchResults(){
+	results = document.getElementById("hidden_result_input").value;
+	results = JSON.parse(results);
+	var filteredResults=[];
+	
+	for(var i=0;i<results.length;i++){
+		if(results[i].category==="Lunch"){
+			filteredResults.push(results[i]);
+		}
+	}
+	
+	clearSearchResult();
+	displaySearchResult(filteredResults);
+}
+
+function showDinnerResults(){
+	results = document.getElementById("hidden_result_input").value;
+	results = JSON.parse(results);
+	var filteredResults=[];
+	
+	for(var i=0;i<results.length;i++){
+		if(results[i].category==="Dinner"){
+			filteredResults.push(results[i]);
+		}
+	}
+	
+	clearSearchResult();
+	displaySearchResult(filteredResults);
+}
+
+function showSnackResults(){
+	results = document.getElementById("hidden_result_input").value;
+	results = JSON.parse(results);
+	var filteredResults=[];
+	
+	for(var i=0;i<results.length;i++){
+		if(results[i].category==="Snack"){
+			filteredResults.push(results[i]);
+		}
+	}
+	
+	clearSearchResult();
+	displaySearchResult(filteredResults);
+}
+
+
 function createCategoryBar(){
 	var categoryBarDiv = document.getElementById("category_bar");
 	
@@ -36,30 +115,35 @@ function createCategoryBar(){
 	
 	var allLabel = document.createElement("label");
 	allLabel.setAttribute("class", "category");
+	allLabel.setAttribute("onclick", "sortResults('all')");
 	allLabel.innerHTML="All";
 	
 	categoryBarDiv.appendChild(allLabel);
 	
 	var breakfastLabel = document.createElement("label");
 	breakfastLabel.setAttribute("class", "category");
+	breakfastLabel.setAttribute("onclick", "sortResults('b')");
 	breakfastLabel.innerHTML="Breakfast";
 	
 	categoryBarDiv.appendChild(breakfastLabel);
 	
 	var lunchLabel = document.createElement("label");
 	lunchLabel.setAttribute("class", "category");
+	lunchLabel.setAttribute("onclick", "sortResults('l')");
 	lunchLabel.innerHTML="Lunch";
 	
 	categoryBarDiv.appendChild(lunchLabel);
 	
 	var dinnerLabel = document.createElement("label");
 	dinnerLabel.setAttribute("class", "category");
+	dinnerLabel.setAttribute("onclick", "sortResults('d')");
 	dinnerLabel.innerHTML="Dinner";
 	
 	categoryBarDiv.appendChild(dinnerLabel);
 	
 	var snackLabel = document.createElement("label");
 	snackLabel.setAttribute("class", "category");
+	snackLabel.setAttribute("onclick", "sortResults('s')");
 	snackLabel.innerHTML="Snack";
 	
 	categoryBarDiv.appendChild(snackLabel);
