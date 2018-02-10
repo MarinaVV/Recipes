@@ -71,7 +71,49 @@ public class RecipeControlServlet extends HttpServlet {
 		case "save_ingredients":
 			saveIngredientsAction(request);
 			break;
+		case "search_recipe_username":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(searchRecipesPrimaryImageByUsername(request));
+			break;
+		case "search_recipe_ingredients_list":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(searchRecipesPrimaryImageByIngredientsList(request));
+			break;
+		case "search_recipe_recipe_name":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(searchRecipesPrimaryImageByRecipeName(request));
+			break;
+		case "get_secondary_images_ingredients":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(getSecondaryImagesIngredients(request));
+			break;
+		case "add_recipe_favorites":
+			response.getWriter().write(addFavoriteRecipe(request));
+			break;
+		case "delete_recipe_title":
+			response.getWriter().write(deleteRecipeByRecipeId(request));
+			
+			break;
+		case "get_favorite_recipes":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(getFavoriteRecipes(request));
+			
+			break;
+		case "remove_recipe_favorites":
+			response.getWriter().write(removeFavoriteRecipe(request));
+			break;
+		case "update_recipe":
+			response.getWriter().write(updateRecipe(request));
+			break;
 		}
+		
+		
+		
 
 	}
 
@@ -143,25 +185,147 @@ public class RecipeControlServlet extends HttpServlet {
 		return new JSONArray(ingredientNames).toString();
 
 	}
-	
+
 	private void saveIngredientsAction(HttpServletRequest request) {
-		
+
 		JSONArray jArr = null;
 
 		try {
 			jArr = new JSONArray(request.getParameter("ingredients"));
 			List<String> ingredientsList = new ArrayList<>();
-			
-			for(int index=0;index<jArr.length();index++){
+
+			for (int index = 0; index < jArr.length(); index++) {
 				ingredientsList.add(jArr.getString(index));
 			}
-			
+
 			ingredientService.saveIngredients(ingredientsList);
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private String searchRecipesPrimaryImageByUsername(HttpServletRequest request) {
+
+		String username = request.getParameter("username");
+
+		List<Recipe> foundIngredients = recipeService.searchRecipesPrimaryImageByUsername(username);
+
+		return new JSONArray(foundIngredients).toString();
+
+	}
+
+	private String searchRecipesPrimaryImageByIngredientsList(HttpServletRequest request) {
+
+		String regex = ",";
+
+		String ingredients = request.getParameter("ingredients_list");
+		String[] ingredientsArray = ingredients.split(regex);
+
+		List<String> ingredientsList = new ArrayList<>();
+
+		for (int index = 0; index < ingredientsArray.length; index++) {
+			ingredientsList.add(ingredientsArray[index]);
+		}
+
+		List<Recipe> foundIngredients = recipeService.searchRecipesPrimaryImageByIngredientsList(ingredientsList);
+
+		return new JSONArray(foundIngredients).toString();
+
+	}
+	
+	private String searchRecipesPrimaryImageByRecipeName(HttpServletRequest request) {
+
+		String recipe_name = request.getParameter("recipe_name");
+
+		List<Recipe> foundIngredients = recipeService.searchRecipesPrimaryImageByRecipeName(recipe_name);
+
+		return new JSONArray(foundIngredients).toString();
+
+	}
+	
+	private String getSecondaryImagesIngredients(HttpServletRequest request) {
+		
+		String recipeId = request.getParameter("recipe_id");
+		Recipe recipe = recipeService.getSecondaryImagesRecipeIngredients(recipeId);
+		JSONObject jObj = new JSONObject(recipe);
+		return jObj.toString();
+	}
+	
+	private String addFavoriteRecipe(HttpServletRequest request){
+		String responseMsg;
+		
+		String recipeId = request.getParameter("recipe_id");
+		String username = request.getParameter("username");
+		
+		responseMsg=recipeService.addFavoriteRecipe(recipeId,username);
+		
+		return responseMsg;
+	}
+	
+	private String removeFavoriteRecipe(HttpServletRequest request) {
+		String responseMsg;
+		
+		String recipeId = request.getParameter("recipe_id");
+		String username = request.getParameter("username");
+		
+		responseMsg=recipeService.removeFavoriteRecipe(recipeId,username);
+		
+		return responseMsg;
+	}
+	
+	private String deleteRecipeByRecipeId(HttpServletRequest request){
+		String responseMsg;
+		
+		String recipeId = request.getParameter("recipe_id");
+		
+		responseMsg=recipeService.deleteRecipeByRecipeId(recipeId);
+		
+		return responseMsg;
+	}
+	
+	private String getFavoriteRecipes(HttpServletRequest request){
+
+		String username = request.getParameter("username");
+		
+		List<Recipe> foundIngredients = recipeService.getFavoriteRecipes(username);
+
+		return new JSONArray(foundIngredients).toString();
+	}
+	
+	private String updateRecipe(HttpServletRequest request) {
+		String responseMsg;
+		
+		String recipeId = request.getParameter("recipe_id");
+		String recipeDescr = request.getParameter("recipe_description");
+		String recipeTitle = request.getParameter("recipe_title");
+		String recipeCategory = request.getParameter("recipe_category");
+		
+		List<Recipe_ingredient> recipeIngredList = new ArrayList<>();
+		
+		JSONArray jArr = null;
+
+		try {
+			jArr = new JSONArray(request.getParameter("recipe_ingredients"));
+			for (int index = 0; index < jArr.length(); index++) {
+				JSONObject obj = jArr.getJSONObject(index);
+				Ingredient ingredient = new Ingredient();
+				ingredient.setName(obj.getString("ingredient"));
+				recipeIngredList.add(index, new Recipe_ingredient());
+				recipeIngredList.get(index).setIngredient(ingredient);
+				recipeIngredList.get(index).setQuantity(obj.getInt("quantity"));
+				recipeIngredList.get(index).setUnits(obj.getString("units"));
+			}
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		responseMsg=recipeService.updateRecipe(recipeId,recipeTitle,recipeCategory,recipeDescr,recipeIngredList);
+		
+		return responseMsg;
 	}
 
 }

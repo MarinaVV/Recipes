@@ -30,10 +30,10 @@ public class NavBarControlServlet extends HttpServlet {
 			dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/find-recipes.jsp");
 			dispatcher.forward(request, response);
 			break;
-		case "fav_recipes":
+	/*	case "fav_recipes":
 			dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/fav-recipes.jsp");
 			dispatcher.forward(request, response);
-			break;
+			break;*/
 		case "create_recipe":
 			dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/create-recipe.jsp");
 			dispatcher.forward(request, response);

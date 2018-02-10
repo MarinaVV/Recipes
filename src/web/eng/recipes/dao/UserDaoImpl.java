@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.inject.Singleton;
 
 import web.eng.recipes.models.User;
+import web.eng.recipes.utils.SQL;
 
 @Singleton
 public class UserDaoImpl extends Dao implements UserDao {
@@ -17,7 +18,7 @@ public class UserDaoImpl extends Dao implements UserDao {
 		PreparedStatement stmt=null;
 
 		try {
-			stmt = con.prepareStatement("INSERT INTO users (username, password) VALUES(?,?)");
+			stmt = con.prepareStatement(SQL.INSERT_USER);
 
 			stmt.setString(1, user.getUserName());
 
@@ -50,7 +51,7 @@ public class UserDaoImpl extends Dao implements UserDao {
 		ResultSet rs;
 
 		try {
-			stmt = con.prepareStatement("Select * from users where username = ?");
+			stmt = con.prepareStatement(SQL.GET_USER_USERNAME);
 			stmt.setString(1, username);
 			rs = stmt.executeQuery();
 

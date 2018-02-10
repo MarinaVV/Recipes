@@ -7,6 +7,7 @@ public class Image {
 	private Recipe recipe;
 	//1 for primary , 0 for secondary
 	private short is_primary;
+	private String image;
 	
 	public long getId() {
 		return id;
@@ -31,6 +32,12 @@ public class Image {
 	}
 	public void setIs_primary(short is_primary) {
 		this.is_primary = is_primary;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	

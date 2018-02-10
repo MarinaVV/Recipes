@@ -1,0 +1,10 @@
+.previewHolder{
+		width: 40%;
+	border: 1px solid;
+	float: left;
+	height: 300px;
+}
+
+.ingredient input{
+	margin:1px;
+}

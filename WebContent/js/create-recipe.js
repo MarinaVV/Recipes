@@ -1,153 +1,173 @@
-function add_ingredient() {
-	var countIngredients = document.getElementById("count_ingredients_input").value;
-	countIngredients++;
-	var countIngredients = document.getElementById("count_ingredients_input").value = countIngredients;
-
-	var ingredientDiv = document.createElement("div");
-	ingredientDiv.setAttribute("class", "ingredient")
-	ingredientDiv.setAttribute("id", "div_ingredient_" + countIngredients);
-
-	var ingredientInput = document.createElement("input");
-	ingredientInput.setAttribute("type", "text");
-	ingredientInput.setAttribute("id", "input_ingredient_" + countIngredients);
-	ingredientInput.setAttribute("name", "ingredient_input");
-	ingredientInput.setAttribute("value", "Add ingredient");
-	ingredientInput.setAttribute("class", "ingredient_input");
-	ingredientInput.setAttribute("onclick", "deleteHintValueIngredient("
-			+ "input_ingredient_" + countIngredients + ")");
-	ingredientInput.setAttribute("onblur", "setHintValueIngredient("
-			+ "input_ingredient_" + countIngredients + ")");
-	ingredientInput.setAttribute("list", "suggestionsIngredients");
-
-	var quantityInput = document.createElement("input");
-	quantityInput.setAttribute("type", "text");
-	quantityInput.setAttribute("id", "quantity_input_" + countIngredients);
-	quantityInput.setAttribute("name", "quantity_input");
-	quantityInput.setAttribute("value", "Quantity");
-	quantityInput.setAttribute("class", "quantity_input");
-	quantityInput.setAttribute("onclick", "deleteHintValueQuantity("
-			+ "quantity_input_" + countIngredients + ")");
-	quantityInput.setAttribute("onblur", "setHintValueQuantity("
-			+ "quantity_input_" + countIngredients + ")");
-
-	var unitsInput = document.createElement("input");
-	unitsInput.setAttribute("type", "text");
-	unitsInput.setAttribute("id", "unit_input_" + countIngredients);
-	unitsInput.setAttribute("name", "units_input");
-	unitsInput.setAttribute("value", "Units");
-	unitsInput.setAttribute("class", "unit_input");
-	unitsInput.setAttribute("onclick", "deleteHintValueUnits(" + "unit_input_"
-			+ countIngredients + ")");
-	unitsInput.setAttribute("onblur", "setHintValueUnits(" + "unit_input_"
-			+ countIngredients + ")");
-	unitsInput.setAttribute("list", "suggestionsUnits");
-
-	var deleteButton = document.createElement("button");
-	deleteButton.setAttribute("id", "delete_button_" + countIngredients);
-	deleteButton.setAttribute("onclick", "delete_ingredient(div_ingredient_"
-			+ countIngredients + ")");
-	deleteButton.innerHTML = "-";
-	deleteButton.setAttribute("class", "delete_button");
-
-	ingredientDiv.appendChild(ingredientInput);
-	ingredientDiv.appendChild(quantityInput);
-	ingredientDiv.appendChild(unitsInput);
-	ingredientDiv.appendChild(deleteButton);
-
-	document.getElementById("ingredients").appendChild(ingredientDiv);
-}
-
 function delete_ingredient(divId) {
 
 	document.getElementById("ingredients").removeChild(divId);
 }
 
-function setUnitsSuggestions(){
-	var unitsDatalist = document.getElementById("suggestionsUnits");
-	
-	var unitsList =["kg","g","mg","tbsp.","tsp.","ml","l","pint"];
-	
-	for(var index=0;index<unitsList.length;index++){
-		var option = document.createElement("option");
-		option.setAttribute("value", unitsList[index]);
-		
-		unitsDatalist.appendChild(option);
-	}
-}
 
-function previewImg(input) {
 
-	if (input.files && input.files[0]) {
-		var reader = new FileReader();
+function checkFieldValues() {
+	elementsMap = getElementsValues();
 
-		reader.onload = function(e) {
-			// get loaded data and render thumbnail.
-			document.getElementById("previewHolder").src = e.target.result;
-		};
+	var title = elementsMap.title;
+	var ingredientsList = elementsMap.recipeIngredientsList;
+	var description = elementsMap.description;
 
-		// read the image file as a data URL.
-		reader.readAsDataURL(input.files[0]);
+	if (title == "Add Title" || title.length <= 0) {
+		alert("No title");
+		return false;
+	} else if (description == "Add Description" || description.length <= 0) {
+		alert("No description");
+		return false;
 	} else {
-		document.getElementById("previewHolder").src = "";
+		recipe_ingredients = elementsMap.recipeIngredientsList;
+		if(recipe_ingredients.length<=0){
+			alert("No ingredients");
+			return false;
+		}
+		for (var index = 0; index < recipe_ingredients.length; index++) {
+			if (recipe_ingredients[index].ingredient.length <= 0 || recipe_ingredients[index].ingredient=="Add ingredient") {
+				alert("Add ingredient name");
+				return false
+			} else if (recipe_ingredients[index].quantity.length <= 0) {
+				alert("Add quantity");
+				return false
+			} else if (isNaN(recipe_ingredients[index].quantity)) {
+				alert("Quantity must be a number");
+				return false
+			} else if (recipe_ingredients[index].units.length <= 0 || recipe_ingredients[index].units=="Units") {
+				alert("Add unit");
+				return false
+			}
+		}
+
+		return true;
 	}
+
 }
 
-function deleteHintValueIngredient(element) {
-	if (element.value == "Add ingredient") {
-		element.setAttribute("value", "")
+function getElementsValues() {
+
+	var elementsMap = {};
+
+	elementsMap.title = document.getElementById("title_input").value;
+	elementsMap.category = document.getElementById("category_select").value;
+	elementsMap.description = document.getElementById("description_input").value;
+
+	elementsMap.primary_img = document.getElementById("primary_img_input").files[0];
+	var secondary_img_list = [];
+	secondary_img_list
+			.push(document.getElementById("secondary_img_1_input").files[0]);
+	secondary_img_list
+			.push(document.getElementById("secondary_img_2_input").files[0]);
+	secondary_img_list
+			.push(document.getElementById("secondary_img_3_input").files[0]);
+	secondary_img_list
+			.push(document.getElementById("secondary_img_4_input").files[0]);
+	elementsMap.secondary_imag_list = secondary_img_list;
+
+	var listRecipeIngredients = [];
+	var listIngredientInputs = document.getElementsByName("ingredient_input");
+	var listQunatitiesInputs = document.getElementsByName("quantity_input");
+	var listUnitsInputs = document.getElementsByName("units_input");
+	for (var index = 0; index < listIngredientInputs.length; index++) {
+		if (listIngredientInputs[index].value != "Add ingredient") {
+			var recipe_ingredient = {};
+			recipe_ingredient.ingredient = listIngredientInputs[index].value;
+			recipe_ingredient.quantity = listQunatitiesInputs[index].value;
+			recipe_ingredient.units = listUnitsInputs[index].value;
+			listRecipeIngredients.push(recipe_ingredient);
+		}
 	}
+	elementsMap.recipeIngredientsList = listRecipeIngredients;
+
+	return elementsMap;
 }
 
-function setHintValueIngredient(element) {
-	if (element.value.trim() == "") {
-		element.setAttribute("value", "Add ingredient");
+function reviewModal() {
+
+	if (!checkFieldValues()) {
+		return false;
 	}
+
+	elementsMap = getElementsValues();
+
+	document.getElementById('modal_title').innerHTML = elementsMap.title;
+	document.getElementById('modal_category').innerHTML = elementsMap.category;
+	document.getElementById('modal_description_ta').value = elementsMap.description;
+
+	var input = document.getElementById('primary_img_input');
+	var img = document.getElementById('modal_previwe_image').childNodes[0];
+	if (input.value!="") {
+		previewImg(input, img);
+	} else {
+		img.src = "img/No-image-available.jpg";
+	}
+	input = document.getElementById('primary_img_input');
+	img = document.getElementById('primary_img').childNodes[0];
+	if (input.value!="") {
+		previewImg(input, img);
+	} else {
+		img.src = "img/No-image-available.jpg";
+	}
+	input = document.getElementById('secondary_img_1_input');
+	img = document.getElementById('secondery_img_1').childNodes[0];
+	if (input.value!="") {
+		previewImg(input, img);
+	}else {
+		img.src = "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=";
+	}
+	input = document.getElementById('secondary_img_2_input');
+	img = document.getElementById('secondery_img_2').childNodes[0];
+	if (input.value!="") {
+		previewImg(input, img);
+	}else {
+		img.src = "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=";
+	}
+	input = document.getElementById('secondary_img_3_input');
+	img = document.getElementById('secondery_img_3').childNodes[0];
+	if (input.value!="") {
+		previewImg(input, img);
+	}else {
+		img.src = "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=";
+	}
+	input = document.getElementById('secondary_img_4_input');
+	img = document.getElementById('secondery_img_4').childNodes[0];
+	if (input.value!="") {
+		previewImg(input, img);
+	}else {
+		img.src = "data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=";
+	}
+
+	recipe_ingredients = elementsMap.recipeIngredientsList;
+
+	for (var i = 0; i < recipe_ingredients.length; i++) {
+		var ingredientName = recipe_ingredients[i].ingredient;
+		recipe_ingredients[i].ingredient = {};
+		recipe_ingredients[i].ingredient.name = ingredientName;
+		createRecipeIngredientRow(recipe_ingredients[i]);
+	}
+
+	return true;
+
 }
 
-function deleteHintValueQuantity(element) {
-	if (element.value == "Quantity") {
-		element.setAttribute("value", "")
+function unclockImageInput(checkInputId, unlockInputId, buttonId) {
+	var file = checkInputId.files[0];
+	if (file != undefined && file != null) {
+		var fileType = file["type"];
 	}
-}
+	var validImageTypes = [ "image/gif", "image/jpeg", "image/png" ];
+	if (validImageTypes.indexOf(fileType) == -1 || file == undefined
+			|| file == null) {
+		if (unlockInputId != undefined || unlockInputId != null) {
+			unlockInputId.disabled = true;
+		}
+		buttonId.disabled = true;
+	} else {
+		if (unlockInputId != undefined || unlockInputId != null) {
+			unlockInputId.disabled = false;
+		}
+		buttonId.disabled = false;
+	}
 
-function setHintValueQuantity(element) {
-	if (element.value.trim() == "") {
-		element.setAttribute("value", "Quantity");
-	}
-}
-
-function deleteHintValueUnits(element) {
-	if (element.value == "Units") {
-		element.setAttribute("value", "")
-	}
-}
-
-function setHintValueUnits(element) {
-	if (element.value.trim() == "") {
-		element.setAttribute("value", "Units");
-	}
-}
-
-function deleteHintValueTitle(element) {
-	if (element.value == "Add Title") {
-		element.setAttribute("value", "")
-	}
-}
-
-function setHintValueTitle(element) {
-	if (element.value.trim() == "") {
-		element.setAttribute("value", "Add Title");
-	}
-}
-
-function deleteHintValueDescription(element) {
-	if (element.innerHTML == "Add Description") {
-		element.innerHTML = "";
-	}
-}
-
-function setHintValueDescription(element) {
-	if (element.innerHTML == "") {
-		element.innerHTML == "Add Description";
-	}
 }

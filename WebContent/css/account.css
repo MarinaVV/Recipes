@@ -1,0 +1,38 @@
+.body_container {
+	margin: 0;
+	padding: 20px;
+	overflow: hidden;
+}
+
+.menu_div {
+	width: 17%;
+	height: 700px;
+	float: left;
+	padding-top: 7px;
+	border: 1px ridge gray;
+	text-align: center;
+}
+
+.menu_item{
+	margin:20px 5px;
+	background-color:rgba(10,100,10,0.3);
+	cursor: pointer;
+}
+
+.menu_item:hover{
+	background-color:rgba(10,150,10,0.3);
+}
+
+.menu_item label{
+	cursor: pointer;
+}
+
+
+.information_div {
+	margin-left: 18%;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 7px;
+	height: 700px;
+	border: 1px ridge gray;
+}

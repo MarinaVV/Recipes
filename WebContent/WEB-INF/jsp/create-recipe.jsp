@@ -9,11 +9,13 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/nav-bar.css"> 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/shared-design.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/create-recipe.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/modal.css"> 
  
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/nav-bar.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/utils.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/create-recipe.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/create-recipe-ajax-call.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/modal.js"></script>
 </head>
 <body>
 	<script type="text/javascript">
@@ -22,9 +24,19 @@
 			setUnitsSuggestions();
 		}
 	</script>
+	
 
 	<div class="outer_container">
-		<p>Create rec</p>
+		<p id="p_uname">${uname}</p>
+		<script>
+			var uname = window.sessionStorage.getItem("uname");
+			if(window.sessionStorage.getItem("uname") == null){
+				var name = document.getElementById("p_uname").innerHTML;
+				window.sessionStorage.setItem("uname", name)
+			}else{
+				document.getElementById("p_uname").innerHTML=window.sessionStorage.getItem("uname");
+			}
+		</script>
 		
 		<!-- Navigation bar -->
 		<div id="nav_bar_container">
@@ -57,36 +69,36 @@
 							<div>
 							<label>Primary image</label>
 							</div>
-							<input id="primary_img" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(primary_img)">
-							<button onclick="previewImg(primary_img)">Peview	image</button>
+							<input id="primary_img_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(primary_img_input, previewHolder); unclockImageInput(primary_img_input, secondary_img_1_input, primary_img_button)">
+							<button id="primary_img_button" onclick="previewImg(primary_img_input, previewHolder)" disabled>Preview	image</button>
 						</div>
 						<div>
 							<div>
 							<label>Image</label>
 							</div>
-							<input id="secondary_img_1" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_1)">
-							<button onclick="previewImg(secondary_img_1)">Peview	image</button>
+							<input id="secondary_img_1_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_1_input,previewHolder); unclockImageInput(secondary_img_1_input, secondary_img_2_input, secondary_img_1_button)" disabled>
+							<button id="secondary_img_1_button" onclick="previewImg(secondary_img_1_input, previewHolder)" disabled>Preview	image</button>
 						</div>
 						<div>
 							<div>
 							<label>Image</label>
 							</div>
-							<input id="secondary_img_2" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_2)">
-							<button onclick="previewImg(secondary_img_2)">Peview	image</button>
+							<input id="secondary_img_2_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_2_input,previewHolder); unclockImageInput(secondary_img_2_input, secondary_img_3_input, secondary_img_2_button)" disabled>
+							<button id="secondary_img_2_button" onclick="previewImg(secondary_img_2_input, previewHolder)" disabled>Preview	image</button>
 						</div>
 						<div>
 							<div>
 							<label>Image</label>
 							</div>
-							<input id="secondary_img_3" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_3)">
-							<button onclick="previewImg(secondary_img_3)">Peview	image</button>
+							<input id="secondary_img_3_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_3_input,previewHolder); unclockImageInput(secondary_img_3_input, secondary_img_4_input, secondary_img_3_button)" disabled>
+							<button id="secondary_img_3_button" onclick="previewImg(secondary_img_3_input, previewHolder)" disabled>Preview	image</button>
 						</div>
 						<div>
 							<div>
 							<label>Image</label>
 							</div>
-							<input id="secondary_img_4" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_4)">
-							<button onclick="previewImg(secondary_img_4)">Peview image</button>
+							<input id="secondary_img_4_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg" onchange="previewImg(secondary_img_4_input,previewHolder); unclockImageInput(secondary_img_4_input, undefined, secondary_img_4_button)" disabled>
+							<button id="secondary_img_4_button" onclick="previewImg(secondary_img_4_input, previewHolder)" disabled>Preview image</button>
 						</div>
 					</div>
 				</div>
@@ -104,9 +116,10 @@
 							class="unit_input" id="unit_input_1" value="Units" name="units_input" list="suggestionsUnits"
 							onclick="deleteHintValueUnits(unit_input_1)" onblur="setHintValueUnits(unit_input_1)"><button 
 							class="delete_button" id="delete_button_1"  onclick="">-</button>
+							<input class="hidden" id="hidden_ingredient_input_1" type="hidden" name="hidden_ingredient_input">
 						</div>		
 					</div>
-					<button id=add_button onclick="add_ingredient()">+</button>	
+					<button id=add_button onclick="add_ingredient_create_update('Add ingredient','Quantity','Units')">+</button>	
 					
 					<datalist id="suggestionsIngredients">
 					</datalist>
@@ -121,9 +134,18 @@
 			</div>
 			
 			<div class="last_buttons_div">
-				<button>Review</button>
+				<button onclick="openReviewModal()">Review</button>
 				<button onclick="saveUnknownIngredients();createRecipe();">Create recipe</button>
 			</div>
+		</div>
+		
+		<!-- The Modal -->
+		<div id="myModal" class="modal">
+
+  			<!-- Modal content -->
+  			<script type="text/javascript">createReviewModal();</script>
+ 				
+
 		</div>
 	</div>
 </body>
