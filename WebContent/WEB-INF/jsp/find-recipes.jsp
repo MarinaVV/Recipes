@@ -93,7 +93,6 @@
 
   				<!-- Modal content -->
   				<script type="text/javascript">createFindRecipesModal();</script>
- 				
 
 			</div>
 		</div>

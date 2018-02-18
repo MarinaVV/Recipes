@@ -8,6 +8,7 @@ window.onclick = function(event) {
 
 function closeModal() {
 	clearModalData();
+	hideComments();
 	document.getElementById('myModal').style.display = "none";
 }
 
@@ -186,6 +187,169 @@ function removeRecipeFromFavorites(recipeIdInput){
 	xhttp.send(formdata);
 }
 
+function createCommentsAreaInModal(){
+	var modalBodyDiv=document.getElementById("modal-body");
+	
+	var showCommentsButton =document.createElement("button");
+	showCommentsButton.setAttribute("id", "modal_show_comments_but");
+	showCommentsButton.setAttribute("onclick", "showComments()");
+	showCommentsButton.innerHTML = "Show comments";
+	modalBodyDiv.appendChild(showCommentsButton);
+	
+	var commentsDiv =document.createElement("div");
+	commentsDiv.setAttribute("id", "modal_comments_div");
+	
+	var greenLineDiv1 = document.createElement("div");
+	greenLineDiv1.setAttribute("class","modal_green_line");
+	commentsDiv.appendChild(greenLineDiv1);
+
+	var simpleDiv1 = document.createElement("div");
+	
+	var addCommentsLabel = document.createElement("span");
+	addCommentsLabel.innerHTML="You can write your comment here";
+	
+	simpleDiv1.appendChild(addCommentsLabel)
+	commentsDiv.appendChild(simpleDiv1);
+	
+	var simpleDiv2 = document.createElement("div");
+	
+	var commentsTextArea = document.createElement("textarea");
+	commentsTextArea.setAttribute("id", "modal_comments_ta");
+	commentsTextArea.setAttribute("rows", "40");
+	commentsTextArea.setAttribute("cols", "5");
+	simpleDiv2.appendChild(commentsTextArea);
+	
+	var addCommentButton =document.createElement("button");
+	addCommentButton.setAttribute("id", "modal_add_comment");
+	addCommentButton.setAttribute("onclick", "insertComment()");
+	addCommentButton.innerHTML = "Comment";
+	simpleDiv2.appendChild(addCommentButton);
+	commentsDiv.appendChild(simpleDiv2);
+	
+	var greenLineDiv2 = document.createElement("div");
+	greenLineDiv2.setAttribute("class","modal_green_line");
+	commentsDiv.appendChild(greenLineDiv2);
+	
+	var modal_showComments_div = document.createElement("div");
+	modal_showComments_div.setAttribute("id","modal_show_comments_div");
+	commentsDiv.appendChild(modal_showComments_div);
+	
+	
+	modalBodyDiv.appendChild(commentsDiv);
+}
+
+function getAllComments(recipeID){
+	var xhttp = new XMLHttpRequest();
+	var action = "get_all_comments";
+	var formdata = new FormData();
+
+	formdata.append("action", action);
+	
+	var recipe_id = document.getElementById("modal_hidden_recipeId").value;
+	formdata.append("recipe_id", recipe_id);
+		
+	xhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			var response = this.responseText;
+			
+			alert(response);
+			
+			
+		}
+	};
+
+	xhttp.open("POST", "RecipeControlServlet", true);
+	xhttp.send(formdata);
+}
+
+
+function createSingleCommentDiv(username,date,comment,id){
+	
+	var outerCommentDiv = document.createElement("div");
+	outerCommentDiv.setAttribute("class","modal_single_comment_outer_div");
+	
+	var innerCommentDiv = document.createElement("div");
+	innerCommentDiv.setAttribute("class","modal_single_comment_inner_div");
+	
+	var hiddenCommentID = document.createElement("input");
+	hiddenCommentID.setAttribute("class","hidden");
+	hiddenCommentID.setAttribute("id","modal_single_comment_hidden_id");
+	hiddenCommentID.value=id;
+	
+	var usernameLabel = document.createElement("label");
+	usernameLabel.setAttribute("class","modal_single_comment_username_label");
+	usernameLabel.innerHTML = username;
+	
+	var dateLabel = document.createElement("label");
+	dateLabel.setAttribute("class","modal_single_comment_date_label");
+	dateLabel.innerHTML = date;
+	
+	innerCommentDiv.appendChild(usernameLabel);
+	innerCommentDiv.appendChild(dateLabel);
+	
+	var line = document.createElement("hr");
+	line.setAttribute("class","modal_single_comment_line");
+	
+	innerCommentDiv.appendChild(line);
+	
+	var commentPartDiv = document.createElement("div");
+	commentPartDiv.setAttribute("id","modal_single_comment_comment_part_div"); 
+	commentPartDiv.innerHTML = comment;
+	
+	innerCommentDiv.appendChild(commentPartDiv);
+	
+	outerCommentDiv.appendChild(innerCommentDiv);
+	
+	return outerCommentDiv;
+}
+
+function showComments(){
+	var modalCommentsDiv=document.getElementById("modal_comments_div");
+	var showCommentsButton=document.getElementById("modal_show_comments_but");
+	
+	if(modalCommentsDiv.style.display=="" || modalCommentsDiv.style.display=="none"){
+		modalCommentsDiv.style.display="block";
+		showCommentsButton.innerHTML = "Hide comments";
+	}else if(modalCommentsDiv.style.display=="block"){
+		modalCommentsDiv.style.display="none";
+		showCommentsButton.innerHTML = "Show comments";
+	}
+}
+
+function hideComments(){
+	var modalCommentsDiv=document.getElementById("modal_comments_div");
+	modalCommentsDiv.style.display="none";
+}
+
+function insertComment(){
+	var xhttp = new XMLHttpRequest();
+	var action = "insert_comment";
+	var formdata = new FormData();
+
+	formdata.append("action", action);
+	
+	var recipe_id = document.getElementById("modal_hidden_recipeId").value;
+	formdata.append("recipe_id", recipe_id);
+	
+	formdata.append("username", sessionStorage.getItem("uname"));
+	
+	var comment = document.getElementById("modal_comments_ta").value;
+	formdata.append("comment", comment);
+	
+	xhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			var response = this.responseText;
+			
+			alert(response);
+			
+			
+		}
+	};
+
+	xhttp.open("POST", "RecipeControlServlet", true);
+	xhttp.send(formdata);
+}
+
 function createReviewModal(){
 	createBaseModal();
 	
@@ -233,6 +397,8 @@ function createFavoritedRecipesModal(){
 	
 	modalBodyDiv.appendChild(addDelButton);
 	
+	createCommentsAreaInModal();
+	
 }
 
 function createMyRecipesModal(){
@@ -254,6 +420,8 @@ function createMyRecipesModal(){
 	addUpdateButton.innerHTML = "Update Recipe";
 	
 	modalBodyDiv.appendChild(addUpdateButton);
+	
+	createCommentsAreaInModal();
 }
 
 function createFindRecipesModal(){
@@ -267,6 +435,8 @@ function createFindRecipesModal(){
 	addToFavButton.innerHTML = "Add to Favorites";
 	
 	modalBodyDiv.appendChild(addToFavButton);
+	
+	createCommentsAreaInModal();
 }
 
 function createBaseModal(){

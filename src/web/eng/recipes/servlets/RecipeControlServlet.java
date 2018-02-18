@@ -110,6 +110,12 @@ public class RecipeControlServlet extends HttpServlet {
 		case "update_recipe":
 			response.getWriter().write(updateRecipe(request));
 			break;
+		case "insert_comment":
+			response.getWriter().write(insertComment(request));
+			break;
+		case "get_all_comments":
+			response.getWriter().write(getAllComments(request));
+			break;
 		}
 		
 		
@@ -326,6 +332,26 @@ public class RecipeControlServlet extends HttpServlet {
 		responseMsg=recipeService.updateRecipe(recipeId,recipeTitle,recipeCategory,recipeDescr,recipeIngredList);
 		
 		return responseMsg;
+	}
+	
+	private String insertComment(HttpServletRequest request){
+
+		String username = request.getParameter("username");
+		String recipeId = request.getParameter("recipe_id");
+		String comment = request.getParameter("comment");
+		
+		String responseMsg = recipeService.insertComment(username, recipeId, comment);
+
+		return responseMsg;
+	}
+	
+	private String getAllComments(HttpServletRequest request){
+
+		String recipeId = request.getParameter("recipe_id");
+		
+		List<Recipe> foundIngredients = recipeService.getAllComments(recipeId);
+
+		return new JSONArray(foundIngredients).toString();
 	}
 
 }

@@ -22,6 +22,7 @@ import org.apache.tomcat.util.http.fileupload.FileUtils;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import web.eng.recipes.dao.RecipeDao;
+import web.eng.recipes.models.Comment;
 import web.eng.recipes.models.Image;
 import web.eng.recipes.models.Recipe;
 import web.eng.recipes.models.Recipe_ingredient;
@@ -193,6 +194,29 @@ public class RecipeServiceImpl implements RecipeService {
 			return "ERROR";
 		}
 	}
+	
+	public List<Comment> getAllComments(String recipeId) {
+		List<Comment> foundComments = new ArrayList<>();
+
+		foundRecipes = recipeDao.getFavoriteRecipes(username);
+		for (Recipe recipe : foundRecipes) {
+			if (recipe.getImages().get(0).getImgPath() != null) {
+				String img = readImg(recipe.getImages().get(0).getImgPath());
+				recipe.getImages().get(0).setImage(img);
+			}
+		}
+		return foundRecipes;
+	}
+	
+public String insertComment(String username, String recipeId, String comment ) {
+		
+		if(recipeDao.insertComment(username,recipeId,comment)) {
+			return "OK";
+		}
+		
+		return "ERROR";
+		
+	}
 
 	private void deleteImage(String imgPath) {
 		File file = new File(imgPath);
@@ -217,6 +241,8 @@ public class RecipeServiceImpl implements RecipeService {
 			return null;
 		}
 	}
+	
+	
 
 	private String writeImg(Part img, String title, String imgName) throws IOException {
 		OutputStream out = null;

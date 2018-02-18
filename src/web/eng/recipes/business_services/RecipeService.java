@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.Part;
 
+import web.eng.recipes.models.Comment;
 import web.eng.recipes.models.Recipe;
 import web.eng.recipes.models.Recipe_ingredient;
 
@@ -19,4 +20,6 @@ public interface RecipeService {
 	String deleteRecipeByRecipeId(String recipeId);
 	List<Recipe> getFavoriteRecipes(String username);
 	String updateRecipe(String recipeId,String recipeTitle,String recipeCategory,String recipeDescr,List<Recipe_ingredient> recipeIngredList);
+	String insertComment(String username, String recipeId, String comment );
+	List<Comment> getAllComments(String recipeId);
 }

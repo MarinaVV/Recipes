@@ -688,6 +688,40 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		}
 	}
 	
+	public boolean insertComment(String username, String recipeId, String comment ) {
+		
+		open();
+		PreparedStatement stmtDelete = null;
+		
+		try {
+			stmtDelete = con.prepareStatement(SQL.INSERT_COMMENT);
+
+			stmtDelete.setString(1, recipeId);
+			stmtDelete.setString(2, comment);
+			stmtDelete.setString(3, username);
+			stmtDelete.execute();
+			
+			return true;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (stmtDelete != null) {
+					stmtDelete.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			close();
+
+		}
+		
+	}
+	
 	public boolean deleteRecipeIngredients(String recipeId) {
 		open();
 		PreparedStatement stmt = null;

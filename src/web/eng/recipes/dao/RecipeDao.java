@@ -20,4 +20,5 @@ public interface RecipeDao {
 	List<Image> deleteRecipeByRecipeId(long recipeId);
 	List<Recipe> getFavoriteRecipes(String username);
 	boolean updateRecipe(String recipeId, String recipeTitle, String recipeCategory, String recipeDescr, List<Recipe_ingredient> recipeIngredList);
+	boolean insertComment(String username, String recipeId, String comment );
 }
