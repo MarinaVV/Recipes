@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import web.eng.recipes.business_services.IngredientService;
 import web.eng.recipes.business_services.RecipeService;
+import web.eng.recipes.models.Comment;
 import web.eng.recipes.models.Ingredient;
 import web.eng.recipes.models.Recipe;
 import web.eng.recipes.models.Recipe_ingredient;
@@ -349,7 +350,7 @@ public class RecipeControlServlet extends HttpServlet {
 
 		String recipeId = request.getParameter("recipe_id");
 		
-		List<Recipe> foundIngredients = recipeService.getAllComments(recipeId);
+		List<Comment> foundIngredients = recipeService.getAllComments(recipeId);
 
 		return new JSONArray(foundIngredients).toString();
 	}

@@ -2,6 +2,7 @@ package web.eng.recipes.dao;
 
 import java.util.List;
 
+import web.eng.recipes.models.Comment;
 import web.eng.recipes.models.Image;
 import web.eng.recipes.models.Recipe;
 import web.eng.recipes.models.Recipe_ingredient;
@@ -21,4 +22,5 @@ public interface RecipeDao {
 	List<Recipe> getFavoriteRecipes(String username);
 	boolean updateRecipe(String recipeId, String recipeTitle, String recipeCategory, String recipeDescr, List<Recipe_ingredient> recipeIngredList);
 	boolean insertComment(String username, String recipeId, String comment );
+	List<Comment> getAllComments(String recipeId);
 }

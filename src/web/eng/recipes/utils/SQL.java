@@ -21,6 +21,8 @@ public  class SQL {
 	public static final String DELETE_RECIPE_INGREDIENTS = "DELETE FROM `recipe_ingredients` WHERE recipe_id=?";
 	
 	
+	public static final String GET_ALL_COMMENTS = "SELECT c.id, c.date, c.comment, users.username FROM `comentars` c inner join users on c.user_id=users.id WHERE recipe_id=? order by date DESC";
+	
 	public static final String GET_RECIPE_BY_RECIPE_TITLE = "Select * from recipes where title=?";
 	
 	public static final String GET_SECONDARY_IMAGES ="Select * From images where recipe_id = ? and is_primary=0";

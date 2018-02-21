@@ -198,14 +198,9 @@ public class RecipeServiceImpl implements RecipeService {
 	public List<Comment> getAllComments(String recipeId) {
 		List<Comment> foundComments = new ArrayList<>();
 
-		foundRecipes = recipeDao.getFavoriteRecipes(username);
-		for (Recipe recipe : foundRecipes) {
-			if (recipe.getImages().get(0).getImgPath() != null) {
-				String img = readImg(recipe.getImages().get(0).getImgPath());
-				recipe.getImages().get(0).setImage(img);
-			}
-		}
-		return foundRecipes;
+		foundComments = recipeDao.getAllComments(recipeId);
+	
+		return foundComments;
 	}
 	
 public String insertComment(String username, String recipeId, String comment ) {

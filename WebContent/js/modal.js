@@ -238,7 +238,7 @@ function createCommentsAreaInModal(){
 	modalBodyDiv.appendChild(commentsDiv);
 }
 
-function getAllComments(recipeID){
+function getAllComments(){
 	var xhttp = new XMLHttpRequest();
 	var action = "get_all_comments";
 	var formdata = new FormData();
@@ -250,9 +250,15 @@ function getAllComments(recipeID){
 		
 	xhttp.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
-			var response = this.responseText;
+			var response = JSON.parse(this.responseText);
 			
-			alert(response);
+			for(var i = 0; i<response.length;i++){
+				var username = response[i].user.userName;
+				var date = response[i].date;
+				var comment = response[i].comment;
+				var id = response[i].id;
+				document.getElementById("modal_show_comments_div").appendChild(createSingleCommentDiv(username,date,comment,id));
+			}
 			
 			
 		}
@@ -262,6 +268,13 @@ function getAllComments(recipeID){
 	xhttp.send(formdata);
 }
 
+
+function clearComments(){
+	var comments=document.getElementById("modal_show_comments_div");
+	for(var i = 0; comments.childNodes.length;i++){
+		comments.removeChild(comments.childNodes[0]);
+	}
+}
 
 function createSingleCommentDiv(username,date,comment,id){
 	
@@ -310,15 +323,19 @@ function showComments(){
 	if(modalCommentsDiv.style.display=="" || modalCommentsDiv.style.display=="none"){
 		modalCommentsDiv.style.display="block";
 		showCommentsButton.innerHTML = "Hide comments";
+		getAllComments();
 	}else if(modalCommentsDiv.style.display=="block"){
 		modalCommentsDiv.style.display="none";
 		showCommentsButton.innerHTML = "Show comments";
+		clearComments();
 	}
+	
 }
 
 function hideComments(){
 	var modalCommentsDiv=document.getElementById("modal_comments_div");
 	modalCommentsDiv.style.display="none";
+	clearComments();
 }
 
 function insertComment(){

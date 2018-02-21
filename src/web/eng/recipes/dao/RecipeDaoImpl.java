@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import web.eng.recipes.business_services.RecipeServiceImpl;
+import web.eng.recipes.models.Comment;
 import web.eng.recipes.models.Image;
 import web.eng.recipes.models.Ingredient;
 import web.eng.recipes.models.Recipe;
@@ -720,6 +721,54 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 
 		}
 		
+	}
+	
+	public List<Comment> getAllComments(String recipeId){
+		open();
+		PreparedStatement stmt = null;
+		ResultSet rs;
+		List<Comment> comments = new ArrayList<>();
+		
+		String sql = SQL.GET_ALL_COMMENTS;
+
+		try {
+			stmt = con.prepareStatement(sql);
+
+			stmt.setString(1, recipeId);
+
+			rs=stmt.executeQuery();
+			
+			while(rs.next()){
+				Comment comment = new Comment();
+				comment.setComment(rs.getString("Comment"));
+				comment.setDate(rs.getDate("date"));
+				comment.setId(rs.getLong("id"));
+				User user = new User();
+				user.setUserName(rs.getString("username"));
+				comment.setUser(user);
+				comments.add(comment);
+			}
+			
+			return comments;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (isAutoCommit) {
+					close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public boolean deleteRecipeIngredients(String recipeId) {
