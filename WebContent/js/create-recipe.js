@@ -93,7 +93,7 @@ function reviewModal() {
 
 	document.getElementById('modal_title').innerHTML = elementsMap.title;
 	document.getElementById('modal_category').innerHTML = elementsMap.category;
-	document.getElementById('modal_description_ta').value = elementsMap.description;
+	document.getElementById('modal_description_ta').innerHTML = elementsMap.description;
 
 	var input = document.getElementById('primary_img_input');
 	var img = document.getElementById('modal_previwe_image').childNodes[0];

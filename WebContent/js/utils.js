@@ -218,6 +218,7 @@ function add_ingredient_create_update(ingredient,quantity,unit) {
 	document.getElementById("ingredients").appendChild(ingredientDiv);
 }
 
+
 function setUnitsSuggestions() {
 	var unitsDatalist = document.getElementById("suggestionsUnits");
 

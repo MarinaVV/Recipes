@@ -57,7 +57,7 @@ function displayModalData(descriptionInput, dateInput, userNameInput,
 
 	document.getElementById('modal_title').innerHTML = titleLabel.innerHTML;
 	document.getElementById('modal_category').innerHTML = categoryLabel.innerHTML;
-	document.getElementById('modal_description_ta').value = descriptionInput.value;
+	document.getElementById('modal_description_ta').innerHTML = descriptionInput.value.replace(/\n/ig, '<br>');
 	document.getElementById('modal_hidden_recipeId').value = recipeId;
 
 	document.getElementById("modal_previwe_image").style.backgroundImage = resultDiv.style.backgroundImage;
@@ -97,7 +97,7 @@ function createRecipeIngredientRow(recipe_ingredient) {
 function clearModalData() {
 	document.getElementById('modal_title').innerHTML = "";
 	document.getElementById('modal_category').innerHTML = "";
-	document.getElementById('modal_description_ta').value = "";
+	document.getElementById('modal_description_ta').innerHTML = "";
 
 	document.getElementById("modal_previwe_image").style.backgroundImage = "";
 	document.getElementById("primary_img").style.backgroundImage = "";
@@ -305,9 +305,10 @@ function createSingleCommentDiv(username,date,comment,id){
 	
 	innerCommentDiv.appendChild(line);
 	
+	
 	var commentPartDiv = document.createElement("div");
 	commentPartDiv.setAttribute("id","modal_single_comment_comment_part_div"); 
-	commentPartDiv.innerHTML = comment;
+	commentPartDiv.innerHTML = comment.replace(/\n/ig, '<br>');
 	
 	innerCommentDiv.appendChild(commentPartDiv);
 	
@@ -357,8 +358,9 @@ function insertComment(){
 		if (this.readyState === 4 && this.status === 200) {
 			var response = this.responseText;
 			
-			alert(response);
-			
+			document.getElementById("modal_comments_ta").value="";
+			clearComments();
+			getAllComments();
 			
 		}
 	};
@@ -591,11 +593,11 @@ function createBaseModal(){
 	var descriptionDiv = document.createElement("div");
 	descriptionDiv.setAttribute("class", "modal_description");
 	
-	var descriptionTextArea = document.createElement("textarea");
+	var descriptionTextArea = document.createElement("div");
 	descriptionTextArea.setAttribute("id", "modal_description_ta");
-	descriptionTextArea.setAttribute("rows", "40");
+	/*descriptionTextArea.setAttribute("rows", "40");
 	descriptionTextArea.setAttribute("cols", "5");
-	descriptionTextArea.setAttribute("readonly", "");
+	descriptionTextArea.setAttribute("readonly", "");*/
 	
 	descriptionDiv.appendChild(descriptionTextArea);
 	modalBodyDiv.appendChild(descriptionDiv);

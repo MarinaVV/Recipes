@@ -46,6 +46,10 @@ function search_recipe_U(username) {
 			document.getElementById("hidden_result_input").value = this.responseText;
 
 			var response = JSON.parse(this.responseText);
+			
+			/*for(var i=0;i<response.length;i++){
+				response[i].description = response[i].description.replace(/(\r\n|\n|\r)/gm, '<br>');
+			}*/
 
 			clearSearchResult();
 			displaySearchResult(response);
@@ -129,7 +133,7 @@ function displaySearchResult(listRecipes) {
 		var title = listRecipes[indexOfList].title;
 		var category = listRecipes[indexOfList].category;
 
-		var description = listRecipes[indexOfList].description;
+		var description = listRecipes[indexOfList].description.replace(/(\r\n|\n|\r)/gm, '<br>');
 		var recipeId = listRecipes[indexOfList].id;
 		var creatingUser = listRecipes[indexOfList].creatingUser.username;
 		var date = listRecipes[indexOfList].date;
