@@ -45,7 +45,7 @@
 		<div class="padding_div"> </div>
 		
 		<!--  BODY -->
-		<div class="body_container">
+		<div id="body_container" class="body_container">
 			<div class="search_part">
 				<p> Choose your search criteria</p>
 				<div class="search_row">

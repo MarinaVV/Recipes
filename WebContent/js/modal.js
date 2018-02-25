@@ -236,9 +236,40 @@ function createCommentsAreaInModal(){
 	
 	var modal_counter = document.createElement("input");
 	modal_counter.setAttribute("id","modal_comment_hidden_counter");
-	//modal_counter.setAttribute("class","hidden_inputs");
+	modal_counter.setAttribute("class","hidden_inputs");
 	modal_counter.value=0;
 	commentsDiv.appendChild(modal_counter);
+	
+	var modalDiv = document.createElement("div");
+	modalDiv.setAttribute("id", "modal_update_comment_div");
+	
+	var modalUpdateCommentContent = document.createElement("div");
+	modalUpdateCommentContent.setAttribute("class", "modal_update_comment_content");
+	
+	var updateCommentTA = document.createElement("textarea");
+	updateCommentTA.setAttribute("id","modal_comment_update_ta");
+	updateCommentTA.setAttribute("rows", "40");
+	updateCommentTA.setAttribute("cols", "5");
+	
+	modalUpdateCommentContent.appendChild(updateCommentTA);
+	
+	var saveCommentButton =document.createElement("button");
+	saveCommentButton.setAttribute("id", "modal_comment_update_save");
+	saveCommentButton.setAttribute("onclick", "");
+	saveCommentButton.innerHTML = "Save";
+	
+	modalUpdateCommentContent.appendChild(saveCommentButton);
+	
+	var cancelSaveCommentButton =document.createElement("button");
+	cancelSaveCommentButton.setAttribute("id", "modal_comment_update_cancel_save");
+	cancelSaveCommentButton.setAttribute("onclick", "closeUpdateCommentModal()");
+	cancelSaveCommentButton.innerHTML = "Cancel";
+	
+	modalUpdateCommentContent.appendChild(cancelSaveCommentButton);
+	
+	modalDiv.appendChild(modalUpdateCommentContent);
+	
+	document.getElementById("body_container").appendChild(modalDiv);
 	
 	modalBodyDiv.appendChild(commentsDiv);
 }
@@ -294,7 +325,7 @@ function createSingleCommentDiv(username,date,comment,id){
 	innerCommentDiv.setAttribute("class","modal_single_comment_inner_div");
 	
 	var hiddenCommentID = document.createElement("input");
-	//hiddenCommentID.setAttribute("class","hidden_inputs");
+	hiddenCommentID.setAttribute("class","hidden_inputs");
 	hiddenCommentID.setAttribute("id","modal_single_comment_hidden_id_" + counterInput.value );
 	hiddenCommentID.value=id;
 	innerCommentDiv.appendChild(hiddenCommentID);
@@ -316,17 +347,20 @@ function createSingleCommentDiv(username,date,comment,id){
 	
 	
 	var commentPartDiv = document.createElement("div");
-	commentPartDiv.setAttribute("id","modal_single_comment_comment_part_div"); 
+	commentPartDiv.setAttribute("id","modal_single_comment_comment_part_div_"+counterInput.value); 
+	commentPartDiv.setAttribute("class","modal_single_comment_comment_part_div"); 
 	commentPartDiv.innerHTML = comment.replace(/\n/ig, '<br>');
 	
 	innerCommentDiv.appendChild(commentPartDiv);
 	
 	if(username===sessionStorage.uname){
-		innerCommentDiv.appendChild(line);
+		var line2 = document.createElement("hr");
+		line2.setAttribute("class","modal_single_comment_line");
+		innerCommentDiv.appendChild(line2);
 		
 		var updateComment =document.createElement("button");
 		updateComment.setAttribute("id", "modal_update_comment");
-		updateComment.setAttribute("onclick", "");
+		updateComment.setAttribute("onclick", "openUpdateCommentModal(modal_single_comment_comment_part_div_"+counterInput.value+",modal_single_comment_hidden_id_"+counterInput.value+" )");
 		updateComment.innerHTML = "Update";
 		innerCommentDiv.appendChild(updateComment);
 		
@@ -398,6 +432,52 @@ function insertComment(){
 function deleteComment(idInput){
 	var xhttp = new XMLHttpRequest();
 	var action = "delete_comment";
+	var formdata = new FormData();
+
+	formdata.append("action", action);
+	
+	formdata.append("comment_id", idInput.value);
+	
+	formdata.append("username", sessionStorage.getItem("uname"));
+	
+	xhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			var response = this.responseText;
+			
+			clearComments();
+			getAllComments();
+			
+		}
+	};
+
+	xhttp.open("POST", "RecipeControlServlet", true);
+	xhttp.send(formdata);
+}
+
+function openUpdateCommentModal(commentDiv, commentId){
+	
+	var updateDiv = document.getElementById("modal_update_comment_div");
+	updateDiv.style.display="block";
+	var saveButton = document.getElementById("modal_comment_update_save");
+	saveButton.setAttribute("onclick","updateComment("+commentId.value+")");
+	var textArea = document.getElementById("modal_comment_update_ta");
+	textArea.value=commentDiv.innerHTML.replace("<br>","");
+}
+
+function closeUpdateCommentModal(){
+	
+	var updateDiv = document.getElementById("modal_update_comment_div");
+	updateDiv.style.display="none";
+	var saveButton = document.getElementById("modal_comment_update_save");
+	saveButton.setAttribute("onclick","");
+	var textArea = document.getElementById("modal_comment_update_ta");
+	textArea.value="";
+}
+
+function updateComment(idInput){
+
+	var xhttp = new XMLHttpRequest();
+	var action = "update_comment";
 	var formdata = new FormData();
 
 	formdata.append("action", action);

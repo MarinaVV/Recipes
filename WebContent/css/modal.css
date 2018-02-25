@@ -298,6 +298,57 @@ to {
 
 }
 
-#modal_single_comment_comment_part_div{
+.modal_single_comment_comment_part_div{
 	word-wrap: break-word;
 }
+
+#modal_update_comment_div {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 2; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	/* Enable scroll if needed */
+	background-color: rgba(0, 0, 0, 0.65); /* Black w/ opacity */
+	-webkit-animation-name: fadeIn; /* Fade in the background */
+	-webkit-animation-duration: 0.4s;
+	animation-name: fadeIn;
+	animation-duration: 0.4s;
+}
+
+.modal_update_comment_content {
+	bottom: 0;
+	margin: 10% auto;
+	background-color: #fefefe;
+	width: 70%;
+	height: 35%;
+	overflow: auto;
+	-webkit-animation-name: slideIn;
+	-webkit-animation-duration: 0.4s;
+	animation-name: slideIn;
+	animation-duration: 0.4s
+}
+
+#modal_comment_update_ta {
+	width: 90%;
+	height: 100px;
+	margin-left: 5%;
+	margin-top:5%;
+	overflow:hidden;
+	overflow-y: auto;
+}
+
+#modal_comment_update_save{
+	margin-right:3%;
+	margin-top:2%;
+	float:right;
+}
+
+#modal_comment_update_cancel_save{
+	margin-right:2%;
+	margin-top:2%;
+	float:right;
+}
+
