@@ -234,6 +234,11 @@ function createCommentsAreaInModal(){
 	modal_showComments_div.setAttribute("id","modal_show_comments_div");
 	commentsDiv.appendChild(modal_showComments_div);
 	
+	var modal_counter = document.createElement("input");
+	modal_counter.setAttribute("id","modal_comment_hidden_counter");
+	//modal_counter.setAttribute("class","hidden_inputs");
+	modal_counter.value=0;
+	commentsDiv.appendChild(modal_counter);
 	
 	modalBodyDiv.appendChild(commentsDiv);
 }
@@ -274,9 +279,13 @@ function clearComments(){
 	for(var i = 0; comments.childNodes.length;i++){
 		comments.removeChild(comments.childNodes[0]);
 	}
+	
+	document.getElementById("modal_comment_hidden_counter").value=0;
 }
 
 function createSingleCommentDiv(username,date,comment,id){
+	
+	var counterInput = document.getElementById("modal_comment_hidden_counter");
 	
 	var outerCommentDiv = document.createElement("div");
 	outerCommentDiv.setAttribute("class","modal_single_comment_outer_div");
@@ -285,9 +294,10 @@ function createSingleCommentDiv(username,date,comment,id){
 	innerCommentDiv.setAttribute("class","modal_single_comment_inner_div");
 	
 	var hiddenCommentID = document.createElement("input");
-	hiddenCommentID.setAttribute("class","hidden");
-	hiddenCommentID.setAttribute("id","modal_single_comment_hidden_id");
+	//hiddenCommentID.setAttribute("class","hidden_inputs");
+	hiddenCommentID.setAttribute("id","modal_single_comment_hidden_id_" + counterInput.value );
 	hiddenCommentID.value=id;
+	innerCommentDiv.appendChild(hiddenCommentID);
 	
 	var usernameLabel = document.createElement("label");
 	usernameLabel.setAttribute("class","modal_single_comment_username_label");
@@ -302,7 +312,6 @@ function createSingleCommentDiv(username,date,comment,id){
 	
 	var line = document.createElement("hr");
 	line.setAttribute("class","modal_single_comment_line");
-	
 	innerCommentDiv.appendChild(line);
 	
 	
@@ -312,6 +321,23 @@ function createSingleCommentDiv(username,date,comment,id){
 	
 	innerCommentDiv.appendChild(commentPartDiv);
 	
+	if(username===sessionStorage.uname){
+		innerCommentDiv.appendChild(line);
+		
+		var updateComment =document.createElement("button");
+		updateComment.setAttribute("id", "modal_update_comment");
+		updateComment.setAttribute("onclick", "");
+		updateComment.innerHTML = "Update";
+		innerCommentDiv.appendChild(updateComment);
+		
+		var updatedeleteComment =document.createElement("button");
+		updatedeleteComment.setAttribute("id", "modal_delete_comment");
+		updatedeleteComment.setAttribute("onclick", "deleteComment(modal_single_comment_hidden_id_"+counterInput.value+")");
+		updatedeleteComment.innerHTML = "Delete";
+		innerCommentDiv.appendChild(updatedeleteComment);
+	}
+	
+	counterInput.value= parseInt(counterInput.value) + 1;
 	outerCommentDiv.appendChild(innerCommentDiv);
 	
 	return outerCommentDiv;
@@ -359,6 +385,31 @@ function insertComment(){
 			var response = this.responseText;
 			
 			document.getElementById("modal_comments_ta").value="";
+			clearComments();
+			getAllComments();
+			
+		}
+	};
+
+	xhttp.open("POST", "RecipeControlServlet", true);
+	xhttp.send(formdata);
+}
+
+function deleteComment(idInput){
+	var xhttp = new XMLHttpRequest();
+	var action = "delete_comment";
+	var formdata = new FormData();
+
+	formdata.append("action", action);
+	
+	formdata.append("comment_id", idInput.value);
+	
+	formdata.append("username", sessionStorage.getItem("uname"));
+	
+	xhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			var response = this.responseText;
+			
 			clearComments();
 			getAllComments();
 			

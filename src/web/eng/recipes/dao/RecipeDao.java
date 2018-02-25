@@ -23,4 +23,6 @@ public interface RecipeDao {
 	boolean updateRecipe(String recipeId, String recipeTitle, String recipeCategory, String recipeDescr, List<Recipe_ingredient> recipeIngredList);
 	boolean insertComment(String username, String recipeId, String comment );
 	List<Comment> getAllComments(String recipeId);
+	boolean isCommentFromUser(String userName, String commentId);
+	boolean deleteComment(String commentId);
 }

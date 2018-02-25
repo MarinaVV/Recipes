@@ -14,12 +14,16 @@ public  class SQL {
 	public static final String INSERT_FAVORITE_RECIPE = "INSERT INTO `favorites`(`recipe_id`,`user_id`) SELECT  ?, id FROM users WHERE `username`=?";
 	
 	
+	public static final String DELETE_COMMENT = "DELETE FROM `comentars` WHERE id=?";
+	
 	public static final String DELETE_FAVORITE_RECIPE = "DELETE FROM `favorites` WHERE recipe_id = ? and user_id in (SELECT id FROM users WHERE username=?)";
 	
 	public static final String DELETE_RECIPE = "DELETE FROM recipes WHERE id=?";
 	
 	public static final String DELETE_RECIPE_INGREDIENTS = "DELETE FROM `recipe_ingredients` WHERE recipe_id=?";
 	
+	
+	public static final String GET_COMMENT_WITH_USERNAME_ID = "SELECT * FROM `comentars` WHERE id = ? and user_id in (Select id from users where username=?)";
 	
 	public static final String GET_ALL_COMMENTS = "SELECT c.id, c.date, c.comment, users.username FROM `comentars` c inner join users on c.user_id=users.id WHERE recipe_id=? order by date DESC";
 	

@@ -203,7 +203,7 @@ public class RecipeServiceImpl implements RecipeService {
 		return foundComments;
 	}
 	
-public String insertComment(String username, String recipeId, String comment ) {
+	public String insertComment(String username, String recipeId, String comment ) {
 		
 		if(recipeDao.insertComment(username,recipeId,comment)) {
 			return "OK";
@@ -212,6 +212,20 @@ public String insertComment(String username, String recipeId, String comment ) {
 		return "ERROR";
 		
 	}
+
+
+	public String deleteComment(String userName, String commentId) {
+	if(recipeDao.isCommentFromUser(userName,commentId)) {
+		if(recipeDao.deleteComment(commentId)) {
+			return "OK";
+		}
+	} else {
+		return "INVALID_USER";
+	}
+	
+	return "ERROR";
+	
+}
 
 	private void deleteImage(String imgPath) {
 		File file = new File(imgPath);
@@ -236,8 +250,7 @@ public String insertComment(String username, String recipeId, String comment ) {
 			return null;
 		}
 	}
-	
-	
+
 
 	private String writeImg(Part img, String title, String imgName) throws IOException {
 		OutputStream out = null;
