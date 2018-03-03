@@ -23,4 +23,5 @@ public interface RecipeService {
 	String insertComment(String username, String recipeId, String comment );
 	List<Comment> getAllComments(String recipeId);
 	String deleteComment(String userName, String commentId);
+	String updateComment(String username, String commentId, String comment);
 }

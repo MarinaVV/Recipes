@@ -49,7 +49,7 @@
 		<div class="padding_div"> </div>
 		
 		<!--  BODY -->
-		<div class="body_container">
+		<div id="body_container" class="body_container">
 		
 			<div class="menu_div">
 				<div class="menu_item">

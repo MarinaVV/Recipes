@@ -6,6 +6,8 @@ public  class SQL {
 
 	public static final String UPDATE_RECIPE = "UPDATE recipes SET title=?, category=?, description=? WHERE id=?";
 	
+	public static final String UPDATE_COMMENT = "UPDATE `comentars` SET `Comment`=? WHERE id=?";
+	
 	
 	public static final String INSERT_COMMENT = "INSERT INTO `comentars`(`recipe_id`, `user_id`, `Comment`) SELECT  ?, id,?  FROM users WHERE `username`= ?";
 	
@@ -13,7 +15,7 @@ public  class SQL {
 	
 	public static final String INSERT_FAVORITE_RECIPE = "INSERT INTO `favorites`(`recipe_id`,`user_id`) SELECT  ?, id FROM users WHERE `username`=?";
 	
-	
+
 	public static final String DELETE_COMMENT = "DELETE FROM `comentars` WHERE id=?";
 	
 	public static final String DELETE_FAVORITE_RECIPE = "DELETE FROM `favorites` WHERE recipe_id = ? and user_id in (SELECT id FROM users WHERE username=?)";

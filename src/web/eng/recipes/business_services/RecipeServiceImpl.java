@@ -225,7 +225,19 @@ public class RecipeServiceImpl implements RecipeService {
 	
 	return "ERROR";
 	
-}
+	}
+	
+	public String updateComment(String username, String commentId, String comment) {
+		if(recipeDao.isCommentFromUser(username,commentId)) {
+			if(recipeDao.updateComment(commentId, comment)) {
+				return "OK";
+			}
+		} else {
+			return "INVALID_USER";
+		}
+		
+		return "ERROR";
+	}
 
 	private void deleteImage(String imgPath) {
 		File file = new File(imgPath);

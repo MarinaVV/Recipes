@@ -120,6 +120,9 @@ public class RecipeControlServlet extends HttpServlet {
 		case "delete_comment":
 			response.getWriter().write(deleteComment(request));
 			break;
+		case "update_comment":
+			response.getWriter().write(updateComment(request));
+			break;
 		}
 		
 		
@@ -364,6 +367,17 @@ public class RecipeControlServlet extends HttpServlet {
 		String commentId = request.getParameter("comment_id");
 		
 		String responseMsg = recipeService.deleteComment(username, commentId);
+
+		return responseMsg;
+	}
+	
+	private String updateComment(HttpServletRequest request){
+
+		String username = request.getParameter("username");
+		String commentId = request.getParameter("comment_id");
+		String comment = request.getParameter("comment");
+		
+		String responseMsg = recipeService.updateComment(username, commentId, comment);
 
 		return responseMsg;
 	}

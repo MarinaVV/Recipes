@@ -482,7 +482,9 @@ function updateComment(idInput){
 
 	formdata.append("action", action);
 	
-	formdata.append("comment_id", idInput.value);
+	formdata.append("comment_id", idInput);
+	
+	formdata.append("comment", document.getElementById("modal_comment_update_ta").value);
 	
 	formdata.append("username", sessionStorage.getItem("uname"));
 	
@@ -490,6 +492,7 @@ function updateComment(idInput){
 		if (this.readyState === 4 && this.status === 200) {
 			var response = this.responseText;
 			
+			closeUpdateCommentModal();
 			clearComments();
 			getAllComments();
 			
