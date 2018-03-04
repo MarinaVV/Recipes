@@ -1,10 +1,42 @@
-.previewHolder{
-		width: 40%;
+.previewHolder {
+	width: 40%;
 	border: 1px solid;
 	float: left;
 	height: 300px;
+	margin-left:7%;
 }
 
-.ingredient input{
-	margin:1px;
+.ingredient input {
+	margin: 1px;
+}
+
+#modalUpdate_description {
+	width: 100%;
+	height: 150px;
+	border: 1px solid black;
+	margin-bottom: 5px;
+	padding: 6px;
+}
+
+.modalUpdate_all_images_holder{
+	width: 40%;
+	height:50px;
+	border: 1px solid black;
+	display:flex;
+	margin-top:320px;
+	margin-left:7%;
+}
+
+.modalUpdate_small_image{
+	border:1px solid black;
+	width:20%;
+}
+
+.images{
+	margin-top:-360px;
+	margin-left:55%;
+}
+
+.modalUpdate_image_input_line{
+	margin:15px 0;
 }

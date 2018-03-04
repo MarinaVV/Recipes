@@ -33,7 +33,7 @@ function openModalUpdate(recipeIdInput, descriptionInput, dateInput,
 
 	}
 
-	document.getElementById("modalUpdate_description").value = descriptionInput.value;
+	document.getElementById("modalUpdate_description").innerHTML = descriptionInput.innerHTML;
 	document.getElementById("modalUpdate_hidden_recipe_id").value = recipeIdInput.value;
 
 	var ingredients = document.getElementsByName("modal_recipe_ingredient_row");

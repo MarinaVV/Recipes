@@ -99,64 +99,47 @@
     			</div>
     			<div class="modal-body">
     				<div class="modal_image_ingredients">
-    					<div class="modal_image_part" disabled>
+    					<div class="modal_image_part" >
     						<div class="previewHolder">
+    						<button>Delete Image</button>
+    						</div>
+    						<div class="modalUpdate_all_images_holder">
+    							<div id="modalUpdate_primary_img" class="modalUpdate_small_image"></div>
+    							<div id="modalUpdate_secondary_img1" class="modalUpdate_small_image"></div>
+    							<div id="modalUpdate_secondary_img2" class="modalUpdate_small_image"></div>
+    							<div id="modalUpdate_secondary_img3" class="modalUpdate_small_image"></div>
+    							<div id="modalUpdate_secondary_img4" class="modalUpdate_small_image"></div>
     						</div>
     						<div class="images">
-    							<div>
+    							<div class = "modalUpdate_image_input_line">
 									<div>
 										<label>Primary image</label>
 									</div>
 									<input id="modalUpdate_primary_img" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
-									<button onclick="previewImg(primary_img)">Peview	image</button>
-									<div>
-										<button>Add</button>
-										<button>Delete</button>
-									</div>
 								</div>
-								<div>
+								<div class = "modalUpdate_image_input_line">
 									<div>
 										<label>Image</label>
 									</div>
 									<input id="modalUpdate_secondary_img_1" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
-									<button onclick="previewImg(secondary_img_1)">Peview	image</button>
-									<div>
-										<button>Add</button>
-										<button>Delete</button>
-									</div>
 								</div>
-								<div>
+								<div class = "modalUpdate_image_input_line">
 									<div>
 										<label>Image</label>
 									</div>
 									<input id="modalUpdate_secondary_img_2" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
-									<button onclick="previewImg(secondary_img_2)">Peview	image</button>
-									<div>
-										<button>Add</button>
-										<button>Delete</button>
-									</div>
 								</div>
-								<div>
+								<div class = "modalUpdate_image_input_line">
 									<div>
 										<label>Image</label>
 									</div>
 									<input id="modalUpdate_secondary_img_3" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
-									<button onclick="previewImg(secondary_img_3)">Peview	image</button>
-									<div>
-										<button>Add</button>
-										<button>Delete</button>
-									</div>
 								</div>
-								<div>
+								<div class = "modalUpdate_image_input_line">
 									<div>
 										<label>Image</label>
 									</div>
 									<input id="modalUpdate_secondary_img_4" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
-									<button onclick="previewImg(secondary_img_4)">Peview image</button>
-									<div>
-										<button>Add</button>
-										<button>Delete</button>
-									</div>
 								</div>
 							</div>
 							
@@ -187,7 +170,7 @@
 						</div>
     				</div>
       				<div class="modal_description">
-      					<textarea id="modalUpdate_description" rows="40" cols="5"></textarea>
+      					<div id="modalUpdate_description"></div>
       				</div>
       				<button onclick="updateRecipe()">Update</button>
     			</div>
