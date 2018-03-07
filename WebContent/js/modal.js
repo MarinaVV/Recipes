@@ -13,10 +13,10 @@ function closeModal() {
 }
 
 function openModal(recipeIdInput, descriptionInput, dateInput, userNameInput,
-		titleLabel, categoryLabel, resultDiv) {
+		titleLabel, categoryLabel, resultDiv, primaryImgID) {
 
 	getSecondaryImages_Ingredients(recipeIdInput.value, descriptionInput,
-			dateInput, userNameInput, titleLabel, categoryLabel, resultDiv);
+			dateInput, userNameInput, titleLabel, categoryLabel, resultDiv, primaryImgID);
 
 	document.getElementById('myModal').style.display = "block";
 }
@@ -31,7 +31,7 @@ function openReviewModal() {
 }
 
 function getSecondaryImages_Ingredients(recipeId, descriptionInput, dateInput,
-		userNameInput, titleLabel, categoryLabel, resultDiv) {
+		userNameInput, titleLabel, categoryLabel, resultDiv, primaryImgID) {
 	var xhttp = new XMLHttpRequest();
 	var action = "get_secondary_images_ingredients";
 	var formdata = new FormData();
@@ -44,7 +44,7 @@ function getSecondaryImages_Ingredients(recipeId, descriptionInput, dateInput,
 			var response = JSON.parse(this.responseText);
 
 			displayModalData(descriptionInput, dateInput, userNameInput,
-					titleLabel, categoryLabel, resultDiv, response, recipeId);
+					titleLabel, categoryLabel, resultDiv, response, recipeId, primaryImgID);
 		}
 	};
 
@@ -53,7 +53,7 @@ function getSecondaryImages_Ingredients(recipeId, descriptionInput, dateInput,
 }
 
 function displayModalData(descriptionInput, dateInput, userNameInput,
-		titleLabel, categoryLabel, resultDiv, secondaryImagesIngredients, recipeId) {
+		titleLabel, categoryLabel, resultDiv, secondaryImagesIngredients, recipeId, primaryImgID) {
 
 	document.getElementById('modal_title').innerHTML = titleLabel.innerHTML;
 	document.getElementById('modal_category').innerHTML = categoryLabel.innerHTML;
@@ -62,7 +62,8 @@ function displayModalData(descriptionInput, dateInput, userNameInput,
 
 	document.getElementById("modal_previwe_image").style.backgroundImage = resultDiv.style.backgroundImage;
 	document.getElementById("primary_img").style.backgroundImage = resultDiv.style.backgroundImage;
-
+	document.getElementById("modal_hidden_primary_img_id").value = primaryImgID.value;
+	
 	var secondaryImages = secondaryImagesIngredients.images;
 	var recipe_ingredients = secondaryImagesIngredients.recipe_ingredients;
 
@@ -70,6 +71,7 @@ function displayModalData(descriptionInput, dateInput, userNameInput,
 		var imgSRC = "data:image/png;base64," + secondaryImages[i].image;
 		document.getElementById("secondery_img_" + (i + 1)).style.backgroundImage = "url(' "
 				+ imgSRC + "')";
+		document.getElementById("modal_hidden_secondary_img"+(i+1)+"_id").value=secondaryImages[i].id;
 	}
 
 	for (var i = 0; i < recipe_ingredients.length; i++) {
@@ -681,17 +683,35 @@ function createBaseModal(){
 	primaryImgDiv.setAttribute("id", "primary_img");
 	primaryImgDiv.setAttribute("onclick", "previewImage(primary_img)");
 	
+	var primaryImgId = document.createElement("input");
+	primaryImgId.setAttribute("id", "modal_hidden_primary_img_id");
+	primaryImgId.setAttribute("class", "hidden_inputs");
+	
+	primaryImgDiv.appendChild(primaryImgId);
+	
 	allImagesDiv.appendChild(primaryImgDiv);
 	
 	var secondaryImgDiv1 = document.createElement("div");
 	secondaryImgDiv1.setAttribute("id", "secondery_img_1");
 	secondaryImgDiv1.setAttribute("onclick", "previewImage(secondery_img_1)");
 
+	var secImg1Id = document.createElement("input");
+	secImg1Id.setAttribute("id", "modal_hidden_secondary_img1_id");
+	secImg1Id.setAttribute("class", "hidden_inputs");
+	
+	secondaryImgDiv1.appendChild(secImg1Id);
+	
 	allImagesDiv.appendChild(secondaryImgDiv1);
 	
 	var secondaryImgDiv2 = document.createElement("div");
 	secondaryImgDiv2.setAttribute("id", "secondery_img_2");
 	secondaryImgDiv2.setAttribute("onclick", "previewImage(secondery_img_2)");
+	
+	var secImg2Id = document.createElement("input");
+	secImg2Id.setAttribute("id", "modal_hidden_secondary_img2_id");
+	secImg2Id.setAttribute("class", "hidden_inputs");
+	
+	secondaryImgDiv2.appendChild(secImg2Id);
 	
 	allImagesDiv.appendChild(secondaryImgDiv2);
 	
@@ -699,11 +719,23 @@ function createBaseModal(){
 	secondaryImgDiv3.setAttribute("id", "secondery_img_3");
 	secondaryImgDiv3.setAttribute("onclick", "previewImage(secondery_img_3)");
 	
+	var secImg3Id = document.createElement("input");
+	secImg3Id.setAttribute("id", "modal_hidden_secondary_img3_id");
+	secImg3Id.setAttribute("class", "hidden_inputs");
+	
+	secondaryImgDiv3.appendChild(secImg3Id);
+	
 	allImagesDiv.appendChild(secondaryImgDiv3);
 	
 	var secondaryImgDiv4 = document.createElement("div");
 	secondaryImgDiv4.setAttribute("id", "secondery_img_4");
 	secondaryImgDiv4.setAttribute("onclick", "previewImage(secondery_img_4)");
+	
+	var secImg4Id = document.createElement("input");
+	secImg4Id.setAttribute("id", "modal_hidden_secondary_img4_id");
+	secImg4Id.setAttribute("class", "hidden_inputs");
+	
+	secondaryImgDiv4.appendChild(secImg4Id);
 	
 	allImagesDiv.appendChild(secondaryImgDiv4);
 	

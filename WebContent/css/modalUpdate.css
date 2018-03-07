@@ -4,6 +4,8 @@
 	float: left;
 	height: 300px;
 	margin-left:7%;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 
 .ingredient input {
@@ -23,20 +25,28 @@
 	height:50px;
 	border: 1px solid black;
 	display:flex;
-	margin-top:320px;
+	margin-top:295px;
 	margin-left:7%;
 }
 
 .modalUpdate_small_image{
 	border:1px solid black;
 	width:20%;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
 }
 
 .images{
-	margin-top:-360px;
+	margin-top:-365px;
 	margin-left:55%;
 }
 
 .modalUpdate_image_input_line{
 	margin:15px 0;
+}
+
+#modalUpdateDelButton{
+	position:relative;
+	margin-left:-92%;
+	margin-top:5px;
 }

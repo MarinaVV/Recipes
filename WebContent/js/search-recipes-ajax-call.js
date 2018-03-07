@@ -141,8 +141,10 @@ function displaySearchResult(listRecipes) {
 		var imgBase64 = listRecipes[indexOfList].images[0].image;
 		if (imgBase64 == "no_image_provided") {
 			var imgSRC = "img/No-image-available.jpg";
+			var primaryImgId = -1;
 		} else {
 			var imgSRC = "data:image/png;base64," + imgBase64;
+			var primaryImgId = listRecipes[indexOfList].images[0].id;
 		}
 
 		if (indexOfList % 2 == 0) {
@@ -169,6 +171,7 @@ function displaySearchResult(listRecipes) {
 
 			document.getElementById("left_hidden_userName_" + resultRowIndex).value = creatingUser;
 
+			document.getElementById("left_hidden_primary_img_id_" + resultRowIndex).value = primaryImgId;
 		} else {
 
 			document.getElementById("right_result_" + resultRowIndex).style.backgroundImage = "url(' "
@@ -187,6 +190,8 @@ function displaySearchResult(listRecipes) {
 			document.getElementById("right_hidden_date_" + resultRowIndex).value = date;
 
 			document.getElementById("right_hidden_userName_" + resultRowIndex).value = creatingUser;
+			
+			document.getElementById("right_hidden_primary_img_id_" + resultRowIndex).value = primaryImgId;
 
 			resultRowIndex++;
 		}
@@ -234,6 +239,11 @@ function createResultRow(rowIndex, createRightElement) {
 	var left_hidden_userName_id = "left_hidden_userName_" + rowIndex;
 	left_hidden_userName.setAttribute("id", left_hidden_userName_id);
 	left_hidden_userName.setAttribute("class", "hidden_inputs");
+	
+	var left_hidden_primary_image_id = document.createElement("input");
+	var left_hidden_primary_image_id_id = "left_hidden_primary_img_id_" + rowIndex;
+	left_hidden_primary_image_id.setAttribute("id", left_hidden_primary_image_id_id);
+	left_hidden_primary_image_id.setAttribute("class", "hidden_inputs");
 
 	left_result_div.appendChild(left_hidden_recipeId);
 	left_result_div.appendChild(left_hidden_description);
@@ -241,11 +251,12 @@ function createResultRow(rowIndex, createRightElement) {
 	left_result_div.appendChild(left_hidden_userName);
 	left_result_div.appendChild(left_result_label);
 	left_result_div.appendChild(left_category_label);
+	left_result_div.appendChild(left_hidden_primary_image_id);
 	left_result_div.setAttribute("onclick", "openModal("
 			+ left_hidden_recipeId_id + "," + left_hidden_descrpt_id + ","
 			+ left_hidden_date_id + "," + left_hidden_userName_id + ","
-			+ left_title_id + "," + left_category_id + "," + left_result_div_id
-			+ ")");
+			+ left_title_id + "," + left_category_id + "," + left_result_div_id + "," 
+			+ left_hidden_primary_image_id_id + ")");
 	result_row_div.appendChild(left_result_div);
 
 	if (createRightElement) {
@@ -283,6 +294,11 @@ function createResultRow(rowIndex, createRightElement) {
 		var right_hidden_userName_id = "right_hidden_userName_" + rowIndex;
 		right_hidden_userName.setAttribute("id", right_hidden_userName_id);
 		right_hidden_userName.setAttribute("class", "hidden_inputs");
+		
+		var right_hidden_primary_image_id = document.createElement("input");
+		var right_hidden_primary_image_id_id = "right_hidden_primary_img_id_" + rowIndex;
+		right_hidden_primary_image_id.setAttribute("id", right_hidden_primary_image_id_id);
+		right_hidden_primary_image_id.setAttribute("class", "hidden_inputs");
 
 		right_result_div.appendChild(right_hidden_recipeId);
 		right_result_div.appendChild(right_hidden_description);
@@ -290,11 +306,12 @@ function createResultRow(rowIndex, createRightElement) {
 		right_result_div.appendChild(right_hidden_userName);
 		right_result_div.appendChild(right_result_label);
 		right_result_div.appendChild(right_category_label);
+		right_result_div.appendChild(right_hidden_primary_image_id);
 		right_result_div.setAttribute("onclick", "openModal("
 				+ right_hidden_recipeId_id + "," + right_hidden_descript_id
 				+ "," + right_hidden_date_id + "," + right_hidden_userName_id
 				+ "," + right_title_id + "," + right_category_id + ","
-				+ right_result_div_id + ")");
+				+ right_result_div_id + "," + right_hidden_primary_image_id_id + ")");
 		result_row_div.appendChild(right_result_div);
 	}
 

@@ -100,46 +100,63 @@
     			<div class="modal-body">
     				<div class="modal_image_ingredients">
     					<div class="modal_image_part" >
-    						<div class="previewHolder">
-    						<button>Delete Image</button>
+    						<div id="modalUpdatePreviewHolder" class="previewHolder">
     						</div>
+    						<button id="modalUpdateDelButton">Delete Image</button>
+    						<input id="number_of_images" class="hidden_inputs">
     						<div class="modalUpdate_all_images_holder">
-    							<div id="modalUpdate_primary_img" class="modalUpdate_small_image"></div>
-    							<div id="modalUpdate_secondary_img1" class="modalUpdate_small_image"></div>
-    							<div id="modalUpdate_secondary_img2" class="modalUpdate_small_image"></div>
-    							<div id="modalUpdate_secondary_img3" class="modalUpdate_small_image"></div>
-    							<div id="modalUpdate_secondary_img4" class="modalUpdate_small_image"></div>
+    							<div id="modalUpdate_primary_img" class="modalUpdate_small_image" 
+    							onclick="previewUpdateImage(modalUpdate_primary_img, modalUpdate_primary_img_hidden_id)">
+    								<input id="modalUpdate_primary_img_hidden_id" class="hidden_inputs">
+    							</div>
+    							<div id="modalUpdate_secondary_img1" class="modalUpdate_small_image" 
+    							onclick="previewUpdateImage(modalUpdate_secondary_img1, modalUpdate_secondary_img1_id)">
+    								<input id="modalUpdate_secondary_img1_id" class="hidden_inputs">
+    							</div>
+    							<div id="modalUpdate_secondary_img2" class="modalUpdate_small_image" 
+    							onclick="previewUpdateImage(modalUpdate_secondary_img2, modalUpdate_secondary_img2_id)">
+    								<input id="modalUpdate_secondary_img2_id" class="hidden_inputs">
+    							</div>
+    							<div id="modalUpdate_secondary_img3" class="modalUpdate_small_image" 
+    							onclick="previewUpdateImage(modalUpdate_secondary_img3, modalUpdate_secondary_img3_id)">
+    								<input id="modalUpdate_secondary_img3_id" class="hidden_inputs">
+    							</div>
+    							<div id="modalUpdate_secondary_img4" class="modalUpdate_small_image" 
+    							onclick="previewUpdateImage(modalUpdate_secondary_img4, modalUpdate_secondary_img4_id)">
+    								<input id="modalUpdate_secondary_img4_id" class="hidden_inputs">
+    							</div>
+    							<input id="list_deleted_images" class="hidden_inputs">
     						</div>
     						<div class="images">
-    							<div class = "modalUpdate_image_input_line">
-									<div>
-										<label>Primary image</label>
-									</div>
-									<input id="modalUpdate_primary_img" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
-								</div>
-								<div class = "modalUpdate_image_input_line">
+    							<div class = "modalUpdate_image_input_line hidden_inputs">
 									<div>
 										<label>Image</label>
 									</div>
-									<input id="modalUpdate_secondary_img_1" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
+									<input id="modalUpdate_primary_img_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
 								</div>
-								<div class = "modalUpdate_image_input_line">
+								<div class = "modalUpdate_image_input_line hidden_inputs">
 									<div>
 										<label>Image</label>
 									</div>
-									<input id="modalUpdate_secondary_img_2" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
+									<input id="modalUpdate_secondary_img_1_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
 								</div>
-								<div class = "modalUpdate_image_input_line">
+								<div class = "modalUpdate_image_input_line hidden_inputs">
 									<div>
 										<label>Image</label>
 									</div>
-									<input id="modalUpdate_secondary_img_3" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
+									<input id="modalUpdate_secondary_img_2_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
 								</div>
-								<div class = "modalUpdate_image_input_line">
+								<div class = "modalUpdate_image_input_line hidden_inputs" >
 									<div>
 										<label>Image</label>
 									</div>
-									<input id="modalUpdate_secondary_img_4" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
+									<input id="modalUpdate_secondary_img_3_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
+								</div>
+								<div class = "modalUpdate_image_input_line hidden_inputs">
+									<div>
+										<label>Image</label>
+									</div>
+									<input id="modalUpdate_secondary_img_4_input" type="file" accept="image/*" data-errormsg="PhotoUploadErrorMsg">
 								</div>
 							</div>
 							

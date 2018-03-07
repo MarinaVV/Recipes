@@ -55,7 +55,54 @@ function openModalUpdate(recipeIdInput, descriptionInput, dateInput,
 
 		add_ingredient_create_update(ingredient, quantity, units);
 	}
+	
+	var imagesCountElement = document.getElementById("number_of_images");
+	if (document.getElementById("modal_hidden_primary_img_id").value != -1) {
+		document.getElementById("modalUpdate_primary_img").style.backgroundImage = document
+				.getElementById("primary_img").style.backgroundImage;
+		document.getElementById("modalUpdate_primary_img_hidden_id").value = document
+				.getElementById("modal_hidden_primary_img_id").value;
+		imagesCountElement.value = 1;
+		
+		previewUpdateImage(document.getElementById("modalUpdate_primary_img"),
+				document.getElementById("modalUpdate_primary_img_hidden_id"));
+	}
 
+	if (document.getElementById("modal_hidden_secondary_img1_id").value != "") {
+		document.getElementById("modalUpdate_secondary_img1").style.backgroundImage = document
+				.getElementById("secondery_img_1").style.backgroundImage;
+		document.getElementById("modalUpdate_secondary_img1_id").value = document
+				.getElementById("modal_hidden_secondary_img1_id").value;
+		imagesCountElement.value = 2;
+	}
+
+	if (document.getElementById("modal_hidden_secondary_img2_id").value != "") {
+		document.getElementById("modalUpdate_secondary_img2").style.backgroundImage = document
+				.getElementById("secondery_img_2").style.backgroundImage;
+		document.getElementById("modalUpdate_secondary_img2_id").value = document
+				.getElementById("modal_hidden_secondary_img2_id").value;
+		imagesCountElement.value = 3;
+	}
+	
+	if (document.getElementById("modal_hidden_secondary_img3_id").value != "") {
+		document.getElementById("modalUpdate_secondary_img3").style.backgroundImage = document
+				.getElementById("secondery_img_3").style.backgroundImage;
+		document.getElementById("modalUpdate_secondary_img3_id").value = document
+				.getElementById("modal_hidden_secondary_img3_id").value;
+		imagesCountElement.value = 4;
+	}
+	
+
+	if (document.getElementById("modal_hidden_secondary_img4_id").value != "") {
+		document.getElementById("modalUpdate_secondary_img4").style.backgroundImage = document
+				.getElementById("secondery_img_4").style.backgroundImage;
+		document.getElementById("modalUpdate_secondary_img4_id").value = document
+				.getElementById("modal_hidden_secondary_img4_id").value;
+		imagesCountElement.value = 5;
+	}
+	
+	displayInputsForAddImage();
+	
 	closeModal();
 	document.getElementById('myModalUpdate').style.display = "block";
 }
@@ -63,6 +110,126 @@ function openModalUpdate(recipeIdInput, descriptionInput, dateInput,
 function delete_ingredient(divId) {
 
 	document.getElementById("ingredients").removeChild(divId);
+}
+
+function previewUpdateImage(imageDiv, imageId) {
+	var element = document.getElementById("modalUpdatePreviewHolder");
+	var button = document.getElementById("modalUpdateDelButton");
+	if (imageDiv.style.backgroundImage != ""
+			&& imageDiv.style.backgroundImage != null
+			&& imageDiv.style.backgroundImage != undefined) {
+		element.style.backgroundImage = imageDiv.style.backgroundImage;
+		if(imageDiv.style.opacity==0.3){
+			element.style.opacity == 0.3;
+			button.innerHTML = "Cancel deletion";
+			button.setAttribute("onclick", "removeImageFromDel("
+					+ imageId.value + "," + imageDiv.id + ")");
+		} else {
+			element.style.opacity = 1;
+			button.innerHTML = "Delete image"
+			button.setAttribute("onclick", "addImageToDel(" + imageId.value
+					+ "," + imageDiv.id + ")");
+		}
+	}
+}
+
+function getImagesToDel(){
+	var input = document.getElementById("list_deleted_images");
+	
+	if(input.value.trim()!="" && input.value!=undefined && input.value!=null){
+		return JSON.parse(input.value);
+	} else {
+		return "";
+	}
+}
+
+function removeImageFromDel(id, imageDiv){
+	if(id=="" || id==undefined || id==null){
+		return;
+	}
+	
+	var imagesCountElement = document.getElementById("number_of_images");
+	if(parseInt(imagesCountElement.value)<0){
+		return;
+	}
+	
+	var button = document.getElementById("modalUpdateDelButton");
+	var previewModal = document.getElementById("modalUpdatePreviewHolder");
+	var input = document.getElementById("list_deleted_images");
+	var elementsList = getImagesToDel();
+	if(elementsList=="" || elementsList.indexOf(id)==-1){
+		return;
+	} else {
+		elementsList.splice(elementsList.indexOf(id));
+		input.value=JSON.stringify(elementsList);
+		imageDiv.style.opacity=1;
+		previewModal.style.opacity=1;
+		button.innerHTML = "Delete image"
+		button.setAttribute("onclick", "addImageToDel(" + id + ","
+				+ imageDiv.id + ")");
+		imagesCountElement.value = parseInt(imagesCountElement.value)-1;
+	}
+	
+	hideInputsForAddImage();
+	displayInputsForAddImage();
+}
+
+function addImageToDel(id, imageDiv){
+	
+	if(id=="" || id==undefined || id==null){
+		return;
+	}
+	
+	var imagesCountElement = document.getElementById("number_of_images");
+	if(parseInt(imagesCountElement.value)>5){
+		return;
+	}
+	
+	var button = document.getElementById("modalUpdateDelButton");
+	var previewModal = document.getElementById("modalUpdatePreviewHolder");
+	var input = document.getElementById("list_deleted_images");
+	var elementsList = getImagesToDel();
+	if(elementsList==""){
+		var newElementsList = [];
+		newElementsList.push(id);
+		input.value=JSON.stringify(newElementsList);
+		imageDiv.style.opacity=0.3;
+		previewModal.style.opacity=0.3;
+		button.innerHTML = "Cancel deletion";
+		button.setAttribute("onclick", "removeImageFromDel(" + id + ","
+				+ imageDiv.id + ")");
+		imagesCountElement.value = parseInt(imagesCountElement.value)+1;
+	} else if (elementsList.indexOf(id)==-1){
+		elementsList.push(id);
+		input.value=JSON.stringify(elementsList);
+		imageDiv.style.opacity=0.3;
+		previewModal.style.opacity=0.3;
+		button.innerHTML = "Cancel deletion";
+		button.setAttribute(
+				"onclick",
+				"removeImageFromDel(" + id + "," + imageDiv.id + ")");
+		imagesCountElement.value = parseInt(imagesCountElement.value)+1;
+	}
+	
+	hideInputsForAddImage();
+	displayInputsForAddImage();
+}
+
+function displayInputsForAddImage(){
+	var imagesCountElement = document.getElementById("number_of_images").value;
+	var input_lines = document.getElementsByClassName("modalUpdate_image_input_line");
+	
+	for(var i = 0; i < imagesCountElement; i++){
+		input_lines[i].classList.remove("hidden_inputs");
+	}
+}
+
+function hideInputsForAddImage() {
+	var input_lines = document.getElementsByClassName("modalUpdate_image_input_line");
+	
+	for(var i = 0; i < 5; i++){
+		input_lines[i].classList.add("hidden_inputs");
+	}
 }
 
 function updateRecipe() {
@@ -79,8 +246,8 @@ function updateRecipe() {
 	var title = document.getElementById("modalUpdate_title").value;
 	formdata.append("recipe_title", title);
 
-	var description = document.getElementById("modalUpdate_description").value;
-	formdata.append("recipe_description", description);
+	/*var description = document.getElementById("modalUpdate_description").value;
+	formdata.append("recipe_description", description);*/
 
 	var recipe_id = document.getElementById("modalUpdate_hidden_recipe_id").value;
 	formdata.append("recipe_id", recipe_id);
@@ -105,7 +272,18 @@ function updateRecipe() {
 	}
 
 	formdata.append("recipe_ingredients", JSON.stringify(recipe_ingredients));
-
+	formdata.append("images_to_delete", document.getElementById("list_deleted_images").value);
+	
+	var listNewImages = [];
+	var input_lines = document.getElementsByClassName("modalUpdate_image_input_line");
+	
+	for(var i = 0; i < 5; i++){
+		if(input_lines[i].classList.length==1){
+			listNewImages.push(input_lines[i].children[1].files[0]);
+		}
+	}
+	
+	
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var response = this.responseText;
@@ -125,14 +303,22 @@ function updateRecipe() {
 function clearUpdateModalData() {
 	document.getElementById('modalUpdate_title').value = "";
 	document.getElementById('modalUpdate_description').value = "";
+	document.getElementById("list_deleted_images").value="";
 
-	/*document.getElementById("modal_previwe_image").style.backgroundImage = "";
-	document.getElementById("primary_img").style.backgroundImage = "";
+	document.getElementById("number_of_images").value=0;
+	
+	document.getElementById("modalUpdatePreviewHolder").style.backgroundImage = "";
+	document.getElementById("modalUpdatePreviewHolder").style.opacity = 1;
+	document.getElementById("modalUpdate_primary_img").style.backgroundImage = "";
+	document.getElementById("modalUpdate_primary_img").style.opacity = 1;
 
 	for (var i = 0; i < 4; i++) {
-		document.getElementById("secondery_img_" + (i + 1)).style.backgroundImage = "";
-	}*/
+		document.getElementById("modalUpdate_secondary_img" + (i + 1)).style.backgroundImage = "";
+		document.getElementById("modalUpdate_secondary_img" + (i + 1)).style.opacity = 1;
+	}
 
+	hideInputsForAddImage();
+	
 	var recipe_ingredients = document
 			.getElementsByName("ingredient_input");
 	var modal_recipe_ingredients = document
@@ -142,6 +328,10 @@ function clearUpdateModalData() {
 	for (var i = 0; i < recipe_ingredients_length; i++) {
 		modal_recipe_ingredients.removeChild(modal_recipe_ingredients.childNodes[3]);
 	}
+	
+	
+	
+	
 }
 
 function checkUpdateModalFieldValues() {
@@ -154,9 +344,9 @@ function checkUpdateModalFieldValues() {
 	if (title == "Add Title" || title.length <= 0) {
 		alert("No title");
 		return false;
-	} else if (description == "Add Description" || description.length <= 0) {
+	/*} else if (description == "Add Description" || description.length <= 0) {
 		alert("No description");
-		return false;
+		return false;*/
 	} else {
 		recipe_ingredients = elementsMap.recipeIngredientsList;
 		if(recipe_ingredients.length<=0){
