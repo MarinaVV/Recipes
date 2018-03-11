@@ -186,9 +186,108 @@ public class RecipeServiceImpl implements RecipeService {
 		}
 	}
 	
-	public String updateRecipe(String recipeId,String recipeTitle,String recipeCategory,String recipeDescr, List<Recipe_ingredient> recipeIngredList) {
+	public String updateRecipe(String recipeId,String recipeTitle,String recipeCategory,String recipeDescr, List<Recipe_ingredient> recipeIngredList, List<Long> imagesToDelete, List<Part> imagesToAdd) {
+		
+		boolean isPrimaryDeleted = false;
+		List<Image> recipeImages = null;
+		List<String> imgesToAddPaths = new ArrayList<>();
 		
 		if (recipeDao.updateRecipe(recipeId, recipeTitle, recipeCategory, recipeDescr, recipeIngredList)) {
+			
+			//delete images if there are images to delete
+			if (imagesToDelete != null && !imagesToDelete.isEmpty()) {
+				List<Image> deletedImages = recipeDao.deleteImagesFromIDs(imagesToDelete);
+				for (int i = 0; i < deletedImages.size(); i++) {
+					if(!isPrimaryDeleted && deletedImages.get(i).getIs_primary() == 1) {
+						isPrimaryDeleted = true;
+					}
+					deleteImage(deletedImages.get(i).getImgPath());
+				}
+			}
+			
+			//get remaining images to recipe
+			recipeImages = recipeDao.getAllImagesByRecipeId(Long.parseLong(recipeId));
+			
+			//if there is only place holder delete it
+			// as recipeImages is set to NULL, the place holder will be added if there is no new img
+			if(!recipeImages.isEmpty() && recipeImages.get(0).getImgPath().equals("no_image_provided")) {
+				if(recipeImages!=null && !recipeImages.isEmpty()) {
+					isPrimaryDeleted=true;
+					List<Long> delPlaceHolder= new ArrayList<>();
+					delPlaceHolder.add(recipeImages.get(0).getId());
+					recipeDao.deleteImagesFromIDs(delPlaceHolder);
+					recipeImages=null;
+				}
+			}
+			
+			//add new Primary img if the old is deleted
+			int indexOfPathsArr = 0;
+			if(isPrimaryDeleted) {
+				//if there are no new images and no secondary img add place holder
+				if(imagesToAdd==null || imagesToAdd.isEmpty()) {
+					if(recipeImages==null || recipeImages.isEmpty()) {
+						imgesToAddPaths.add(0,"no_image_provided");
+						recipeDao.insertImage(imgesToAddPaths, (short)1, Long.parseLong(recipeId));
+						return "UPDATED";
+					//if there are secondary images make last image new primary
+					} else {
+						//ToDo make last image primary	
+					}
+				// if new images are added make the first 1 primary
+				} else {
+					String pathToPrImage;
+					
+					try {
+						pathToPrImage = writeImg(imagesToAdd.get(0), recipeTitle, "primary_img");
+						imgesToAddPaths.add(0,pathToPrImage);
+						indexOfPathsArr = 1;
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+				}
+			} 
+			
+			//if there are no new images to add end execution as the other steps are completed
+			if(imagesToAdd==null || imagesToAdd.isEmpty()) {
+				return "UPDATED";
+			}
+			
+			//insert new secondary images
+			for(int secondaryImgNumber=1;indexOfPathsArr<imagesToAdd.size();secondaryImgNumber++) {
+				boolean imageNameExists = false;	
+				String imgName="secondary_img_"+secondaryImgNumber;
+				
+				for(int existingImgIndex=0; existingImgIndex<recipeImages.size();existingImgIndex++) {
+					if(recipeImages.get(existingImgIndex).getImgPath().contains(imgName)) {
+						imageNameExists=true;
+					}
+				}
+				
+				if(imageNameExists) {
+					continue;
+				} else {
+					String imgPath;
+					
+					try {
+						imgPath = writeImg(imagesToAdd.get(indexOfPathsArr), recipeTitle, imgName);
+						imgesToAddPaths.add(imgPath);
+						indexOfPathsArr++;
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			//insert the images into the database
+			if(isPrimaryDeleted) {
+				recipeDao.insertImage(imgesToAddPaths, (short)1, Long.parseLong(recipeId));
+			} else {
+				recipeDao.insertImage(imgesToAddPaths, (short)0, Long.parseLong(recipeId));
+			}
+			
 			return "UPDATED";
 		} else {
 			return "ERROR";

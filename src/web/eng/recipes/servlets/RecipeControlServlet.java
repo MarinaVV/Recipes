@@ -307,7 +307,7 @@ public class RecipeControlServlet extends HttpServlet {
 		return new JSONArray(foundIngredients).toString();
 	}
 	
-	private String updateRecipe(HttpServletRequest request) {
+	private String updateRecipe(HttpServletRequest request) throws ServletException, IllegalStateException, IOException {
 		String responseMsg;
 		
 		String recipeId = request.getParameter("recipe_id");
@@ -316,27 +316,49 @@ public class RecipeControlServlet extends HttpServlet {
 		String recipeCategory = request.getParameter("recipe_category");
 		
 		List<Recipe_ingredient> recipeIngredList = new ArrayList<>();
+		List<Long> imagesToDelete = new ArrayList<>();
+		List<Part> imagesToAdd = new ArrayList<>();
 		
-		JSONArray jArr = null;
+		JSONArray jArrRecIngr = null;
+		JSONArray jArrImgDel = null;
+		JSONArray jArrImgAdd= null;
 
 		try {
-			jArr = new JSONArray(request.getParameter("recipe_ingredients"));
-			for (int index = 0; index < jArr.length(); index++) {
-				JSONObject obj = jArr.getJSONObject(index);
-				Ingredient ingredient = new Ingredient();
-				ingredient.setName(obj.getString("ingredient"));
-				recipeIngredList.add(index, new Recipe_ingredient());
-				recipeIngredList.get(index).setIngredient(ingredient);
-				recipeIngredList.get(index).setQuantity(obj.getInt("quantity"));
-				recipeIngredList.get(index).setUnits(obj.getString("units"));
+			if (request.getParameter("recipe_ingredients")!=null && !request.getParameter("recipe_ingredients").isEmpty()) {
+				jArrRecIngr = new JSONArray(request.getParameter("recipe_ingredients"));
+				for (int index = 0; index < jArrRecIngr.length(); index++) {
+					JSONObject obj = jArrRecIngr.getJSONObject(index);
+					Ingredient ingredient = new Ingredient();
+					ingredient.setName(obj.getString("ingredient"));
+					recipeIngredList.add(index, new Recipe_ingredient());
+					recipeIngredList.get(index).setIngredient(ingredient);
+					recipeIngredList.get(index).setQuantity(obj.getInt("quantity"));
+					recipeIngredList.get(index).setUnits(obj.getString("units"));
+				}
 			}
+			
+			if (request.getParameter("images_to_delete")!=null && !request.getParameter("images_to_delete").isEmpty()) {
+				jArrImgDel = new JSONArray(request.getParameter("images_to_delete"));
 
+				for (int index = 0; index < jArrImgDel.length(); index++) {
+					imagesToDelete.add(jArrImgDel.getLong(index));
+
+				}
+			}
+			for (int i = 0; i < 5; i++) {
+				if (request.getPart("new_images_"+i) != null && request.getPart("new_images_"+i).getContentType() != null
+						&& request.getPart("new_images_"+i).getContentType().startsWith("image/")) {
+					imagesToAdd.add(request.getPart("new_images_"+i));
+				}
+			}
+			
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		responseMsg=recipeService.updateRecipe(recipeId,recipeTitle,recipeCategory,recipeDescr,recipeIngredList);
+		responseMsg=recipeService.updateRecipe(recipeId,recipeTitle,recipeCategory,recipeDescr,recipeIngredList,imagesToDelete,imagesToAdd);
 		
 		return responseMsg;
 	}

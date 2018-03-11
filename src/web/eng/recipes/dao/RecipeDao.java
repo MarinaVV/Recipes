@@ -26,4 +26,7 @@ public interface RecipeDao {
 	boolean isCommentFromUser(String userName, String commentId);
 	boolean deleteComment(String commentId);
 	boolean updateComment(String commentId, String comment);
+	List<Image> deleteImagesFromIDs(List<Long> imagesToDel);
+	List<Image> getAllImagesByRecipeId(Long recipe_id);
+	void insertImage(List<String> imgPaths, Short isPrimary, Long recipe_id);
 }

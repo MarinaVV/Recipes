@@ -120,7 +120,7 @@ function previewUpdateImage(imageDiv, imageId) {
 			&& imageDiv.style.backgroundImage != undefined) {
 		element.style.backgroundImage = imageDiv.style.backgroundImage;
 		if(imageDiv.style.opacity==0.3){
-			element.style.opacity == 0.3;
+			element.style.opacity = 0.3;
 			button.innerHTML = "Cancel deletion";
 			button.setAttribute("onclick", "removeImageFromDel("
 					+ imageId.value + "," + imageDiv.id + ")");
@@ -160,14 +160,14 @@ function removeImageFromDel(id, imageDiv){
 	if(elementsList=="" || elementsList.indexOf(id)==-1){
 		return;
 	} else {
-		elementsList.splice(elementsList.indexOf(id));
+		elementsList.splice(elementsList.indexOf(id),1);
 		input.value=JSON.stringify(elementsList);
 		imageDiv.style.opacity=1;
 		previewModal.style.opacity=1;
 		button.innerHTML = "Delete image"
 		button.setAttribute("onclick", "addImageToDel(" + id + ","
 				+ imageDiv.id + ")");
-		imagesCountElement.value = parseInt(imagesCountElement.value)-1;
+		imagesCountElement.value = parseInt(imagesCountElement.value)+1;
 	}
 	
 	hideInputsForAddImage();
@@ -198,7 +198,7 @@ function addImageToDel(id, imageDiv){
 		button.innerHTML = "Cancel deletion";
 		button.setAttribute("onclick", "removeImageFromDel(" + id + ","
 				+ imageDiv.id + ")");
-		imagesCountElement.value = parseInt(imagesCountElement.value)+1;
+		imagesCountElement.value = parseInt(imagesCountElement.value)-1;
 	} else if (elementsList.indexOf(id)==-1){
 		elementsList.push(id);
 		input.value=JSON.stringify(elementsList);
@@ -208,7 +208,7 @@ function addImageToDel(id, imageDiv){
 		button.setAttribute(
 				"onclick",
 				"removeImageFromDel(" + id + "," + imageDiv.id + ")");
-		imagesCountElement.value = parseInt(imagesCountElement.value)+1;
+		imagesCountElement.value = parseInt(imagesCountElement.value)-1;
 	}
 	
 	hideInputsForAddImage();
@@ -219,7 +219,7 @@ function displayInputsForAddImage(){
 	var imagesCountElement = document.getElementById("number_of_images").value;
 	var input_lines = document.getElementsByClassName("modalUpdate_image_input_line");
 	
-	for(var i = 0; i < imagesCountElement; i++){
+	for(var i = 0; i < 5-imagesCountElement; i++){
 		input_lines[i].classList.remove("hidden_inputs");
 	}
 }
@@ -246,8 +246,8 @@ function updateRecipe() {
 	var title = document.getElementById("modalUpdate_title").value;
 	formdata.append("recipe_title", title);
 
-	/*var description = document.getElementById("modalUpdate_description").value;
-	formdata.append("recipe_description", description);*/
+	var description = document.getElementById("modalUpdate_description").innerHTML;
+	formdata.append("recipe_description", description);
 
 	var recipe_id = document.getElementById("modalUpdate_hidden_recipe_id").value;
 	formdata.append("recipe_id", recipe_id);
@@ -274,14 +274,15 @@ function updateRecipe() {
 	formdata.append("recipe_ingredients", JSON.stringify(recipe_ingredients));
 	formdata.append("images_to_delete", document.getElementById("list_deleted_images").value);
 	
-	var listNewImages = [];
 	var input_lines = document.getElementsByClassName("modalUpdate_image_input_line");
 	
 	for(var i = 0; i < 5; i++){
-		if(input_lines[i].classList.length==1){
-			listNewImages.push(input_lines[i].children[1].files[0]);
+		if(input_lines[i].classList.length==1 && 
+				input_lines[i].children[1].files[0]!=undefined){
+			formdata.append("new_images_"+i,input_lines[i].children[1].files[0]);
 		}
 	}
+	
 	
 	
 	xhttp.onreadystatechange = function() {
@@ -344,9 +345,9 @@ function checkUpdateModalFieldValues() {
 	if (title == "Add Title" || title.length <= 0) {
 		alert("No title");
 		return false;
-	/*} else if (description == "Add Description" || description.length <= 0) {
+	} else if (description == "Add Description" || description.length <= 0) {
 		alert("No description");
-		return false;*/
+		return false;
 	} else {
 		recipe_ingredients = elementsMap.recipeIngredientsList;
 		if(recipe_ingredients.length<=0){
@@ -380,7 +381,7 @@ function getUpdateModalElementsValues() {
 
 	elementsMap.title = document.getElementById("modalUpdate_title").value;
 	elementsMap.category = document.getElementById("modalUpdate_category").value;
-	elementsMap.description = document.getElementById("modalUpdate_description").value;
+	elementsMap.description = document.getElementById("modalUpdate_description").innerHTML;
 
 /*	elementsMap.primary_img = document.getElementById("primary_img_input").files[0];
 	var secondary_img_list = [];

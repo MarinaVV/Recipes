@@ -618,6 +618,8 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 			while(rs.next()){
 				Image image = new Image();
 				image.setImgPath(rs.getString("img_path"));
+				image.setId(rs.getLong("id"));
+				image.setIs_primary(rs.getShort("is_primary"));
 				images.add(image);
 			}
 			
@@ -907,7 +909,112 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 			}
 		}
 	}
+	
+	public List<Image> deleteImagesFromIDs(List<Long> imagesToDel){
+		open();
+		PreparedStatement stmtDelete = null;
+		List<Image> images;
+		
+		String sql = "DELETE FROM `images` WHERE ";
+		
+		for(int i=0; i<imagesToDel.size(); i++) {
+			if(i==imagesToDel.size()-1) {
+				sql+=" id=? ";
+			} else {
+				sql+=" id=? OR ";
+			}
+		}
+		
+		try {
+			con.setAutoCommit(false);
+			isAutoCommit = false;
+			
+			images=getImagesByIDs(imagesToDel);
+			
+			stmtDelete = con.prepareStatement(sql);
 
+			for(int i=0; i<imagesToDel.size(); i++) {
+				stmtDelete.setLong(i+1, imagesToDel.get(i));
+			}
+			
+			stmtDelete.execute();
+			
+			con.commit();
+			return images;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (stmtDelete != null) {
+					stmtDelete.close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			close();
+
+		}
+
+	}
+
+	private List<Image> getImagesByIDs(List<Long> imagesToDel) {
+		open();
+		PreparedStatement stmt = null;
+		ResultSet rs;
+		List<Image> deletedImages = new ArrayList<>();
+		
+		String sql = "SELECT * FROM `images` WHERE";
+		
+		for (int i = 0; i < imagesToDel.size(); i++) {
+			if (i == imagesToDel.size() - 1) {
+				sql += " id=? ";
+			} else {
+				sql += " id=? OR ";
+			}
+		}
+
+		try {
+			stmt = con.prepareStatement(sql);
+
+			for (int i = 0; i < imagesToDel.size(); i++) {
+				stmt.setLong(i+1, imagesToDel.get(i));
+			}
+			
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Image image = new Image();
+				image.setImgPath(rs.getString("img_path"));
+				image.setIs_primary(rs.getShort("is_primary"));
+				deletedImages.add(image);
+			}
+			
+			return deletedImages;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (isAutoCommit) {
+					close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	private Recipe mapResultToRecipe(ResultSet rs) throws SQLException {
 		Recipe recipe = new Recipe();
 		recipe.setCategory(rs.getString("category"));

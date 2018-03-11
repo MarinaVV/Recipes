@@ -187,7 +187,7 @@
 						</div>
     				</div>
       				<div class="modal_description">
-      					<div id="modalUpdate_description"></div>
+      					<div id="modalUpdate_description" contenteditable="true"></div>
       				</div>
       				<button onclick="updateRecipe()">Update</button>
     			</div>

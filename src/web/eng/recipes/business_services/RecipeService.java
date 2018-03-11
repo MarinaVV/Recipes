@@ -19,7 +19,7 @@ public interface RecipeService {
 	String removeFavoriteRecipe(String recipeId, String username);
 	String deleteRecipeByRecipeId(String recipeId);
 	List<Recipe> getFavoriteRecipes(String username);
-	String updateRecipe(String recipeId,String recipeTitle,String recipeCategory,String recipeDescr,List<Recipe_ingredient> recipeIngredList);
+	String updateRecipe(String recipeId,String recipeTitle,String recipeCategory,String recipeDescr,List<Recipe_ingredient> recipeIngredList, List<Long> imagesToDelete, List<Part> imagesToAdd);
 	String insertComment(String username, String recipeId, String comment );
 	List<Comment> getAllComments(String recipeId);
 	String deleteComment(String userName, String commentId);
