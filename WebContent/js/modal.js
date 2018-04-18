@@ -9,6 +9,7 @@ window.onclick = function(event) {
 function closeModal() {
 	clearModalData();
 	hideComments();
+	document.getElementById("modal_show_comments_but").innerHTML = "Show comments";
 	document.getElementById('myModal').style.display = "none";
 }
 

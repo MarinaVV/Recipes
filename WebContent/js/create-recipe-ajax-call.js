@@ -28,9 +28,15 @@ function createRecipe() {
 
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			window.alert(this.responseText);
+			document.getElementById("loader").hidden = true;
+			document.getElementById("outer_container").hidden = false;
+			//window.alert(this.responseText);
+			
 		}
 	};
+	
+	document.getElementById("loader").hidden = false;
+	document.getElementById("outer_container").hidden = true;
 
 	xhttp.open("POST", "RecipeControlServlet", true);
 	xhttp.send(formdata);

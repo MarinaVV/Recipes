@@ -25,8 +25,9 @@
 		}
 	</script>
 	
+	<div id="loader" class="loader" hidden></div>
 
-	<div class="outer_container">
+	<div id="outer_container" class="outer_container">
 		<p id="p_uname">${uname}</p>
 		<script>
 			var uname = window.sessionStorage.getItem("uname");
