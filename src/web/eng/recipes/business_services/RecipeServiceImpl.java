@@ -231,7 +231,32 @@ public class RecipeServiceImpl implements RecipeService {
 						return "UPDATED";
 					//if there are secondary images make last image new primary
 					} else {
-						//ToDo make last image primary	
+						//get last image from images present in db
+						Image lastImage = recipeImages.get(recipeImages.size()-1);
+						
+						//make list with 1 image, becouse the function takes list as parameter
+						List<Long> imageToDel = new ArrayList<>();
+						imageToDel.add(lastImage.getId());
+						
+						//read image before delete
+						lastImage.setImage(readImg(lastImage.getImgPath()));
+						
+						//delete last image from db
+						recipeDao.deleteImagesFromIDs(imageToDel);
+						
+						//delete last image from folder
+						deleteImage(lastImage.getImgPath());
+						
+						//insert the last image as primary image
+						String newPrimaryImg;
+						List<String> newPrimaryImgPath = new ArrayList<>();
+						
+						newPrimaryImg = writeBase64Img(lastImage.getImage(), recipeTitle, "primary_img");
+						newPrimaryImgPath.add(0,newPrimaryImg);
+						
+						//write image in db
+						recipeDao.insertImage(newPrimaryImgPath, (short)1, Long.parseLong(recipeId));
+						
 					}
 				// if new images are added make the first 1 primary
 				} else {
@@ -362,6 +387,35 @@ public class RecipeServiceImpl implements RecipeService {
 		}
 	}
 
+	private String writeBase64Img(String image, String title, String imgName) {
+		String directory = IMAGE_FOLDER;
+		String name = imgName + ".png";
+		
+		String pathToDir = directory + title + "\\";
+		String imgPath = pathToDir + name;
+
+		byte dearr[] = Base64.decode(image);
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(new File(imgPath));
+			fos.write(dearr);
+			return imgPath;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (fos != null) {
+					fos.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
 
 	private String writeImg(Part img, String title, String imgName) throws IOException {
 		OutputStream out = null;
