@@ -320,6 +320,12 @@ function clearUpdateModalData() {
 
 	hideInputsForAddImage();
 	
+	var input_lines = document.getElementsByClassName("modalUpdate_image_input_line");
+	
+	for(var i = 0; i < 5; i++){
+		input_lines[i].children[1].value="";
+	}
+	
 	var recipe_ingredients = document
 			.getElementsByName("ingredient_input");
 	var modal_recipe_ingredients = document

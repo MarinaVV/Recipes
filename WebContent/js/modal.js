@@ -104,9 +104,11 @@ function clearModalData() {
 
 	document.getElementById("modal_previwe_image").style.backgroundImage = "";
 	document.getElementById("primary_img").style.backgroundImage = "";
+	document.getElementById("modal_hidden_primary_img_id").value="";
 
 	for (var i = 0; i < 4; i++) {
 		document.getElementById("secondery_img_" + (i + 1)).style.backgroundImage = "";
+		document.getElementById("modal_hidden_secondary_img"+(i+1)+"_id").value="";
 	}
 
 	var recipe_ingredients = document
