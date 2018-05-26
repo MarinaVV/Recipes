@@ -52,7 +52,7 @@
 		<div id="body_container" class="body_container">
 		
 			<div class="menu_div">
-				<div class="menu_item">
+				<div class="menu_item" onclick="showProfileArea()">
 					<label>Profile</label>
 				</div>
 				<div class="menu_item" onclick="showMyRecipes()">
@@ -64,7 +64,7 @@
 			</div>
 			
 			<div id="information_div" class="information_div">
-			
+
 			</div>
 			
 			

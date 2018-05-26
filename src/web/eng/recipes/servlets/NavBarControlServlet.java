@@ -17,7 +17,16 @@ public class NavBarControlServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String action = request.getParameter("action");
+		String username = request.getParameter("username");
 		RequestDispatcher dispatcher;
+		
+		if(username==null || username.isEmpty()) {
+			dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/log-in.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
+		
+		
 
 
 		switch (action) {

@@ -129,5 +129,6 @@ public  class SQL {
 	
 	public static final String INSERT_USER = "INSERT INTO users (username, password) VALUES(?,?)";
 	
+	public static final String UPDATE_PASSWORD = "UPDATE users SET password = ? WHERE username = ?";
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
 }

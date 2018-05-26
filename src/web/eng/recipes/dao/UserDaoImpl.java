@@ -81,4 +81,35 @@ public class UserDaoImpl extends Dao implements UserDao {
 		return null;
 	}
 
+	@Override
+	public boolean updateUserPassword(String username, String password) {
+		open();
+		PreparedStatement stmt=null;
+
+		try {
+			stmt = con.prepareStatement(SQL.UPDATE_PASSWORD);
+
+			stmt.setString(1, password);
+			stmt.setString(2, username);
+
+			stmt.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			close();
+		}
+
+		return true;
+	}
+
 }

@@ -1,4 +1,5 @@
 function showMyRecipes() {
+	clearInformationDiv();
 	createResultArea();	
 	clearModal();
 	createMyRecipesModal();
@@ -6,6 +7,7 @@ function showMyRecipes() {
 	var username = sessionStorage.uname;
 	search_recipe_U(username);
 }
+
 
 function showFavoriteRecipes() {
 	var xhttp = new XMLHttpRequest();
@@ -16,6 +18,7 @@ function showFavoriteRecipes() {
 	var username = sessionStorage.uname;
 	formdata.append("username", username);
 
+	clearInformationDiv();
 	createResultArea();
 	clearModal();
 	createFavoritedRecipesModal();
@@ -39,6 +42,84 @@ function showFavoriteRecipes() {
 function clearModal(){
 	var modalDiv = document.getElementById("myModal");
 	modalDiv.removeChild(modalDiv.childNodes[0]);
+}
+
+function showProfileArea(){
+	clearInformationDiv();
+	var informationDiv = document.getElementById("information_div");
+	
+	var personalInformationDiv = document.createElement("div");
+	personalInformationDiv.setAttribute("class", "personal_information");
+	
+	var usernameLabel = document.createElement("label");
+	usernameLabel.setAttribute("id", "pi_username_label");
+	usernameLabel.innerHTML = "User: " + sessionStorage.getItem("uname");
+	personalInformationDiv.appendChild(usernameLabel);
+	
+	////////////////Change Pass Div//////////////////////////////
+	var changePasswordDiv = document.createElement("div");
+	changePasswordDiv.setAttribute("id", "change-password-div");
+	
+	var newPassDiv = document.createElement("div");
+	var newPassInput = document.createElement("input");
+	newPassInput.setAttribute("placeholder", "New Password");
+	newPassInput.setAttribute("id", "new_pass_input");
+	newPassDiv.appendChild(newPassInput);
+	changePasswordDiv.appendChild(newPassDiv);
+	
+	var confermNewPassDiv = document.createElement("div");
+	var confermNewPassInput = document.createElement("input");
+	confermNewPassInput.setAttribute("placeholder", "Confirm New Password");
+	confermNewPassInput.setAttribute("id", "confirm_new_pass_input");
+	confermNewPassDiv.appendChild(confermNewPassInput);
+	changePasswordDiv.appendChild(confermNewPassDiv);
+	
+	var oldPassDiv = document.createElement("div");
+	var oldPassInput = document.createElement("input");
+	oldPassInput.setAttribute("placeholder", "Old Password");
+	oldPassInput.setAttribute("id", "old_pass_confirm");
+	oldPassDiv.appendChild(oldPassInput);
+	changePasswordDiv.appendChild(oldPassDiv);
+	
+	var changePassBtnDiv = document.createElement("div");
+	var changePassBtn = document.createElement("button");
+	changePassBtn.setAttribute("onclick", "changePassword()");
+	changePassBtn.innerHTML = "Change Password";
+	changePassBtnDiv.appendChild(changePassBtn);
+	changePasswordDiv.appendChild(changePassBtnDiv);
+	/////////////////////////////////////////////////////////////
+	personalInformationDiv.appendChild(changePasswordDiv);
+	
+    ////////////////Delete Acc Div//////////////////////////////
+	var deleteAccDiv = document.createElement("div");
+	deleteAccDiv.setAttribute("id", "delete-acc-div");
+	
+	var passDiv = document.createElement("div");
+	var passInput = document.createElement("input");
+	passInput.setAttribute("placeholder", "Password");
+	passDiv.appendChild(passInput);
+	deleteAccDiv.appendChild(passDiv);
+	
+	var deleteAccBtnDiv = document.createElement("div");
+	var deleteAccBtn = document.createElement("button");
+	deleteAccBtn.setAttribute("onClick", "");
+	deleteAccBtn.innerHTML = "Delete Account";
+	deleteAccBtnDiv.appendChild(deleteAccBtn);
+	deleteAccDiv.appendChild(deleteAccBtnDiv);
+	////////////////////////////////////////////////////////////
+	personalInformationDiv.appendChild(deleteAccDiv);
+	
+	informationDiv.appendChild(personalInformationDiv);
+}
+
+function clearInformationDiv(){
+	var informationDiv = document.getElementById("information_div");
+	
+	for(var i=0; informationDiv.children.length > 0;i++){
+		if(informationDiv.children.length > 0){
+			informationDiv.removeChild(informationDiv.children[0]);
+		}
+	}
 }
 
 function createResultArea() {
@@ -65,6 +146,40 @@ function createResultArea() {
 	resultsDiv.setAttribute("id", "results")
 
 	informationDiv.appendChild(resultsDiv);
+}
+
+
+function changePassword(){
+	var username = sessionStorage.getItem("uname");
+	var newPass = document.getElementById("new_pass_input").value;
+	var newPassConfirm = document.getElementById("confirm_new_pass_input").value;
+	var oldPassword = document.getElementById("old_pass_confirm").value;
+	
+	if(newPass!=newPassConfirm){
+		window.alert("Passwords doesn't match");
+		return;
+	}
+	
+	var xhttp = new XMLHttpRequest();
+	var action = "change_password";
+	var formdata = new FormData();
+
+	formdata.append("action", action);
+	formdata.append("username", username);
+	formdata.append("newPassword", newPass);
+	formdata.append("oldPassword", oldPassword);
+
+	console.log(formdata);
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			window.alert(this.responseText);
+		}
+	};
+
+	xhttp.open("POST", "UserControlServlet", true);
+	xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhttp.send("action=" + action + "&username=" + username + "&newPassword="
+			+ newPass + "&oldPassword=" + oldPassword);
 }
 
 function deleteRecipe(recipeId) {

@@ -1,6 +1,7 @@
 package web.eng.recipes.servlets;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -45,6 +46,7 @@ public class UserControlServlet extends HttpServlet {
 		
 		String action = request.getParameter("action");
 		
+		
 		User user = new User();
 		user.setUserName(request.getParameter("username"));
 		user.setPassword(request.getParameter("password"));
@@ -69,17 +71,15 @@ public class UserControlServlet extends HttpServlet {
 			
 			response.getWriter().write(isUserCreated);
 
-			/*switch (isUserCreated) {
-			case "DUPLICATE_NAME":
-				response.getWriter().write("Duplicate");
-				break;
-			case "ACC_CREATED":
-				response.getWriter().write("ACC_CREATED");
-				break;
-			case "ERROR":
-				response.getWriter().write("Created");
-				break;
-			}*/
+		} else if (action!=null && action.equals("change_password")) {
+			
+			String oldPassword = request.getParameter("oldPassword");
+			String newPassword = request.getParameter("newPassword");
+			String username = request.getParameter("username");
+			
+			String responseText = userService.changePassword(username, newPassword, oldPassword);
+			
+			response.getWriter().write(responseText);
 		}
 		
 	}

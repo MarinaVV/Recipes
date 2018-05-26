@@ -2,6 +2,8 @@ package web.eng.recipes.business_services;
 
 import javax.inject.Inject;
 
+import org.apache.catalina.realm.UserDatabaseRealm;
+
 import web.eng.recipes.dao.UserDao;
 import web.eng.recipes.dao.UserDaoImpl;
 import web.eng.recipes.models.User;
@@ -36,6 +38,25 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 		}
+		return "ERROR";
+	}
+
+	@Override
+	public String changePassword(String username, String newPassword, String oldPassword) {
+		
+		User user = dao.findUserByUsername(username);
+		
+		if(user == null) {
+			return "USER_NOT_FOUND";
+		}
+		if(!user.getPassword().equals(oldPassword)) {
+			return "WRONG_PASSWORD";
+		}
+		
+		if(dao.updateUserPassword(username, newPassword)){
+			return "PASSWORD_CHANGED";
+		}
+		
 		return "ERROR";
 	}
 

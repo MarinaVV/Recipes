@@ -7,4 +7,6 @@ public interface UserService {
 	boolean login(User user);
 	
 	String register(User user);
+	
+	String changePassword(String username, String newPassword, String oldPassword);
 }

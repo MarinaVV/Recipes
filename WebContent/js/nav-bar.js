@@ -15,7 +15,7 @@ function createNavBar(){
 	for(key in mapOptions){
 		var a = document.createElement('a');
 		a.innerHTML=mapOptions[key];
-		a.setAttribute("href",  "NavBarControlServlet?action="+key);
+		a.setAttribute("href",  "NavBarControlServlet?action="+key+"&username="+window.sessionStorage.getItem("uname"));
 		var action = getParameterByName("action");
 		// Mark home as clicked first time when enter home page
 		if(window.location.href.indexOf("UserControlServlet") > -1 && key == "home"){
@@ -26,7 +26,7 @@ function createNavBar(){
 			a.setAttribute("class", "active")
 		}
 		var li = document.createElement('li');
-		a.setAttribute("onclick", "document.location.href='NavBarControlServlet?action="+key);
+		a.setAttribute("onclick", "document.location.href='NavBarControlServlet?action="+key+"&username="+window.sessionStorage.getItem("uname"));
 		li.appendChild(a);
 		li.setAttribute("class", "nav_bar_option");
 		
