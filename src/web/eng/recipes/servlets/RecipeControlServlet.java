@@ -56,6 +56,24 @@ public class RecipeControlServlet extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(getAllIngredientsAction());
 			break;
+		case "search_recipe_username":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(searchRecipesPrimaryImageByUsername(request));
+			break;
+		case "search_recipe_recipe_name":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(searchRecipesPrimaryImageByRecipeName(request));
+			break;
+		case "get_secondary_images_ingredients":
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(getSecondaryImagesIngredients(request));
+			break;
+		case "get_all_comments":
+			response.getWriter().write(getAllComments(request));
+			break;
 		}
 
 	}
@@ -72,25 +90,10 @@ public class RecipeControlServlet extends HttpServlet {
 		case "save_ingredients":
 			saveIngredientsAction(request);
 			break;
-		case "search_recipe_username":
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(searchRecipesPrimaryImageByUsername(request));
-			break;
 		case "search_recipe_ingredients_list":
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(searchRecipesPrimaryImageByIngredientsList(request));
-			break;
-		case "search_recipe_recipe_name":
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(searchRecipesPrimaryImageByRecipeName(request));
-			break;
-		case "get_secondary_images_ingredients":
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(getSecondaryImagesIngredients(request));
 			break;
 		case "add_recipe_favorites":
 			response.getWriter().write(addFavoriteRecipe(request));
@@ -113,9 +116,6 @@ public class RecipeControlServlet extends HttpServlet {
 			break;
 		case "insert_comment":
 			response.getWriter().write(insertComment(request));
-			break;
-		case "get_all_comments":
-			response.getWriter().write(getAllComments(request));
 			break;
 		case "delete_comment":
 			response.getWriter().write(deleteComment(request));
@@ -231,20 +231,25 @@ public class RecipeControlServlet extends HttpServlet {
 
 	private String searchRecipesPrimaryImageByIngredientsList(HttpServletRequest request) {
 
-		String regex = ",";
+		JSONArray jArr = null;
+		String ing = request.getParameter("ingredients_list");
+		try {
+			jArr = new JSONArray(ing);
+			List<String> ingredientsList = new ArrayList<>();
 
-		String ingredients = request.getParameter("ingredients_list");
-		String[] ingredientsArray = ingredients.split(regex);
+			for (int index = 0; index < jArr.length(); index++) {
+				ingredientsList.add(jArr.getString(index));
+			}
 
-		List<String> ingredientsList = new ArrayList<>();
+			List<Recipe> foundRecipes = recipeService.searchRecipesPrimaryImageByIngredientsList(ingredientsList);
 
-		for (int index = 0; index < ingredientsArray.length; index++) {
-			ingredientsList.add(ingredientsArray[index]);
+			return new JSONArray(foundRecipes).toString();
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
-
-		List<Recipe> foundIngredients = recipeService.searchRecipesPrimaryImageByIngredientsList(ingredientsList);
-
-		return new JSONArray(foundIngredients).toString();
 
 	}
 	

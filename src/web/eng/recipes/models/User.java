@@ -7,7 +7,6 @@ public class User {
 	private long id;
 	private String userName;
 	private String password;
-	private String role;
 	// 1 - user is deleted, 0-user is not deleted
 	private int is_deleted;
 	private List<Recipe> myRecipes;
@@ -40,14 +39,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
 	}
 
 	public int getIs_deleted() {

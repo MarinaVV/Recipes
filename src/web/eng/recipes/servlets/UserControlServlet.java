@@ -1,7 +1,6 @@
 package web.eng.recipes.servlets;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -51,12 +50,14 @@ public class UserControlServlet extends HttpServlet {
 		user.setUserName(request.getParameter("username"));
 		user.setPassword(request.getParameter("password"));
 		
-		if(action!=null && action.equals("log_in")){
-			
-			boolean isLogInSuccsesful =  userService.login(user) ;
-			
+		
+		switch (action) {
+		case "log_in":
+			boolean isLogInSuccsesful = userService.login(user);
+
 			if (isLogInSuccsesful) {
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/NavBarControlServlet?action=home");
+				RequestDispatcher dispatcher = getServletContext()
+						.getRequestDispatcher("/NavBarControlServlet?action=home");
 				request.setAttribute("uname", user.getUserName());
 				dispatcher.forward(request, response);
 			} else {
@@ -64,22 +65,23 @@ public class UserControlServlet extends HttpServlet {
 				request.setAttribute("is_invalid", "true");
 				dispatcher.forward(request, response);
 			}
-			
-		}else if(action!=null && action.equals("register")){
-			
-			String isUserCreated = userService.register(user);
-			
-			response.getWriter().write(isUserCreated);
+			break;
+		case "register":
 
-		} else if (action!=null && action.equals("change_password")) {
-			
+			String isUserCreated = userService.register(user);
+
+			response.getWriter().write(isUserCreated);
+			break;
+		case "change_password":
+
 			String oldPassword = request.getParameter("oldPassword");
 			String newPassword = request.getParameter("newPassword");
 			String username = request.getParameter("username");
-			
+
 			String responseText = userService.changePassword(username, newPassword, oldPassword);
-			
+
 			response.getWriter().write(responseText);
+			break;
 		}
 		
 	}

@@ -35,10 +35,6 @@ function getSecondaryImages_Ingredients(recipeId, descriptionInput, dateInput,
 		userNameInput, titleLabel, categoryLabel, resultDiv, primaryImgID) {
 	var xhttp = new XMLHttpRequest();
 	var action = "get_secondary_images_ingredients";
-	var formdata = new FormData();
-
-	formdata.append("action", action);
-	formdata.append("recipe_id", recipeId);
 
 	xhttp.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
@@ -49,8 +45,8 @@ function getSecondaryImages_Ingredients(recipeId, descriptionInput, dateInput,
 		}
 	};
 
-	xhttp.open("POST", "RecipeControlServlet", true);
-	xhttp.send(formdata);
+	xhttp.open("GET", "RecipeControlServlet?action=" + action + "&recipe_id=" + recipeId , true);
+	xhttp.send();
 }
 
 function displayModalData(descriptionInput, dateInput, userNameInput,
@@ -282,12 +278,7 @@ function createCommentsAreaInModal(){
 function getAllComments(){
 	var xhttp = new XMLHttpRequest();
 	var action = "get_all_comments";
-	var formdata = new FormData();
-
-	formdata.append("action", action);
-	
 	var recipe_id = document.getElementById("modal_hidden_recipeId").value;
-	formdata.append("recipe_id", recipe_id);
 		
 	xhttp.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
@@ -305,8 +296,8 @@ function getAllComments(){
 		}
 	};
 
-	xhttp.open("POST", "RecipeControlServlet", true);
-	xhttp.send(formdata);
+	xhttp.open("GET", "RecipeControlServlet?action=" + action + "&recipe_id=" + recipe_id, true);
+	xhttp.send();
 }
 
 

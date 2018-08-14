@@ -16,7 +16,8 @@ function register() {
 	var username = document.getElementById("username").value;
 	var password = document.getElementById("password").value;
 	var action = "register";
-
+	var formdata = new FormData();
+	
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var response = this.responseText;
@@ -34,10 +35,9 @@ function register() {
 		}
 	};
 
-	xhttp.open("POST", "UserControlServlet?action=register", true);
-	xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	xhttp.send("action=" + action + "&username=" + username + "&password="
-			+ password);
+	xhttp.open("POST", "UserControlServlet?action=" + action + "&username=" + username + "&password=" + password, true);
+	xhttp.setRequestHeader("Content-Type", "application/form-data");
+	xhttp.send();
 }
 
 function isPasswordConfirmed() {

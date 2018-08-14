@@ -59,7 +59,6 @@ public class UserDaoImpl extends Dao implements UserDao {
 				user = new User();
 				user.setUserName(rs.getString(2));
 				user.setPassword(rs.getString(3));
-				user.setRole(rs.getString(4));
 				user.setIs_deleted(rs.getInt(5));
 
 				return user;

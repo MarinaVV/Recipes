@@ -162,14 +162,7 @@ function changePassword(){
 	
 	var xhttp = new XMLHttpRequest();
 	var action = "change_password";
-	var formdata = new FormData();
 
-	formdata.append("action", action);
-	formdata.append("username", username);
-	formdata.append("newPassword", newPass);
-	formdata.append("oldPassword", oldPassword);
-
-	console.log(formdata);
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			window.alert(this.responseText);
