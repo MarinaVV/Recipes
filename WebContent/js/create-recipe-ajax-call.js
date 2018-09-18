@@ -52,57 +52,57 @@ function createRecipe() {
 	 */
 }
 
-function saveUnknownIngredients() {
-	var optionElements = document.getElementsByName("options");
-	var allIngredientsList = [];
-
-	// get all ingredients
-	for (var index = 0; index < optionElements.length; index++) {
-		allIngredientsList.push(optionElements[index].value);
-	}
-
-	var ingredientElements = document.getElementsByName("ingredient_input");
-	var ingredientsList = [];
-
-	// get the ingredients which will be inserted
-	for (var index = 0; index < ingredientElements.length; index++) {
-		ingredientsList.push(ingredientElements[index].value);
-	}
-
-	var missingIngredients = [];
-
-	// get the ingredients that are not in the database
-	for (var index = 0; index < ingredientsList.length; index++) {
-
-		if (allIngredientsList.indexOf(ingredientsList[index]) == -1 && missingIngredients.indexOf(ingredientsList[index]) == -1) {
-			missingIngredients.push(ingredientsList[index]);
-		}
-	}
-
-	if (missingIngredients.length > 0) {
-		var xhttp = new XMLHttpRequest();
-		var action = "save_ingredients";
-		var formdata = new FormData();
-
-		formdata.append("action", action);
-		formdata.append("ingredients", JSON.stringify(missingIngredients));
-
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				var suggestionsElement = document.getElementById("suggestionsIngredients");
-				
-				for(var index=0;index<missingIngredients.length;index++){
-					var option = document.createElement("option");
-					option.setAttribute("value", missingIngredients[index]);
-					option.setAttribute("name", "options");
-					
-					suggestionsElement.appendChild(option);
-				}
-			}
-		};
-
-		xhttp.open("POST", "RecipeControlServlet", true);
-		xhttp.send(formdata);
-	}
-}
+//function saveUnknownIngredients() {
+//	var optionElements = document.getElementsByName("options");
+//	var allIngredientsList = [];
+//
+//	// get all ingredients
+//	for (var index = 0; index < optionElements.length; index++) {
+//		allIngredientsList.push(optionElements[index].value);
+//	}
+//
+//	var ingredientElements = document.getElementsByName("ingredient_input");
+//	var ingredientsList = [];
+//
+//	// get the ingredients which will be inserted
+//	for (var index = 0; index < ingredientElements.length; index++) {
+//		ingredientsList.push(ingredientElements[index].value);
+//	}
+//
+//	var missingIngredients = [];
+//
+//	// get the ingredients that are not in the database
+//	for (var index = 0; index < ingredientsList.length; index++) {
+//
+//		if (allIngredientsList.indexOf(ingredientsList[index]) == -1 && missingIngredients.indexOf(ingredientsList[index]) == -1) {
+//			missingIngredients.push(ingredientsList[index]);
+//		}
+//	}
+//
+//	if (missingIngredients.length > 0) {
+//		var xhttp = new XMLHttpRequest();
+//		var action = "save_ingredients";
+//		var formdata = new FormData();
+//
+//		formdata.append("action", action);
+//		formdata.append("ingredients", JSON.stringify(missingIngredients));
+//
+//		xhttp.onreadystatechange = function() {
+//			if (this.readyState == 4 && this.status == 200) {
+//				var suggestionsElement = document.getElementById("suggestionsIngredients");
+//				
+//				for(var index=0;index<missingIngredients.length;index++){
+//					var option = document.createElement("option");
+//					option.setAttribute("value", missingIngredients[index]);
+//					option.setAttribute("name", "options");
+//					
+//					suggestionsElement.appendChild(option);
+//				}
+//			}
+//		};
+//
+//		xhttp.open("POST", "RecipeControlServlet", true);
+//		xhttp.send(formdata);
+//	}
+//}
 

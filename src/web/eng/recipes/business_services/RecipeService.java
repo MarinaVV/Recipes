@@ -24,4 +24,5 @@ public interface RecipeService {
 	List<Comment> getAllComments(String recipeId);
 	String deleteComment(String userName, String commentId);
 	String updateComment(String username, String commentId, String comment);
+	List<String> getAllIngredientNames();
 }

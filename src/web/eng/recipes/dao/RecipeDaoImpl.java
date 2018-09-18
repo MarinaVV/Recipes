@@ -19,6 +19,43 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 
 	private boolean isAutoCommit = true;
 
+	
+	public List<Ingredient> getAllIngredientNames() {
+		open();
+		PreparedStatement stmt = null;
+		ResultSet rs;
+		List<Ingredient> ingredients = new ArrayList<>();
+
+		try {
+			stmt = con.prepareStatement(SQL.GET_ALL_INGREDIENTS);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Ingredient ingredient = new Ingredient();
+				ingredient.setId(rs.getLong("id"));
+				ingredient.setName(rs.getString("name"));
+				ingredients.add(ingredient);
+			}
+
+			return ingredients;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			close();
+		}
+	}
+	
+	
 	public Recipe getRecipeByTitle(String title) {
 
 		open();
@@ -108,7 +145,7 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 	public void insertRecipeIngredients(List<Recipe_ingredient> recipe_ingredients, Long recipe_id) {
 		open();
 		PreparedStatement stmt = null;
-		String sql = "INSERT INTO recipe_ingredients (`recipe_id`, `ingredient`, `quantity`, `units` ) VALUES ";
+		String sql = "INSERT INTO recipe_ingredients (`recipe_id`, `ingredient_id`, `quantity`, `units` ) VALUES ";
 
 		// change the insert query depending on number of ingredients
 		for (int index = 0; index < recipe_ingredients.size(); index++) {
@@ -128,7 +165,7 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 				indexNumber++;
 				stmt.setLong(indexNumber, recipe_id);
 				indexNumber++;
-				stmt.setString(indexNumber, recipe_ingredients.get(index).getIngredient().getName().toLowerCase());
+				stmt.setLong(indexNumber, this.getIngredientIdByName(recipe_ingredients.get(index).getIngredient().getName().toLowerCase()));
 				indexNumber++;
 				stmt.setInt(indexNumber, recipe_ingredients.get(index).getQuantity());
 				indexNumber++;
@@ -316,7 +353,7 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		try {
 			stmt = con.prepareStatement(sql);
 
-			stmt.setString(1, recipeName.toLowerCase());
+			stmt.setString(1, "%"+recipeName.toLowerCase()+"%");
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -346,6 +383,97 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 		}
 
 		return foundRecipes;
+	}
+	
+	public List<Recipe> getRecipesPrimaryImageByIngredient(String ingredient) {
+		open();
+		PreparedStatement stmt = null;
+		String sql = SQL.GET_RECIPES_IMAGES_BY_INGREDIENTS_LIST_2;
+		ResultSet rs;
+		List<Recipe> foundRecipes = new ArrayList<>();
+
+		try {
+			stmt = con.prepareStatement(sql);
+
+			stmt.setString(1, ingredient);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+
+				Recipe recipe = mapResultToRecipe(rs);
+
+				foundRecipes.add(recipe);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (isAutoCommit) {
+					close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return foundRecipes;
+	}
+	
+	public List<Recipe_ingredient> getRecipeIngredientsByRecipeId(Long recipeId){
+		open();
+		PreparedStatement stmt = null;
+		String sql = SQL.GET_RECIPE_INGREDIENTS_BY_RECIPE_ID;
+		ResultSet rs;
+		List<Recipe_ingredient> foundRecipeIngredients = new ArrayList<>();
+
+		try {
+			stmt = con.prepareStatement(sql);
+
+			stmt.setLong(1, recipeId);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Recipe_ingredient ri = new Recipe_ingredient();
+				
+				ri.setQuantity(rs.getInt("quantity"));
+				ri.setUnits(rs.getString("units"));
+				
+				Ingredient ingredient = new Ingredient();
+				ingredient.setName(rs.getString("name"));
+				ri.setIngredient(ingredient);
+
+				foundRecipeIngredients.add(ri);
+			}
+			
+			return foundRecipeIngredients;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (isAutoCommit) {
+					close();
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 	
 	public List<Recipe> getFavoriteRecipes(String username){
@@ -429,7 +557,7 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 				Recipe_ingredient recipe_ingredient = new Recipe_ingredient();
 				recipe_ingredient.setId(rs.getLong("id"));
 				Ingredient ingredient = new Ingredient();
-				ingredient.setName(rs.getString("ingredient"));
+				ingredient.setName(rs.getString("name"));
 				recipe_ingredient.setIngredient(ingredient);
 				recipe_ingredient.setQuantity(rs.getInt("quantity"));
 				recipe_ingredient.setUnits(rs.getString("units"));
@@ -1013,6 +1141,82 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void insertIngredients(List<Ingredient> ingredientsList) {
+		open();
+		PreparedStatement stmt = null;
+		String sql = SQL.INSERT_INGREDIENT;
+
+		// change the insert query depending on number of ingredients
+		for (int index = 0; index < ingredientsList.size(); index++) {
+			if (index < ingredientsList.size() - 1) {
+				sql += "(?),";
+			} else {
+				sql += "(?)";
+			}
+
+		}
+
+		try {
+			stmt = con.prepareStatement(sql);
+
+			for (int index = 0; index < ingredientsList.size(); index++) {
+				stmt.setString(index + 1, ingredientsList.get(index).getName());
+			}
+
+			stmt.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+				close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private Long getIngredientIdByName(String name) {
+		open();
+		PreparedStatement stmt = null;
+		String sql = "SELECT id FROM ingredients WHERE name=?";
+		ResultSet rs;
+		
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, name);
+
+			rs = stmt.executeQuery();
+			
+			if(rs !=null && rs.next()) {
+				return rs.getLong("id");
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+				if(isAutoCommit) {
+					close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
 	}
 	
 	private Recipe mapResultToRecipe(ResultSet rs) throws SQLException {

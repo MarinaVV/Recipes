@@ -6,26 +6,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import web.eng.recipes.models.Ingredient;
 import web.eng.recipes.models.User;
 import web.eng.recipes.utils.SQL;
 
 public class IngredientDaoImpl extends Dao implements IngredientDao {
 
-	public List<String> getAllIngredientNames() {
+	public List<Ingredient> getAllIngredientNames() {
 		open();
 		PreparedStatement stmt = null;
 		ResultSet rs;
-		List<String> ingredientNames = new ArrayList<>();
+		List<Ingredient> ingredients = new ArrayList<>();
 
 		try {
 			stmt = con.prepareStatement(SQL.GET_ALL_INGREDIENTS);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				ingredientNames.add(rs.getString(2));
+				Ingredient ingredient = new Ingredient();
+				ingredient.setId(rs.getLong("id"));
+				ingredient.setName(rs.getString("name"));
 			}
 
-			return ingredientNames;
+			return ingredients;
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

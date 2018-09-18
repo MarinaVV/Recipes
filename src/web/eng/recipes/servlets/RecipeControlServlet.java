@@ -23,7 +23,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import web.eng.recipes.business_services.IngredientService;
+import web.eng.recipes.business_services.IngredientServiceImpl;
 import web.eng.recipes.business_services.RecipeService;
+import web.eng.recipes.business_services.RecipeServiceImpl;
 import web.eng.recipes.models.Comment;
 import web.eng.recipes.models.Ingredient;
 import web.eng.recipes.models.Recipe;
@@ -43,7 +45,8 @@ public class RecipeControlServlet extends HttpServlet {
 
 	public RecipeControlServlet() {
 		super();
-		// TODO Auto-generated constructor stub
+//		recipeService = new RecipeServiceImpl();
+//		ingredientService = new IngredientServiceImpl();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -194,7 +197,7 @@ public class RecipeControlServlet extends HttpServlet {
 
 	private String getAllIngredientsAction() {
 
-		List<String> ingredientNames = ingredientService.getAllIngredientNames();
+		List<String> ingredientNames = recipeService.getAllIngredientNames();
 		return new JSONArray(ingredientNames).toString();
 
 	}

@@ -6,23 +6,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 import web.eng.recipes.dao.IngredientDao;
+import web.eng.recipes.models.Ingredient;
 
 public class IngredientServiceImpl implements IngredientService {
 
 	@Inject
 	IngredientDao ingredientDao;
 
-	public List<String> getAllIngredientNames() {
-		
-		List<String> ingredientNames=ingredientDao.getAllIngredientNames();
-		
-		if(ingredientNames!=null) {
-			return ingredientNames;
-		}else {
-			return new ArrayList<String>();
-		}
-		
-	}
+
 	
 	public void saveIngredients(List<String> ingredientsList) {
 		

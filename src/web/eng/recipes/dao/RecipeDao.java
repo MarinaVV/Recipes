@@ -4,6 +4,7 @@ import java.util.List;
 
 import web.eng.recipes.models.Comment;
 import web.eng.recipes.models.Image;
+import web.eng.recipes.models.Ingredient;
 import web.eng.recipes.models.Recipe;
 import web.eng.recipes.models.Recipe_ingredient;
 
@@ -14,6 +15,7 @@ public interface RecipeDao {
 	List<Recipe> getRecipesPrimaryImageByUsername(String username);
 	List<Recipe> getRecipesPrimaryImageByIngredientsList(List<String> ingredients);
 	List<Recipe> getRecipesPrimaryImageByRecipeName(String recipeName);
+	List<Recipe> getRecipesPrimaryImageByIngredient(String ingredient);
 	Recipe getSecondaryImagesIngredients(long recipeId);
 	boolean isRecipeFavorited(String recipeId, String username);
 	boolean insertToFavorites(String recipeId, String username);
@@ -29,4 +31,7 @@ public interface RecipeDao {
 	List<Image> deleteImagesFromIDs(List<Long> imagesToDel);
 	List<Image> getAllImagesByRecipeId(Long recipe_id);
 	void insertImage(List<String> imgPaths, Short isPrimary, Long recipe_id);
+	void insertIngredients(List<Ingredient> ingredientsList);
+	List<Ingredient> getAllIngredientNames();
+	List<Recipe_ingredient> getRecipeIngredientsByRecipeId(Long recipeId);
 }

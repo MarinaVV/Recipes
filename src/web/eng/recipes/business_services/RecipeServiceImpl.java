@@ -18,12 +18,14 @@ import javax.inject.Inject;
 import javax.servlet.http.Part;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.eclipse.jdt.internal.compiler.ast.ThisReference;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import web.eng.recipes.dao.RecipeDao;
 import web.eng.recipes.models.Comment;
 import web.eng.recipes.models.Image;
+import web.eng.recipes.models.Ingredient;
 import web.eng.recipes.models.Recipe;
 import web.eng.recipes.models.Recipe_ingredient;
 import web.eng.recipes.utils.Properties;
@@ -61,6 +63,8 @@ public class RecipeServiceImpl implements RecipeService {
 		} else {
 			imgPaths.add(0, "no_image_provided");
 		}
+		
+		this.addMissingIngredients(recipe.getRecipe_ingredients());
 
 		if (recipeDao.createRecipe(recipe, imgPaths)) {
 			return "RECIPE_CREATED";
@@ -88,16 +92,37 @@ public class RecipeServiceImpl implements RecipeService {
 	public List<Recipe> searchRecipesPrimaryImageByIngredientsList(List<String> ingredients) {
 
 		List<Recipe> foundRecipes = new ArrayList<>();
+		List<Recipe> filteredRecipes = new ArrayList<>();
 
-		foundRecipes = recipeDao.getRecipesPrimaryImageByIngredientsList(ingredients);
-		for (Recipe recipe : foundRecipes) {
+		foundRecipes = recipeDao.getRecipesPrimaryImageByIngredient(ingredients.get(0));
+
+		if(foundRecipes==null) {
+			return null;
+		}
+		
+		for(String searchIngredientName : ingredients) {
+			for(Recipe foundRecipe : foundRecipes) {
+				boolean areAllIngredientsPresent = true;
+				List<Recipe_ingredient> recipe_ingredients = recipeDao.getRecipeIngredientsByRecipeId(foundRecipe.getId());
+				for(Recipe_ingredient recipeIngredient : recipe_ingredients) {
+					if(!searchIngredientName.equals(recipeIngredient.getIngredient().getName())) {
+						areAllIngredientsPresent = false;
+					}
+				}
+				if(areAllIngredientsPresent) {
+					filteredRecipes.add(foundRecipe);
+				}
+			}
+		}
+		
+		for (Recipe recipe : filteredRecipes) {
 			if (recipe.getImages().get(0).getImgPath() != null) {
 				String img = readImg(recipe.getImages().get(0).getImgPath());
 				recipe.getImages().get(0).setImage(img);
 			}
 		}
 
-		return foundRecipes;
+		return filteredRecipes;
 	}
 
 	public List<Recipe> searchRecipesPrimaryImageByRecipeName(String recipeName) {
@@ -362,6 +387,24 @@ public class RecipeServiceImpl implements RecipeService {
 		
 		return "ERROR";
 	}
+	
+	public List<String> getAllIngredientNames() {
+		
+		List<Ingredient> ingredients=recipeDao.getAllIngredientNames();
+		
+		List<String> ingredientNames = new ArrayList();
+		
+		for(Ingredient ingredient : ingredients) {
+			ingredientNames.add(ingredient.getName());
+		}
+		
+		if(ingredientNames!=null) {
+			return ingredientNames;
+		}else {
+			return new ArrayList<String>();
+		}
+		
+	}
 
 	private void deleteImage(String imgPath) {
 		File file = new File(imgPath);
@@ -444,6 +487,38 @@ public class RecipeServiceImpl implements RecipeService {
 		} finally {
 			out.close();
 		}
+	}
+	
+	private void addMissingIngredients(List<Recipe_ingredient> recipe_ingredients) {
+		
+		if(recipe_ingredients == null || recipe_ingredients.isEmpty()) {
+			return;
+		}
+		
+		List<Ingredient> ingredients = new ArrayList<>();
+		
+		for(Recipe_ingredient recipe_ingredient : recipe_ingredients) {
+			ingredients.add(recipe_ingredient.getIngredient());
+		}
+		
+		List<Ingredient> allFoods = this.recipeDao.getAllIngredientNames();
+
+		List<Ingredient> missingFoods = this.findMissingIngredients(ingredients, allFoods);
+
+		this.recipeDao.insertIngredients(missingFoods);
+	}
+	
+	private List<Ingredient> findMissingIngredients(List<Ingredient> ingredientsToCheck, List<Ingredient> allIngredients) {
+
+		List<Ingredient> missingFoods = new ArrayList<>();
+
+		for (Ingredient ingredient : ingredientsToCheck) {
+			if (!allIngredients.contains(ingredient) ) {
+				missingFoods.add(ingredient);
+			}
+		}
+
+		return missingFoods;
 	}
 
 }

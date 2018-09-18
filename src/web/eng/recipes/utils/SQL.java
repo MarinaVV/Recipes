@@ -33,7 +33,7 @@ public  class SQL {
 	
 	public static final String GET_SECONDARY_IMAGES ="Select * From images where recipe_id = ? and is_primary=0";
 	
-	public static final String GET_RECIPEINGREDIENTS = "Select * From recipe_ingredients where recipe_id=?";
+	public static final String GET_RECIPEINGREDIENTS = "Select * From recipe_ingredients ri INNER JOIN ingredients i ON ri.ingredient_id=i.id  where recipe_id=?";
 	
 	public static final String GET_ALL_IMAGES_RECIPE_ID = "Select * from images where recipe_id=?";
 	
@@ -81,6 +81,28 @@ public  class SQL {
 	//Used to add ingredient for the recipe search by ingredient list
 	public static final String INGREDIENT_ROW_FOR_INGREDIENTS_LIST = "recipe_id in (SELECT recipe_id FROM recipe_ingredients WHERE ingredient=?) ";
 
+	public static final String GET_RECIPES_IMAGES_BY_INGREDIENTS_LIST_2 = "SELECT 	images.id AS img_id," + 
+																			"		images.img_path," + 
+																			"		images.is_primary," + 
+																			"		recipes.id AS recipe_id," + 
+																			"		recipes.description," + 
+																			"		recipes.category," + 
+																			"		recipes.date," + 
+																			"		recipes.title," + 
+																			"		users.id AS user_id," + 
+																			"		users.username " + 
+																			"FROM `recipes` " + 
+																			"INNER JOIN images on images.recipe_id = recipes.id AND images.is_primary=1 " + 
+																			"INNER JOIN recipe_ingredients on recipe_ingredients.recipe_id = recipes.id " + 
+																			"INNER JOIN ingredients on recipe_ingredients.ingredient_id=ingredients.id " +
+																			"INNER JOIN users on recipes.user_id=users.id " +
+																			"WHERE ingredients.name = ?";
+	
+	public static final String GET_RECIPE_INGREDIENTS_BY_RECIPE_ID = "SELECT * " + 
+																	 "from recipe_ingredients " + 
+																	 "INNER JOIN ingredients ON recipe_ingredients.ingredient_id=ingredients.id " + 
+																	 "WHERE recipe_ingredients.recipe_id=?";
+	
 	public static final String GET_RECIPES_IMAGES_BY_RECIPE_NAME = "SELECT  images.id AS img_id, "
 			+ "	images.img_path, 	"
 			+ "	images.is_primary, "
@@ -94,7 +116,7 @@ public  class SQL {
 		+ "FROM `images` "
 			+ "	INNER JOIN `recipes` ON images.recipe_id=recipes.id AND images.is_primary<>0"
 			+ " INNER JOIN `users` ON recipes.user_id=users.id "
-		+ "WHERE images.is_primary=1 AND recipes.title=?";
+		+ "WHERE images.is_primary=1 AND recipes.title LIKE ?";
 	
 	public static final String GET_FAVORITE_RECIPES_IMAGES = "SELECT  images.id AS img_id, "
 				+ "images.img_path, 	 "
