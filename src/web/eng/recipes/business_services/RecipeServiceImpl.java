@@ -100,16 +100,19 @@ public class RecipeServiceImpl implements RecipeService {
 			return null;
 		}
 		
-		for(String searchIngredientName : ingredients) {
-			for(Recipe foundRecipe : foundRecipes) {
-				boolean areAllIngredientsPresent = true;
-				List<Recipe_ingredient> recipe_ingredients = recipeDao.getRecipeIngredientsByRecipeId(foundRecipe.getId());
-				for(Recipe_ingredient recipeIngredient : recipe_ingredients) {
-					if(!searchIngredientName.equals(recipeIngredient.getIngredient().getName())) {
-						areAllIngredientsPresent = false;
+		for (Recipe foundRecipe : foundRecipes) {
+			List<String> ingredientsToFind = new ArrayList<>(ingredients);
+			List<Recipe_ingredient> recipe_ingredients = recipeDao
+					.getRecipeIngredientsByRecipeId(foundRecipe.getId());
+			for (String searchIngredientName : ingredients) {
+
+				
+				for (Recipe_ingredient recipeIngredient : recipe_ingredients) {
+					if (searchIngredientName.equals(recipeIngredient.getIngredient().getName())) {
+						ingredientsToFind.remove(searchIngredientName);
 					}
 				}
-				if(areAllIngredientsPresent) {
+				if (ingredientsToFind.isEmpty()) {
 					filteredRecipes.add(foundRecipe);
 				}
 			}

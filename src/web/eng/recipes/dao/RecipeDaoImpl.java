@@ -165,7 +165,7 @@ public class RecipeDaoImpl extends Dao implements RecipeDao {
 				indexNumber++;
 				stmt.setLong(indexNumber, recipe_id);
 				indexNumber++;
-				stmt.setLong(indexNumber, this.getIngredientIdByName(recipe_ingredients.get(index).getIngredient().getName().toLowerCase()));
+				stmt.setLong(indexNumber, this.getIngredientIdByName(recipe_ingredients.get(index).getIngredient().getName()));
 				indexNumber++;
 				stmt.setInt(indexNumber, recipe_ingredients.get(index).getQuantity());
 				indexNumber++;
