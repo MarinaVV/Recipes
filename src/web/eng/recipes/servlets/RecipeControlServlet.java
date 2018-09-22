@@ -1,11 +1,6 @@
 package web.eng.recipes.servlets;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import web.eng.recipes.business_services.IngredientService;
-import web.eng.recipes.business_services.IngredientServiceImpl;
 import web.eng.recipes.business_services.RecipeService;
-import web.eng.recipes.business_services.RecipeServiceImpl;
 import web.eng.recipes.models.Comment;
 import web.eng.recipes.models.Ingredient;
 import web.eng.recipes.models.Recipe;
@@ -40,13 +32,8 @@ public class RecipeControlServlet extends HttpServlet {
 	@Inject
 	RecipeService recipeService;
 
-	@Inject
-	IngredientService ingredientService;
-
 	public RecipeControlServlet() {
 		super();
-//		recipeService = new RecipeServiceImpl();
-//		ingredientService = new IngredientServiceImpl();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -89,9 +76,6 @@ public class RecipeControlServlet extends HttpServlet {
 		switch (action) {
 		case "create_recipe":
 			response.getWriter().write(createRecipeAction(request));
-			break;
-		case "save_ingredients":
-			saveIngredientsAction(request);
 			break;
 		case "search_recipe_ingredients_list":
 			response.setContentType("application/json");
@@ -200,26 +184,6 @@ public class RecipeControlServlet extends HttpServlet {
 		List<String> ingredientNames = recipeService.getAllIngredientNames();
 		return new JSONArray(ingredientNames).toString();
 
-	}
-
-	private void saveIngredientsAction(HttpServletRequest request) {
-
-		JSONArray jArr = null;
-
-		try {
-			jArr = new JSONArray(request.getParameter("ingredients"));
-			List<String> ingredientsList = new ArrayList<>();
-
-			for (int index = 0; index < jArr.length(); index++) {
-				ingredientsList.add(jArr.getString(index));
-			}
-
-			ingredientService.saveIngredients(ingredientsList);
-
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	private String searchRecipesPrimaryImageByUsername(HttpServletRequest request) {
