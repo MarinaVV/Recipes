@@ -312,7 +312,7 @@ public class RecipeServiceImpl implements RecipeService {
 				boolean imageNameExists = false;	
 				String imgName="secondary_img_"+secondaryImgNumber;
 				
-				for(int existingImgIndex=0; existingImgIndex<recipeImages.size();existingImgIndex++) {
+				for(int existingImgIndex=0;recipeImages !=null && existingImgIndex<recipeImages.size();existingImgIndex++) {
 					if(recipeImages.get(existingImgIndex).getImgPath().contains(imgName)) {
 						imageNameExists=true;
 					}
