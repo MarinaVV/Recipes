@@ -149,6 +149,8 @@ public  class SQL {
 	
 	public static final String GET_USER_USERNAME ="Select * from users where username = ?";
 	
+	public static final String GET_USER_USERNAME_LOGIN ="Select * from users where username = ? AND is_deleted=0";
+	
 	public static final String INSERT_USER = "INSERT INTO users (username, password) VALUES(?,?)";
 	
 	public static final String UPDATE_PASSWORD = "UPDATE users SET password = ? WHERE username = ?";

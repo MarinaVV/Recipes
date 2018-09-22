@@ -51,7 +51,7 @@ public class UserDaoImpl extends Dao implements UserDao {
 		ResultSet rs;
 
 		try {
-			stmt = con.prepareStatement(SQL.GET_USER_USERNAME);
+			stmt = con.prepareStatement(SQL.GET_USER_USERNAME_LOGIN);
 			stmt.setString(1, username);
 			rs = stmt.executeQuery();
 
