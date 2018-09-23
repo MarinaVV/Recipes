@@ -82,6 +82,15 @@ public class UserControlServlet extends HttpServlet {
 
 			response.getWriter().write(responseText);
 			break;
+		case "delete_acc":
+			
+			String password = request.getParameter("password");
+			String usernameDA = request.getParameter("username");
+
+			String responseTxt = userService.deleteAcc(usernameDA, password);
+
+			response.getWriter().write(responseTxt);
+			break;
 		}
 		
 	}

@@ -60,4 +60,22 @@ public class UserServiceImpl implements UserService {
 		return "ERROR";
 	}
 
+	@Override
+	public String deleteAcc(String username, String password) {
+		User user = dao.findUserByUsername(username);
+
+		if (user == null) {
+			return "USER_NOT_FOUND";
+		}
+		if (!user.getPassword().equals(password)) {
+			return "WRONG_PASSWORD";
+		}
+
+		if (dao.updateUserIsDeleted(username)) {
+			return "ACC_DELETED";
+		}
+
+		return "ERROR";
+	}
+
 }

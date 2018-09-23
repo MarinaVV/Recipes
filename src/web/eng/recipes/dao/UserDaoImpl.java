@@ -111,4 +111,34 @@ public class UserDaoImpl extends Dao implements UserDao {
 		return true;
 	}
 
+	@Override
+	public boolean updateUserIsDeleted(String username) {
+		open();
+		PreparedStatement stmt=null;
+
+		try {
+			stmt = con.prepareStatement(SQL.UPDATE_IS_DELETED);
+
+			stmt.setString(1, username);
+
+			stmt.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			close();
+		}
+
+		return true;
+	}
+
 }

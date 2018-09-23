@@ -9,4 +9,6 @@ public interface UserDao {
 	User findUserByUsername(String username);
 	
 	boolean updateUserPassword (String username, String password);
+	
+	boolean updateUserIsDeleted(String usename);
 }

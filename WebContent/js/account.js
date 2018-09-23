@@ -97,12 +97,13 @@ function showProfileArea(){
 	var passDiv = document.createElement("div");
 	var passInput = document.createElement("input");
 	passInput.setAttribute("placeholder", "Password");
+	passInput.setAttribute("id", "del_acc_pass_input");
 	passDiv.appendChild(passInput);
 	deleteAccDiv.appendChild(passDiv);
 	
 	var deleteAccBtnDiv = document.createElement("div");
 	var deleteAccBtn = document.createElement("button");
-	deleteAccBtn.setAttribute("onClick", "");
+	deleteAccBtn.setAttribute("onClick", "deleteAcc()");
 	deleteAccBtn.innerHTML = "Delete Account";
 	deleteAccBtnDiv.appendChild(deleteAccBtn);
 	deleteAccDiv.appendChild(deleteAccBtnDiv);
@@ -173,6 +174,38 @@ function changePassword(){
 	xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhttp.send("action=" + action + "&username=" + username + "&newPassword="
 			+ newPass + "&oldPassword=" + oldPassword);
+}
+
+function deleteAcc(){
+	
+	var userConfirm = confirm("Do you want to deactivate your account");
+	
+	if(userConfirm==false){
+		return;
+	}
+	
+	var username = sessionStorage.getItem("uname");
+	var password = document.getElementById("del_acc_pass_input").value;
+	
+	var xhttp = new XMLHttpRequest();
+	var action = "delete_acc";
+
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			if(this.responseText=="ACC_DELETED"){
+				logOut();
+			}
+		}
+	};
+
+	xhttp.open("POST", "UserControlServlet", true);
+	xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	xhttp.send("action=" + action + "&username=" + username + "&password="+ password);
+}
+
+function logOut(){
+	sessionStorage.removeItem("uname");
+	window.location.href="UserControlServlet?action=log_in";
 }
 
 function deleteRecipe(recipeId) {

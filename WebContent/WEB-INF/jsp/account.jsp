@@ -61,6 +61,9 @@
 				<div class="menu_item" onclick="showFavoriteRecipes()">
 					<label>Favorite recipes</label>
 				</div>
+				<div class="menu_item" onclick="logOut()">
+					<label>Log out</label>
+				</div>
 			</div>
 			
 			<div id="information_div" class="information_div">
